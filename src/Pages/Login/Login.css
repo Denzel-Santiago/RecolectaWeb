@@ -1,0 +1,142 @@
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #cfe0df, #1a6d6d);
+  font-family: Arial, sans-serif;
+}
+
+/* ===========================
+   Sección izquierda
+   =========================== */
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 70%;
+  max-width: 420px;
+  padding: 35px;
+  border: 3px solid #003b3b;
+  border-radius: 12px;
+  background: rgba(0, 83, 83, 0.65);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+.login-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 25px;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group label {
+  color: white;
+  font-size: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  background: #d3e4e4;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+/* Checkbox y términos */
+.terminos-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminos-group label {
+  color: white;
+  font-size: 14px;
+}
+
+.terminos-link {
+  color: #ffd700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Botón */
+.login-button {
+  width: 160px;
+  margin: 10px auto 0;
+  padding: 10px;
+  background: white;
+  border: 1px solid #003b3b;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.login-button:hover {
+  background: #e3e3e3;
+}
+
+/* Pie de ayuda */
+.ayuda-section {
+  margin-top: 15px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+/* ===========================
+   Sección derecha
+   =========================== */
+.login-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Contenedor del logo */
+.logo-container {
+  text-align: center;
+}
+
+.logo-placeholder img {
+  width: 400px;
+  height: auto;
+}
+
+/* Título de la app */
+.app-title {
+  margin-top: 10px;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* Texto inferior */
+.terminos-info {
+  margin-top: 15px;
+  text-align: center;
+  width: 70%;
+  font-size: 14px;
+  opacity: 0.9;
+}
