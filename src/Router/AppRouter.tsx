@@ -6,6 +6,8 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import Historial from "../Pages/Historial/Historial";
 import Alertas from "../Pages/Alertas/Alertas";
 import Anomalias from "../Pages/Anomalias/Anomalias";
+import EstadoRuta from "../Pages/EstadoRuta/EstadoRuta";
+import ValidacionRecoleccion from "../Pages/ValidacionRecoleccion/ValidacionRecoleccion";
 
 export default function AppRouter() {
   return (
@@ -57,6 +59,28 @@ export default function AppRouter() {
             <>
               <Navbar />
               <Anomalias />
+            </>
+          } 
+        />
+
+        {/* Ruta de estado de ruta (con navbar) */}
+        <Route 
+          path="/estado-ruta" 
+          element={
+            <>
+              <Navbar />
+              <EstadoRuta />
+            </>
+          } 
+        />
+
+        {/* Ruta de recolección (con navbar) */}
+        <Route 
+          path="/validacion-recoleccion" 
+          element={
+            <>
+              <Navbar />
+              <ValidacionRecoleccion />
             </>
           } 
         />

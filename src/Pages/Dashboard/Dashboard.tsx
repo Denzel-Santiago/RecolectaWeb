@@ -1,6 +1,6 @@
 // pages/Dashboard/Dashboard.jsx
 import { useState, useEffect, type JSX } from 'react';
-import './Dashboard.css';
+import './Dashboard.css'; // Asegúrate de que este archivo tenga el CSS encapsulado
 import {
   FiTruck, FiAlertTriangle, FiCheckCircle, FiClock, FiMap,
   FiBarChart2, FiBell, FiEye, FiFileText, FiSend,
@@ -57,176 +57,179 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
-      {/* Header Compacto */}
-      <header className="dashboard-header">
-        <div className="header-top">
-          <div>
-            <h1>Panel de Control</h1>
-            <p className="subtitle">Sistema de Recolección</p>
+    // Contenedor principal encapsulado
+    <div className="anomalias-dash-container">
+      <div className="anomalias-dashboard">
+        {/* Header Compacto */}
+        <header className="anomalias-dash-header">
+          <div className="anomalias-header-top">
+            <div>
+              <h1>Panel de Control</h1>
+              <p className="anomalias-subtitle">Sistema de Recolección</p>
+            </div>
+            <div className="anomalias-header-time">
+              <FiClock /> {lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})}
+              <button onClick={() => setLastUpdate(new Date())} className="anomalias-btn-refresh">
+                <FiRefreshCw />
+              </button>
+            </div>
           </div>
-          <div className="header-time">
-            <FiClock /> {lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})}
-            <button onClick={() => setLastUpdate(new Date())} className="btn-refresh">
-              <FiRefreshCw />
-            </button>
-          </div>
-        </div>
 
-        {/* Métricas Compactas */}
-        <div className="metrics-compact">
-          <div className="metric-item">
-            <div className="metric-icon primary"><FiTruck /></div>
-            <span className="metric-value">{metricas.totalRutas}</span>
-            <span className="metric-label">Rutas</span>
+          {/* Métricas Compactas */}
+          <div className="anomalias-metrics-compact">
+            <div className="anomalias-metric-item">
+              <div className="anomalias-metric-icon primary"><FiTruck /></div>
+              <span className="anomalias-metric-value">{metricas.totalRutas}</span>
+              <span className="anomalias-metric-label">Rutas</span>
+            </div>
+            <div className="anomalias-metric-item">
+              <div className="anomalias-metric-icon success"><FiCheckCircle /></div>
+              <span className="anomalias-metric-value">{metricas.puntosCompletados}</span>
+              <span className="anomalias-metric-label">Completados</span>
+            </div>
+            <div className="anomalias-metric-item">
+              <div className="anomalias-metric-icon warning"><FiAlertTriangle /></div>
+              <span className="anomalias-metric-value">{metricas.alertasActivas}</span>
+              <span className="anomalias-metric-label">Alertas</span>
+            </div>
+            <div className="anomalias-metric-item">
+              <div className="anomalias-metric-icon info"><FiUsers /></div>
+              <span className="anomalias-metric-value">{metricas.eficiencia}%</span>
+              <span className="anomalias-metric-label">Eficiencia</span>
+            </div>
           </div>
-          <div className="metric-item">
-            <div className="metric-icon success"><FiCheckCircle /></div>
-            <span className="metric-value">{metricas.puntosCompletados}</span>
-            <span className="metric-label">Completados</span>
-          </div>
-          <div className="metric-item">
-            <div className="metric-icon warning"><FiAlertTriangle /></div>
-            <span className="metric-value">{metricas.alertasActivas}</span>
-            <span className="metric-label">Alertas</span>
-          </div>
-          <div className="metric-item">
-            <div className="metric-icon info"><FiUsers /></div>
-            <span className="metric-value">{metricas.eficiencia}%</span>
-            <span className="metric-label">Eficiencia</span>
-          </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Contenido Principal Compacto */}
-      <div className="dashboard-grid">
-        
-        {/* Tarjeta 1: Rutas Activas (Compacta) */}
-        <div className="card compact">
-          <div className="card-header">
-            <FiTruck /> <span>Rutas Activas</span>
-            <span className="badge">{rutasActivas.length}</span>
-          </div>
-          <div className="card-body">
-            {rutasActivas.map(ruta => (
-              <div key={ruta.id} className="list-item">
-                <div className="item-main">
-                  <span className="item-title">{ruta.nombre}</span>
-                  <span className="item-sub">{ruta.conductor}</span>
-                </div>
-                <div className="item-right">
-                  <span className={`status status-${ruta.estado}`}>
-                    {getEstadoIcon(ruta.estado)}
-                    {ruta.estado === 'en-progreso' ? 'En curso' : 
-                     ruta.estado === 'pendiente' ? 'Pendiente' : 'Completada'}
-                  </span>
-                  <div className="progress-small">
-                    <div className="progress-bar" style={{width: `${ruta.progreso}%`}}></div>
+        {/* Contenido Principal Compacto */}
+        <div className="anomalias-dashboard-grid">
+          
+          {/* Tarjeta 1: Rutas Activas (Compacta) */}
+          <div className="anomalias-card compact">
+            <div className="anomalias-card-header">
+              <FiTruck /> <span>Rutas Activas</span>
+              <span className="anomalias-badge">{rutasActivas.length}</span>
+            </div>
+            <div className="anomalias-card-body">
+              {rutasActivas.map(ruta => (
+                <div key={ruta.id} className="anomalias-list-item">
+                  <div className="anomalias-item-main">
+                    <span className="anomalias-item-title">{ruta.nombre}</span>
+                    <span className="anomalias-item-sub">{ruta.conductor}</span>
+                  </div>
+                  <div className="anomalias-item-right">
+                    <span className={`anomalias-status anomalias-status-${ruta.estado}`}>
+                      {getEstadoIcon(ruta.estado)}
+                      {ruta.estado === 'en-progreso' ? 'En curso' : 
+                      ruta.estado === 'pendiente' ? 'Pendiente' : 'Completada'}
+                    </span>
+                    <div className="anomalias-progress-small">
+                      <div className="anomalias-progress-bar" style={{width: `${ruta.progreso}%`}}></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tarjeta 2: Alertas (Compacta) */}
-        <div className="card compact">
-          <div className="card-header">
-            <FiBell /> <span>Alertas</span>
-            <span className="badge alert">{alertas.length}</span>
-          </div>
-          <div className="card-body">
-            {alertas.map(alerta => (
-              <div key={alerta.id} className={`alert-item alert-${alerta.tipo}`}>
-                <div className="alert-icon">
-                  <FiAlertTriangle />
-                </div>
-                <div className="alert-content">
-                  <p>{alerta.mensaje}</p>
-                  <small>{alerta.tiempo}</small>
-                </div>
-                <button className="btn-icon"><FiEye /></button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tarjeta 3: Acciones Rápidas (Compacta) */}
-        <div className="card compact">
-          <div className="card-header">
-            <FiMap /> <span>Acciones</span>
-          </div>
-          <div className="card-body grid-actions">
-            {acciones.map(accion => {
-              const Icon = accion.icon;
-              return (
-                <button key={accion.id} className="action-btn">
-                  <Icon />
-                  <span>{accion.nombre}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Tarjeta 4: Estadísticas (Compacta) */}
-        <div className="card compact">
-          <div className="card-header">
-            <FiBarChart2 /> <span>Estadísticas</span>
-          </div>
-          <div className="card-body">
-            <div className="stats-summary">
-              <div className="stat-circle">
-                <div className="circle" style={{
-                  background: `conic-gradient(#0F676C ${metricas.eficiencia * 3.6}deg, #eee 0deg)`
-                }}>
-                  <span>{metricas.eficiencia}%</span>
-                </div>
-                <p>Eficiencia General</p>
-              </div>
+              ))}
             </div>
-            
-            <div className="stats-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ruta</th>
-                    <th>✓</th>
-                    <th>✗</th>
-                    <th>%</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {estadisticas.map(stat => (
-                    <tr key={stat.ruta}>
-                      <td><strong>{stat.ruta}</strong></td>
-                      <td className="success">{stat.completados}</td>
-                      <td className="warning">{stat.pendientes}</td>
-                      <td>
-                        <div className="efficiency-bar">
-                          <div style={{width: `${stat.eficiencia}%`}}></div>
-                          <span>{stat.eficiencia}%</span>
-                        </div>
-                      </td>
+          </div>
+
+          {/* Tarjeta 2: Alertas (Compacta) */}
+          <div className="anomalias-card compact">
+            <div className="anomalias-card-header">
+              <FiBell /> <span>Alertas</span>
+              <span className="anomalias-badge alert">{alertas.length}</span>
+            </div>
+            <div className="anomalias-card-body">
+              {alertas.map(alerta => (
+                <div key={alerta.id} className={`anomalias-alert-item anomalias-alert-${alerta.tipo}`}>
+                  <div className="anomalias-alert-icon">
+                    <FiAlertTriangle />
+                  </div>
+                  <div className="anomalias-alert-content">
+                    <p>{alerta.mensaje}</p>
+                    <small>{alerta.tiempo}</small>
+                  </div>
+                  <button className="anomalias-btn-icon"><FiEye /></button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tarjeta 3: Acciones Rápidas (Compacta) */}
+          <div className="anomalias-card compact">
+            <div className="anomalias-card-header">
+              <FiMap /> <span>Acciones</span>
+            </div>
+            <div className="anomalias-card-body anomalias-grid-actions">
+              {acciones.map(accion => {
+                const Icon = accion.icon;
+                return (
+                  <button key={accion.id} className="anomalias-action-btn">
+                    <Icon />
+                    <span>{accion.nombre}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Tarjeta 4: Estadísticas (Compacta) */}
+          <div className="anomalias-card compact">
+            <div className="anomalias-card-header">
+              <FiBarChart2 /> <span>Estadísticas</span>
+            </div>
+            <div className="anomalias-card-body">
+              <div className="anomalias-stats-summary">
+                <div className="anomalias-stat-circle">
+                  <div className="anomalias-circle" style={{
+                    background: `conic-gradient(#0F676C ${metricas.eficiencia * 3.6}deg, #eee 0deg)`
+                  }}>
+                    <span>{metricas.eficiencia}%</span>
+                  </div>
+                  <p>Eficiencia General</p>
+                </div>
+              </div>
+              
+              <div className="anomalias-stats-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ruta</th>
+                      <th>✓</th>
+                      <th>✗</th>
+                      <th>%</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {estadisticas.map(stat => (
+                      <tr key={stat.ruta}>
+                        <td><strong>{stat.ruta}</strong></td>
+                        <td className="success">{stat.completados}</td>
+                        <td className="warning">{stat.pendientes}</td>
+                        <td>
+                          <div className="anomalias-efficiency-bar">
+                            <div style={{width: `${stat.eficiencia}%`}}></div>
+                            <span>{stat.eficiencia}%</span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+
         </div>
 
+        {/* Footer Minimalista */}
+        <footer className="anomalias-dash-footer">
+          <div className="anomalias-footer-content">
+            <FiShield />
+            <span>Sistema de Recolección v2.0 • Última actualización: {
+              lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})
+            }</span>
+          </div>
+        </footer>
       </div>
-
-      {/* Footer Minimalista */}
-      <footer className="dashboard-footer">
-        <div className="footer-content">
-          <FiShield />
-          <span>Sistema de Recolección v2.0 • Última actualización: {
-            lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})
-          }</span>
-        </div>
-      </footer>
     </div>
   );
 }
