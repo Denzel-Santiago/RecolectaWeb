@@ -5,6 +5,7 @@ import Navbar from "../components/Navigation/Navbar";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Historial from "../Pages/Historial/Historial";
 import Alertas from "../Pages/Alertas/Alertas";
+import Anomalias from "../Pages/Anomalias/Anomalias";
 
 export default function AppRouter() {
   return (
@@ -45,6 +46,17 @@ export default function AppRouter() {
             <>
               <Navbar />
               <Alertas />
+            </>
+          } 
+        />
+
+        {/* Ruta de anomalias (con navbar) */}
+        <Route 
+          path="/anomalias" 
+          element={
+            <>
+              <Navbar />
+              <Anomalias />
             </>
           } 
         />

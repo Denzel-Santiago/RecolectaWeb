@@ -1,147 +1,232 @@
 // pages/Dashboard/Dashboard.jsx
+import { useState, useEffect, type JSX } from 'react';
 import './Dashboard.css';
+import {
+  FiTruck, FiAlertTriangle, FiCheckCircle, FiClock, FiMap,
+  FiBarChart2, FiBell, FiEye, FiFileText, FiSend,
+  FiUsers, FiRefreshCw,
+  FiActivity, FiShield
+} from 'react-icons/fi';
 
 export default function Dashboard() {
-  // Datos de ejemplo para las rutas
+  const [lastUpdate, setLastUpdate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setLastUpdate(new Date()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   const rutasActivas = [
-    { id: 1, nombre: 'RUTA 01', estado: 'En progreso' },
-    { id: 2, nombre: 'RUTA 02', estado: 'Pendiente' },
-    { id: 3, nombre: 'RUTA 03', estado: 'Completada' },
+    { id: 1, nombre: 'Ruta 01', conductor: 'Juan Pérez', estado: 'en-progreso', progreso: 65 },
+    { id: 2, nombre: 'Ruta 02', conductor: 'Carlos Ruiz', estado: 'pendiente', progreso: 0 },
+    { id: 3, nombre: 'Ruta 03', conductor: 'Ana Torres', estado: 'completada', progreso: 100 },
   ];
 
   const alertas = [
-    { id: 1, mensaje: 'RUTA 01 No ha completado su recolección', tipo: 'crítica' },
-    { id: 2, mensaje: 'RUTA 02 No Completo un punto de ruta', tipo: 'advertencia' },
-    { id: 3, mensaje: 'RUTA 03 se encuentra inactiva', tipo: 'informativa' },
+    { id: 1, mensaje: 'Ruta 01 - Falla mecánica', tipo: 'critica', tiempo: '15 min' },
+    { id: 2, mensaje: 'Ruta 02 - Punto bloqueado', tipo: 'advertencia', tiempo: '30 min' },
   ];
 
   const acciones = [
-    'Ver detalles de ruta',
-    'Enviar notificación',
-    'Ver reporte detallado',
-    'Ver el mapa de rutas',
+    { id: 1, nombre: 'Ver detalles', icon: FiEye },
+    { id: 2, nombre: 'Enviar notificación', icon: FiSend },
+    { id: 3, nombre: 'Ver reporte', icon: FiFileText },
+    { id: 4, nombre: 'Ver mapa', icon: FiMap },
   ];
 
   const estadisticas = [
-    { ruta: 'RUTA 01', incompletos: 2, completados: 10, pendientes: 10, demoras: 5 },
-    { ruta: 'RUTA 02', incompletos: 3, completados: 12, pendientes: 8, demoras: 3 },
-    { ruta: 'RUTA 03', incompletos: 4, completados: 15, pendientes: 5, demoras: 2 },
+    { ruta: 'Ruta 01', completados: 10, pendientes: 2, eficiencia: 83 },
+    { ruta: 'Ruta 02', completados: 12, pendientes: 3, eficiencia: 80 },
+    { ruta: 'Ruta 03', completados: 15, pendientes: 4, eficiencia: 79 },
   ];
 
+  const metricas = {
+    totalRutas: rutasActivas.length,
+    puntosCompletados: estadisticas.reduce((a, b) => a + b.completados, 0),
+    alertasActivas: alertas.length,
+    eficiencia: Math.round(estadisticas.reduce((a, b) => a + b.eficiencia, 0) / estadisticas.length),
+  };
+
+  const getEstadoIcon = (estado: string) => {
+    const icons: Record<string, JSX.Element> = {
+      'en-progreso': <FiActivity />,
+      'pendiente': <FiClock />,
+      'completada': <FiCheckCircle />
+    };
+    return icons[estado] || <FiTruck />;
+  };
+
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Panel de Control - Supervisor</h1>
-        <div className="dashboard-time">Última actualización: Hoy 14:30</div>
-      </div>
-
-      <div className="dashboard-content">
-        {/* Columna izquierda */}
-        <div className="dashboard-left">
-          {/* Sección: Rutas Activas */}
-          <div className="dashboard-card">
-            <h2 className="card-title">📋 Rutas Activas</h2>
-            <div className="card-content">
-              <ul className="ruta-list">
-                {rutasActivas.map((ruta) => (
-                  <li key={ruta.id} className="ruta-item">
-                    <span className="ruta-nombre">{ruta.nombre}</span>
-                    <span className={`ruta-estado ruta-estado-${ruta.estado.toLowerCase().replace(' ', '-')}`}>
-                      {ruta.estado}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <div className="dashboard">
+      {/* Header Compacto */}
+      <header className="dashboard-header">
+        <div className="header-top">
+          <div>
+            <h1>Panel de Control</h1>
+            <p className="subtitle">Sistema de Recolección</p>
           </div>
-
-          {/* Sección: Alertas */}
-          <div className="dashboard-card">
-            <h2 className="card-title">🔔 Alertas</h2>
-            <div className="card-content">
-              <div className="alertas-container">
-                {alertas.map((alerta) => (
-                  <div key={alerta.id} className={`alerta-item alerta-${alerta.tipo}`}>
-                    <div className="alerta-icon">⚠️</div>
-                    <div className="alerta-text">{alerta.mensaje}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="header-time">
+            <FiClock /> {lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})}
+            <button onClick={() => setLastUpdate(new Date())} className="btn-refresh">
+              <FiRefreshCw />
+            </button>
           </div>
         </div>
 
-        {/* Columna derecha */}
-        <div className="dashboard-right">
-          {/* Sección: Acciones Rápidas */}
-          <div className="dashboard-card">
-            <h2 className="card-title">⚡ Acciones</h2>
-            <div className="card-content">
-              <div className="acciones-container">
-                {acciones.map((accion, index) => (
-                  <button key={index} className="accion-btn">
-                    <span className="accion-numero">{index + 1}.</span>
-                    <span className="accion-texto">{accion}</span>
-                  </button>
-                ))}
+        {/* Métricas Compactas */}
+        <div className="metrics-compact">
+          <div className="metric-item">
+            <div className="metric-icon primary"><FiTruck /></div>
+            <span className="metric-value">{metricas.totalRutas}</span>
+            <span className="metric-label">Rutas</span>
+          </div>
+          <div className="metric-item">
+            <div className="metric-icon success"><FiCheckCircle /></div>
+            <span className="metric-value">{metricas.puntosCompletados}</span>
+            <span className="metric-label">Completados</span>
+          </div>
+          <div className="metric-item">
+            <div className="metric-icon warning"><FiAlertTriangle /></div>
+            <span className="metric-value">{metricas.alertasActivas}</span>
+            <span className="metric-label">Alertas</span>
+          </div>
+          <div className="metric-item">
+            <div className="metric-icon info"><FiUsers /></div>
+            <span className="metric-value">{metricas.eficiencia}%</span>
+            <span className="metric-label">Eficiencia</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Contenido Principal Compacto */}
+      <div className="dashboard-grid">
+        
+        {/* Tarjeta 1: Rutas Activas (Compacta) */}
+        <div className="card compact">
+          <div className="card-header">
+            <FiTruck /> <span>Rutas Activas</span>
+            <span className="badge">{rutasActivas.length}</span>
+          </div>
+          <div className="card-body">
+            {rutasActivas.map(ruta => (
+              <div key={ruta.id} className="list-item">
+                <div className="item-main">
+                  <span className="item-title">{ruta.nombre}</span>
+                  <span className="item-sub">{ruta.conductor}</span>
+                </div>
+                <div className="item-right">
+                  <span className={`status status-${ruta.estado}`}>
+                    {getEstadoIcon(ruta.estado)}
+                    {ruta.estado === 'en-progreso' ? 'En curso' : 
+                     ruta.estado === 'pendiente' ? 'Pendiente' : 'Completada'}
+                  </span>
+                  <div className="progress-small">
+                    <div className="progress-bar" style={{width: `${ruta.progreso}%`}}></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tarjeta 2: Alertas (Compacta) */}
+        <div className="card compact">
+          <div className="card-header">
+            <FiBell /> <span>Alertas</span>
+            <span className="badge alert">{alertas.length}</span>
+          </div>
+          <div className="card-body">
+            {alertas.map(alerta => (
+              <div key={alerta.id} className={`alert-item alert-${alerta.tipo}`}>
+                <div className="alert-icon">
+                  <FiAlertTriangle />
+                </div>
+                <div className="alert-content">
+                  <p>{alerta.mensaje}</p>
+                  <small>{alerta.tiempo}</small>
+                </div>
+                <button className="btn-icon"><FiEye /></button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tarjeta 3: Acciones Rápidas (Compacta) */}
+        <div className="card compact">
+          <div className="card-header">
+            <FiMap /> <span>Acciones</span>
+          </div>
+          <div className="card-body grid-actions">
+            {acciones.map(accion => {
+              const Icon = accion.icon;
+              return (
+                <button key={accion.id} className="action-btn">
+                  <Icon />
+                  <span>{accion.nombre}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tarjeta 4: Estadísticas (Compacta) */}
+        <div className="card compact">
+          <div className="card-header">
+            <FiBarChart2 /> <span>Estadísticas</span>
+          </div>
+          <div className="card-body">
+            <div className="stats-summary">
+              <div className="stat-circle">
+                <div className="circle" style={{
+                  background: `conic-gradient(#0F676C ${metricas.eficiencia * 3.6}deg, #eee 0deg)`
+                }}>
+                  <span>{metricas.eficiencia}%</span>
+                </div>
+                <p>Eficiencia General</p>
               </div>
             </div>
-          </div>
-
-          {/* Sección: Estado General */}
-          <div className="dashboard-card">
-            <h2 className="card-title">📊 Estado</h2>
-            <div className="card-content">
-              {/* Tabla de puntos */}
-              <div className="estado-section">
-                <h3 className="estado-subtitle">Puntos por Ruta</h3>
-                <table className="estado-table">
-                  <thead>
-                    <tr>
-                      <th>Ruta</th>
-                      <th>Incompletos</th>
-                      <th>Completados</th>
+            
+            <div className="stats-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ruta</th>
+                    <th>✓</th>
+                    <th>✗</th>
+                    <th>%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {estadisticas.map(stat => (
+                    <tr key={stat.ruta}>
+                      <td><strong>{stat.ruta}</strong></td>
+                      <td className="success">{stat.completados}</td>
+                      <td className="warning">{stat.pendientes}</td>
+                      <td>
+                        <div className="efficiency-bar">
+                          <div style={{width: `${stat.eficiencia}%`}}></div>
+                          <span>{stat.eficiencia}%</span>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {estadisticas.map((stat) => (
-                      <tr key={stat.ruta}>
-                        <td className="ruta-cell">{stat.ruta}</td>
-                        <td className="incompletos-cell">{stat.incompletos}</td>
-                        <td className="completados-cell">{stat.completados}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Detalles de RUTA 01 */}
-              <div className="ruta-detalle">
-                <div className="detalle-item">
-                  <h4 className="detalle-title">Puntos Pendientes</h4>
-                  <div className="detalle-contenido">
-                    <span className="detalle-ruta">RUTA 01</span>
-                    <span className="detalle-valor">10</span>
-                  </div>
-                </div>
-                
-                <div className="detalle-item">
-                  <h4 className="detalle-title">Demoras RUTA 01</h4>
-                  <div className="detalle-contenido">
-                    <span className="detalle-ruta">Minutos promedio</span>
-                    <span className="detalle-valor demora">5</span>
-                  </div>
-                </div>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+
       </div>
 
-      {/* Footer del dashboard */}
-      <div className="dashboard-footer">
-        <p>Sistema de Gestión de Recolección - Versión 1.0</p>
-      </div>
+      {/* Footer Minimalista */}
+      <footer className="dashboard-footer">
+        <div className="footer-content">
+          <FiShield />
+          <span>Sistema de Recolección v2.0 • Última actualización: {
+            lastUpdate.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'})
+          }</span>
+        </div>
+      </footer>
     </div>
   );
 }

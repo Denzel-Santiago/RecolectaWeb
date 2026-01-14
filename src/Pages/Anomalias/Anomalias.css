@@ -1,0 +1,156 @@
+/* CONTENEDOR GENERAL */
+.anomalias-container {
+  background-color: #116b6f;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* PANEL */
+.anomalias-panel {
+  background-color: #bcdcdc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.anomalias-title {
+  text-align: center;
+  color: #0f3f43;
+  margin-bottom: 20px;
+}
+
+/* FILTROS */
+.anomalias-filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.anomalias-filtros select,
+.anomalias-filtros input {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* TABLA */
+.anomalias-tabla table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.anomalias-tabla th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #f6a609;
+}
+
+.anomalias-tabla td {
+  padding: 10px;
+  border-bottom: 1px solid #f6a609;
+}
+
+/* ESTADOS */
+.estado {
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.estado-completado { background-color: #2ecc71; }
+.estado-en-proceso { background-color: #f1c40f; color: #1f3d3a; }
+.estado-retrasado { background-color: #e74c3c; }
+.estado-pendiente { background-color: #bdc3c7; color: #1f3d3a; }
+
+/* PRIORIDAD */
+.prioridad {
+  font-weight: bold;
+}
+
+.prioridad-crítica { color: #e74c3c; }
+.prioridad-media { color: #f39c12; }
+.prioridad-baja { color: #27ae60; }
+
+/* BOTONES */
+.btn-ver {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  justify-content: flex-end;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background-color: #ffffff;
+  width: 380px;
+  height: 100%;
+  padding: 20px;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal {
+  transform: translateX(0);
+}
+
+
+
+.modal-title {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.modal-subtitle {
+  margin-bottom: 15px;
+}
+
+.modal-info select {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.modal-historial {
+  margin-top: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-registrar {
+  background-color: #116b6f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.btn-cerrar {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
