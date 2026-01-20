@@ -8,13 +8,10 @@ import {
   FiAlertTriangle,
   FiPauseCircle,
   FiEye,
-  FiFilter,
   FiSearch,
   FiDownload,
-  FiNavigation,
   FiCalendar,
   FiTruck,
-  FiBarChart2
 } from 'react-icons/fi';
 
 export default function EstadoRuta() {
@@ -157,234 +154,201 @@ export default function EstadoRuta() {
 
   return (
     <div className="estado-ruta-container">
-      {/* Header con estadísticas */}
-      <header className="estado-ruta-header">
-        <div className="header-content">
-          <div className="header-title">
-            <h1>Estado por Ruta</h1>
-            <p className="subtitle">Seguimiento en tiempo real de puntos de recolección</p>
-          </div>
-          
-          <div className="header-stats">
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(15, 103, 108, 0.2)' }}>
-                <FiMapPin />
-              </div>
-              <div>
-                <span className="stat-value">{estadisticas.total}</span>
-                <span className="stat-label">Puntos totales</span>
-              </div>
+      <div className="estado-ruta">
+        {/* Header con estadísticas */}
+        <header className="estado-ruta-header">
+          <div className="estado-ruta header-content">
+            <div className="estado-ruta header-title">
+              <h1>Estado por Ruta</h1>
+              <p className="estado-ruta subtitle">Seguimiento en tiempo real de puntos de recolección</p>
             </div>
             
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(46, 204, 113, 0.2)' }}>
+            <div className="estado-ruta header-stats">
+              <div className="estado-ruta stat-card">
+                <div className="estado-ruta stat-icon" style={{ backgroundColor: 'rgba(238, 244, 245, 0.85)' }}>
+                  <FiMapPin />
+                </div>
+                <div>
+                  <span className="estado-ruta stat-value">{estadisticas.total}</span>
+                  <span className="estado-ruta stat-label">Puntos totales</span>
+                </div>
+              </div>
+              
+              <div className="estado-ruta stat-card">
+                <div className="estado-ruta stat-icon" style={{ backgroundColor: 'rgba(15, 236, 107, 0.94)' }}>
+                  <FiCheckCircle />
+                </div>
+                <div>
+                  <span className="estado-ruta stat-value">{estadisticas.completados}</span>
+                  <span className="estado-ruta stat-label">Completados</span>
+                </div>
+              </div>
+              
+              <div className="estado-ruta stat-card">
+                <div className="estado-ruta stat-icon" style={{ backgroundColor: 'rgba(192, 241, 15, 0.9)' }}>
+                  <FiClock />
+                </div>
+                <div>
+                  <span className="estado-ruta stat-value">{estadisticas.enProceso}</span>
+                  <span className="estado-ruta stat-label">En proceso</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Panel de controles */}
+        <div className="estado-ruta controles-panel">
+          <div className="estado-ruta controles-left">
+            <div className="estado-ruta ruta-selector">
+              <label className="estado-ruta selector-label">
+                <FiTruck />
+                <span>Seleccionar ruta:</span>
+              </label>
+              <select 
+                className="estado-ruta selector-input"
+                value={selectedRuta}
+                onChange={(e) => setSelectedRuta(e.target.value)}
+              >
+                {rutasDisponibles.map(ruta => (
+                  <option key={ruta} value={ruta}>{ruta}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="estado-ruta filtros-rapidos">
+              <button className="estado-ruta filtro-btn estado-ruta active">
+                <span>Todos los puntos</span>
+              </button>
+              <button className="estado-ruta filtro-btn">
                 <FiCheckCircle />
-              </div>
-              <div>
-                <span className="stat-value">{estadisticas.completados}</span>
-                <span className="stat-label">Completados</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(241, 196, 15, 0.2)' }}>
+                <span>Solo completados</span>
+              </button>
+              <button className="estado-ruta filtro-btn">
                 <FiClock />
-              </div>
-              <div>
-                <span className="stat-value">{estadisticas.enProceso}</span>
-                <span className="stat-label">En proceso</span>
-              </div>
+                <span>En proceso</span>
+              </button>
+              <button className="estado-ruta filtro-btn">
+                <FiAlertTriangle />
+                <span>Solo retrasados</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="estado-ruta controles-right">
+            <div className="estado-ruta search-container">
+              <FiSearch className="estado-ruta search-icon" />
+              <input
+                type="text"
+                placeholder="Buscar punto, dirección o barrio..."
+                className="estado-ruta search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
             
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(52, 152, 219, 0.2)' }}>
-                <FiBarChart2 />
-              </div>
-              <div>
-                <span className="stat-value">{estadisticas.kilosTotal}</span>
-                <span className="stat-label">Kg recolectados</span>
-              </div>
+            <button className="estado-ruta action-btn">
+              <FiDownload />
+              <span>Exportar</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Tabla de puntos */}
+        <div className="estado-ruta table-container">
+          <div className="estado-ruta table-header">
+            <div className="estado-ruta table-summary">
+              Mostrando {puntosFiltrados.length} puntos de {selectedRuta}
+            </div>
+            <div className="estado-ruta table-actions">
+              <FiCalendar className="estado-ruta action-icon" />
+              <span>Actualizado: Hoy 14:30</span>
             </div>
           </div>
-        </div>
-      </header>
 
-      {/* Panel de controles */}
-      <div className="controles-panel">
-        <div className="controles-left">
-          <div className="ruta-selector">
-            <label className="selector-label">
-              <FiTruck />
-              <span>Seleccionar ruta:</span>
-            </label>
-            <select 
-              className="selector-input"
-              value={selectedRuta}
-              onChange={(e) => setSelectedRuta(e.target.value)}
-            >
-              {rutasDisponibles.map(ruta => (
-                <option key={ruta} value={ruta}>{ruta}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filtros-rapidos">
-            <button className="filtro-btn active">
-              <span>Todos los puntos</span>
-            </button>
-            <button className="filtro-btn">
-              <FiCheckCircle />
-              <span>Solo completados</span>
-            </button>
-            <button className="filtro-btn">
-              <FiClock />
-              <span>En proceso</span>
-            </button>
-            <button className="filtro-btn">
-              <FiAlertTriangle />
-              <span>Solo retrasados</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="controles-right">
-          <div className="search-container">
-            <FiSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Buscar punto, dirección o barrio..."
-              className="search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          
-          <button className="action-btn">
-            <FiDownload />
-            <span>Exportar</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Tabla de puntos */}
-      <div className="table-container">
-        <div className="table-header">
-          <div className="table-summary">
-            Mostrando {puntosFiltrados.length} puntos de {selectedRuta}
-          </div>
-          <div className="table-actions">
-            <FiCalendar className="action-icon" />
-            <span>Actualizado: Hoy 14:30</span>
-          </div>
-        </div>
-
-        <div className="table-wrapper">
-          <table className="estado-ruta-table">
-            <thead>
-              <tr>
-                <th>Punto</th>
-                <th>Ubicación</th>
-                <th>Estado</th>
-                <th>Hora</th>
-                <th>Conductor/Vehiculo</th>
-                <th>Métricas</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {puntosFiltrados.map((punto) => (
-                <tr key={punto.id} className="table-row">
-                  <td className="punto-cell">
-                    <div className="punto-info">
-                      <div className="punto-codigo">{punto.codigo}</div>
-                      <div className="punto-nombre">{punto.nombre}</div>
-                    </div>
-                  </td>
-                  <td className="ubicacion-cell">
-                    <div className="ubicacion-info">
-                      <div className="direccion">
-                        <FiMapPin />
-                        <span>{punto.direccion}</span>
-                      </div>
-                      <div className="barrio">{punto.barrio}</div>
-                    </div>
-                  </td>
-                  <td className="estado-cell">
-                    <div className={`estado-badge estado-${punto.estado}`}>
-                      {getEstadoIcon(punto.estado)}
-                      <span>
-                        {punto.estado === 'completado' ? 'Completado' :
-                         punto.estado === 'en-proceso' ? 'En proceso' :
-                         punto.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="hora-cell">
-                    <div className="hora-info">
-                      <div className="hora">{punto.hora}</div>
-                      {punto.tiempo !== '--' && (
-                        <div className="tiempo">{punto.tiempo}</div>
-                      )}
-                    </div>
-                  </td>
-                  <td className="conductor-cell">
-                    <div className="conductor-info">
-                      <div className="conductor">{punto.conductor}</div>
-                      <div className="vehiculo">
-                        <FiTruck />
-                        <span>{punto.vehiculo}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="metricas-cell">
-                    <div className="metricas">
-                      <div className="metrica">
-                        <span className="metrica-label">Peso:</span>
-                        <span className="metrica-value">{punto.kilos} kg</span>
-                      </div>
-                      {punto.tiempo !== '--' && (
-                        <div className="metrica">
-                          <span className="metrica-label">Duración:</span>
-                          <span className="metrica-value">{punto.tiempo}</span>
-                        </div>
-                      )}
-                    </div>
-                  </td>
-                  <td className="acciones-cell">
-                    <button className="btn-detalles">
-                      <FiEye />
-                      <span>Detalles</span>
-                    </button>
-                    
-                  </td>
+          <div className="estado-ruta table-wrapper">
+            <table className="estado-ruta estado-ruta-table">
+              <thead>
+                <tr>
+                  <th>Punto</th>
+                  <th>Ubicación</th>
+                  <th>Estado</th>
+                  <th>Hora</th>
+                  <th>Conductor/Vehiculo</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {puntosFiltrados.map((punto) => (
+                  <tr key={punto.id} className="estado-ruta table-row">
+                    <td className="estado-ruta punto-cell">
+                      <div className="estado-ruta punto-info">
+                        <div className="estado-ruta punto-codigo">{punto.codigo}</div>
+                        <div className="estado-ruta punto-nombre">{punto.nombre}</div>
+                      </div>
+                    </td>
+                    <td className="estado-ruta ubicacion-cell">
+                      <div className="estado-ruta ubicacion-info">
+                        <div className="estado-ruta direccion">
+                          <FiMapPin />
+                          <span>{punto.direccion}</span>
+                        </div>
+                        <div className="estado-ruta barrio">{punto.barrio}</div>
+                      </div>
+                    </td>
+                    <td className="estado-ruta estado-cell">
+                      <div className={`estado-ruta estado-badge estado-ruta estado-${punto.estado}`}>
+                        {getEstadoIcon(punto.estado)}
+                        <span>
+                          {punto.estado === 'completado' ? 'Completado' :
+                           punto.estado === 'en-proceso' ? 'En proceso' :
+                           punto.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="estado-ruta hora-cell">
+                      <div className="estado-ruta hora-info">
+                        <div className="estado-ruta hora">{punto.hora}</div>
+                        {punto.tiempo !== '--' && (
+                          <div className="estado-ruta tiempo">{punto.tiempo}</div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="estado-ruta conductor-cell">
+                      <div className="estado-ruta conductor-info">
+                        <div className="estado-ruta conductor">{punto.conductor}</div>
+                        <div className="estado-ruta vehiculo">
+                          <FiTruck />
+                          <span>{punto.vehiculo}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="estado-ruta acciones-cell">
+                      <button className="estado-ruta btn-detalles">
+                        <FiEye />
+                        <span>Detalles</span>
+                      </button>
+                      
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        {/* Resumen de ruta */}
-        <div className="ruta-resumen">
-          <div className="resumen-item">
-            <h4>Resumen de {selectedRuta}</h4>
-            <div className="resumen-stats">
-              <div className="resumen-stat">
-                <span className="stat-num">{estadisticas.completados}</span>
-                <span className="stat-label">Completados</span>
-              </div>
-              <div className="resumen-stat">
-                <span className="stat-num">{estadisticas.pendientes}</span>
-                <span className="stat-label">Pendientes</span>
-              </div>
-              <div className="resumen-stat">
-                <span className="stat-num">{estadisticas.kilosTotal} kg</span>
-                <span className="stat-label">Recolectado</span>
-              </div>
-              <div className="resumen-stat">
-                <span className="stat-num">
-                  {Math.round((estadisticas.completados / estadisticas.total) * 100)}%
-                </span>
-                <span className="stat-label">Progreso</span>
+          {/* Resumen de ruta */}
+          <div className="estado-ruta ruta-resumen">
+            <div className="estado-ruta resumen-item">
+              <h4>Resumen de {selectedRuta}</h4>
+              <div className="estado-ruta resumen-stats">
+                <div className="estado-ruta resumen-stat">
+                  <span className="estado-ruta stat-num">{estadisticas.completados}</span>
+                  <span className="estado-ruta stat-label">Completados</span>
+                </div>
+                <div className="estado-ruta resumen-stat">
+                  <span className="estado-ruta stat-num">{estadisticas.pendientes}</span>
+                  <span className="estado-ruta stat-label">Pendientes</span>
+                </div>
               </div>
             </div>
           </div>

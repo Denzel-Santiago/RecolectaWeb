@@ -231,403 +231,405 @@ export default function Anomalias() {
 
   return (
     <div className="anomalias-page">
-      {/* Header con estadísticas */}
-      <header className="anomalias-header">
-        <div className="anomalias-header-content">
-          <div className="anomalias-header-title">
-            <h1>Gestión de Anomalías</h1>
-            <p className="anomalias-subtitle">Reportes y seguimiento de incidentes en puntos de recolección</p>
+      <div className="anomalias">
+        {/* Header con estadísticas */}
+        <header className="anomalias-header">
+          <div className="anomalias header-content">
+            <div className="anomalias header-title">
+              <h1>Gestión de Anomalías</h1>
+              <p className="anomalias subtitle">Reportes y seguimiento de incidentes en puntos de recolección</p>
+            </div>
+            
+            <div className="anomalias stats-container">
+              <div className="anomalias stat-card">
+                <div className="anomalias stat-icon-1">
+                  <FiAlertTriangle />
+                </div>
+                <div>
+                  <span className="anomalias stat-value">{estadisticas.total}</span>
+                  <span className="anomalias stat-label">Anomalías totales</span>
+                </div>
+              </div>
+              
+              <div className="anomalias stat-card">
+                <div className="anomalias stat-icon-2">
+                  <FiAlertCircle />
+                </div>
+                <div>
+                  <span className="anomalias stat-value">{estadisticas.criticas}</span>
+                  <span className="anomalias stat-label">Críticas activas</span>
+                </div>
+              </div>
+              
+              <div className="anomalias stat-card">
+                <div className="anomalias stat-icon-3">
+                  <FiClock />
+                </div>
+                <div>
+                  <span className="anomalias stat-value">{estadisticas.enProceso}</span>
+                  <span className="anomalias stat-label">En proceso</span>
+                </div>
+              </div>
+              
+              <div className="anomalias stat-card">
+                <div className="anomalias stat-icon-4">
+                  <FiCheckCircle />
+                </div>
+                <div>
+                  <span className="anomalias stat-value">{estadisticas.resueltas}</span>
+                  <span className="anomalias stat-label">Resueltas</span>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <div className="anomalias-stats">
-            <div className="anomalias-stat-card">
-              <div className="anomalias-stat-icon">
+        </header>
+
+        {/* Panel de controles */}
+        <div className="anomalias controls-container">
+          <div className="anomalias search-container">
+            <FiSearch className="anomalias search-icon" />
+            <input
+              type="text"
+              placeholder="Buscar por punto, descripción o dirección..."
+              className="anomalias search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
+          <div className="anomalias filters-row">
+            <div className="anomalias filter-group">
+              <label className="anomalias filter-label">
+                <FiFilter />
+                <span>Estado:</span>
+              </label>
+              <select 
+                className="anomalias filter-select"
+                value={selectedEstado}
+                onChange={(e) => setSelectedEstado(e.target.value)}
+              >
+                <option value="todos">Todos los estados</option>
+                <option value="completado">Completado</option>
+                <option value="en-proceso">En proceso</option>
+                <option value="retrasado">Retrasado</option>
+                <option value="pendiente">Pendiente</option>
+              </select>
+            </div>
+
+            <div className="anomalias filter-group">
+              <label className="anomalias filter-label">
                 <FiAlertTriangle />
-              </div>
-              <div>
-                <span className="anomalias-stat-value">{estadisticas.total}</span>
-                <span className="anomalias-stat-label">Anomalías totales</span>
-              </div>
+                <span>Prioridad:</span>
+              </label>
+              <select 
+                className="anomalias filter-select"
+                value={selectedPrioridad}
+                onChange={(e) => setSelectedPrioridad(e.target.value)}
+              >
+                <option value="todos">Todas las prioridades</option>
+                <option value="critica">Crítica</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+              </select>
             </div>
-            
-            <div className="anomalias-stat-card">
-              <div className="anomalias-stat-icon">
-                <FiAlertCircle />
-              </div>
-              <div>
-                <span className="anomalias-stat-value">{estadisticas.criticas}</span>
-                <span className="anomalias-stat-label">Críticas activas</span>
-              </div>
-            </div>
-            
-            <div className="anomalias-stat-card">
-              <div className="anomalias-stat-icon">
-                <FiClock />
-              </div>
-              <div>
-                <span className="anomalias-stat-value">{estadisticas.enProceso}</span>
-                <span className="anomalias-stat-label">En proceso</span>
-              </div>
-            </div>
-            
-            <div className="anomalias-stat-card">
-              <div className="anomalias-stat-icon">
-                <FiCheckCircle />
-              </div>
-              <div>
-                <span className="anomalias-stat-value">{estadisticas.resueltas}</span>
-                <span className="anomalias-stat-label">Resueltas</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
 
-      {/* Panel de controles */}
-      <div className="anomalias-controls">
-        <div className="anomalias-search-container">
-          <FiSearch className="anomalias-search-icon" />
-          <input
-            type="text"
-            placeholder="Buscar por punto, descripción o dirección..."
-            className="anomalias-search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        <div className="anomalias-filters">
-          <div className="anomalias-filter-group">
-            <label className="anomalias-filter-label">
-              <FiFilter />
-              <span>Estado:</span>
-            </label>
-            <select 
-              className="anomalias-filter-select"
-              value={selectedEstado}
-              onChange={(e) => setSelectedEstado(e.target.value)}
-            >
-              <option value="todos">Todos los estados</option>
-              <option value="completado">Completado</option>
-              <option value="en-proceso">En proceso</option>
-              <option value="retrasado">Retrasado</option>
-              <option value="pendiente">Pendiente</option>
-            </select>
-          </div>
-
-          <div className="anomalias-filter-group">
-            <label className="anomalias-filter-label">
-              <FiAlertTriangle />
-              <span>Prioridad:</span>
-            </label>
-            <select 
-              className="anomalias-filter-select"
-              value={selectedPrioridad}
-              onChange={(e) => setSelectedPrioridad(e.target.value)}
-            >
-              <option value="todos">Todas las prioridades</option>
-              <option value="critica">Crítica</option>
-              <option value="media">Media</option>
-              <option value="baja">Baja</option>
-            </select>
-          </div>
-
-          <button className="anomalias-action-btn">
-            <FiArchive />
-            <span>Exportar reporte</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Tabla de anomalías */}
-      <div className="anomalias-table-container">
-        <div className="anomalias-table-header">
-          <div className="anomalias-table-summary">
-            Mostrando {anomaliasFiltradas.length} de {anomalias.length} anomalías
-          </div>
-          <div className="anomalias-table-actions">
-            <FiCalendar />
-            <span>Última actualización: Hoy 15:45</span>
-          </div>
-        </div>
-
-        <div className="anomalias-table-wrapper">
-          <table className="anomalias-table">
-            <thead>
-              <tr>
-                <th>Punto</th>
-                <th>Descripción</th>
-                <th>Fecha reporte</th>
-                <th>Estado</th>
-                <th>Prioridad</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {anomaliasFiltradas.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <div className="anomalias-punto-info">
-                      <div className="anomalias-punto-codigo">{item.punto}</div>
-                      <div className="anomalias-punto-nombre">{item.nombre}</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="anomalias-descripcion">
-                      {item.descripcion}
-                      <div style={{ fontSize: '12px', opacity: 0.7, marginTop: '4px' }}>
-                        <FiUser style={{ marginRight: '4px' }} />
-                        {item.reportadoPor}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <div>{formatFecha(item.fecha)}</div>
-                      <div style={{ fontSize: '12px', opacity: 0.7 }}>{item.hora}</div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={`anomalias-estado anomalias-estado-${item.estado}`}>
-                      {getEstadoIcon(item.estado)}
-                      <span>
-                        {item.estado === 'completado' ? 'Completado' :
-                         item.estado === 'en-proceso' ? 'En proceso' :
-                         item.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
-                      </span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={`anomalias-prioridad anomalias-prioridad-${item.prioridad}`}>
-                      <div style={{ 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%',
-                        backgroundColor: getPrioridadColor(item.prioridad)
-                      }}></div>
-                      <span>
-                        {item.prioridad === 'critica' ? 'Crítica' :
-                         item.prioridad === 'media' ? 'Media' : 'Baja'}
-                      </span>
-                    </div>
-                  </td>
-                  <td>
-                    <button 
-                      className="anomalias-btn-detalles"
-                      onClick={() => handleOpenModal(item)}
-                    >
-                      <FiEye />
-                      <span>Ver</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Resumen de anomalías */}
-        <div className="anomalias-resumen">
-          <h4>Resumen por prioridad</h4>
-          <div className="anomalias-resumen-stats">
-            <div className="anomalias-resumen-stat">
-              <span className="anomalias-resumen-num" style={{ color: '#e74c3c' }}>{estadisticas.criticas}</span>
-              <span className="anomalias-resumen-label">Críticas</span>
-            </div>
-            <div className="anomalias-resumen-stat">
-              <span className="anomalias-resumen-num" style={{ color: '#f39c12' }}>
-                {anomalias.filter(a => a.prioridad === 'media').length}
-              </span>
-              <span className="anomalias-resumen-label">Media</span>
-            </div>
-            <div className="anomalias-resumen-stat">
-              <span className="anomalias-resumen-num" style={{ color: '#27ae60' }}>
-                {anomalias.filter(a => a.prioridad === 'baja').length}
-              </span>
-              <span className="anomalias-resumen-label">Baja</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal */}
-      <div className={`anomalias-modal-overlay ${mostrarModal ? 'show' : ''}`}>
-        <div className="anomalias-modal" onClick={(e) => e.stopPropagation()}>
-          <div className="anomalias-modal-header">
-            <h2 className="anomalias-modal-title">
-              {getTipoIcon(selectedAnomalia?.tipo || 'infraestructura')}
-              <span>Detalles de Anomalía</span>
-            </h2>
-            <button 
-              className="anomalias-modal-close"
-              onClick={() => setMostrarModal(false)}
-            >
-              <FiX />
+            <button className="anomalias action-btn">
+              <FiArchive />
+              <span>Exportar reporte</span>
             </button>
           </div>
+        </div>
 
-          {selectedAnomalia && (
-            <>
-              <div className="anomalias-modal-info">
-                <div>
-                  <div className="anomalias-modal-label">
-                    <FiMapPin />
-                    <span>Punto:</span>
-                  </div>
-                  <div>{selectedAnomalia.punto} - {selectedAnomalia.nombre}</div>
-                </div>
-                
-                <div>
-                  <div className="anomalias-modal-label">
-                    <FiCalendar />
-                    <span>Fecha reporte:</span>
-                  </div>
-                  <div>{formatFecha(selectedAnomalia.fecha)} {selectedAnomalia.hora}</div>
-                </div>
-                
-                <div>
-                  <div className="anomalias-modal-label">
-                    <FiUser />
-                    <span>Reportado por:</span>
-                  </div>
-                  <div>{selectedAnomalia.reportadoPor}</div>
-                </div>
-                
-                <div>
-                  <div className="anomalias-modal-label">
-                    <FiUsers />
-                    <span>Asignado a:</span>
-                  </div>
-                  <div>{selectedAnomalia.asignadoA}</div>
-                </div>
+        {/* Tabla de anomalías */}
+        <div className="anomalias table-container">
+          <div className="anomalias table-header">
+            <div className="anomalias table-summary">
+              Mostrando {anomaliasFiltradas.length} de {anomalias.length} anomalías
+            </div>
+            <div className="anomalias table-actions">
+              <FiCalendar />
+              <span>Última actualización: Hoy 15:45</span>
+            </div>
+          </div>
+
+          <div className="anomalias table-wrapper">
+            <table className="anomalias anomalias-table">
+              <thead>
+                <tr>
+                  <th>Punto</th>
+                  <th>Descripción</th>
+                  <th>Fecha reporte</th>
+                  <th>Estado</th>
+                  <th>Prioridad</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {anomaliasFiltradas.map((item) => (
+                  <tr key={item.id} className="anomalias table-row">
+                    <td>
+                      <div className="anomalias punto-info">
+                        <div className="anomalias punto-codigo">{item.punto}</div>
+                        <div className="anomalias punto-nombre">{item.nombre}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="anomalias descripcion">
+                        {item.descripcion}
+                        <div style={{ fontSize: '12px', opacity: 0.7, marginTop: '4px' }}>
+                          <FiUser style={{ marginRight: '4px' }} />
+                          {item.reportadoPor}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <div>{formatFecha(item.fecha)}</div>
+                        <div style={{ fontSize: '12px', opacity: 0.7 }}>{item.hora}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={`anomalias estado-badge anomalias estado-${item.estado}`}>
+                        {getEstadoIcon(item.estado)}
+                        <span>
+                          {item.estado === 'completado' ? 'Completado' :
+                           item.estado === 'en-proceso' ? 'En proceso' :
+                           item.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={`anomalias prioridad-badge anomalias prioridad-${item.prioridad}`}>
+                        <div style={{ 
+                          width: '8px', 
+                          height: '8px', 
+                          borderRadius: '50%',
+                          backgroundColor: getPrioridadColor(item.prioridad)
+                        }}></div>
+                        <span>
+                          {item.prioridad === 'critica' ? 'Crítica' :
+                           item.prioridad === 'media' ? 'Media' : 'Baja'}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <button 
+                        className="anomalias btn-detalles"
+                        onClick={() => handleOpenModal(item)}
+                      >
+                        <FiEye />
+                        <span>Ver</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Resumen de anomalías */}
+          <div className="anomalias resumen-container">
+            <h4>Resumen por prioridad</h4>
+            <div className="anomalias resumen-stats">
+              <div className="anomalias resumen-stat">
+                <span className="anomalias resumen-num" style={{ color: '#e74c3c' }}>{estadisticas.criticas}</span>
+                <span className="anomalias resumen-label">Críticas</span>
               </div>
-
-              <div className="anomalias-modal-section">
-                <label className="anomalias-modal-label">
-                  <FiFileText />
-                  <span>Descripción detallada</span>
-                </label>
-                <div className="anomalias-modal-textarea" style={{ minHeight: '80px' }}>
-                  {selectedAnomalia.descripcion}
-                </div>
+              <div className="anomalias resumen-stat">
+                <span className="anomalias resumen-num" style={{ color: '#f39c12' }}>
+                  {anomalias.filter(a => a.prioridad === 'media').length}
+                </span>
+                <span className="anomalias resumen-label">Media</span>
               </div>
+              <div className="anomalias resumen-stat">
+                <span className="anomalias resumen-num" style={{ color: '#27ae60' }}>
+                  {anomalias.filter(a => a.prioridad === 'baja').length}
+                </span>
+                <span className="anomalias resumen-label">Baja</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              <div className="anomalias-modal-section">
-                <label className="anomalias-modal-label">Estado y métricas</label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+        {/* Modal */}
+        <div className={`anomalias modal-overlay ${mostrarModal ? 'show' : ''}`}>
+          <div className="anomalias modal" onClick={(e) => e.stopPropagation()}>
+            <div className="anomalias modal-header">
+              <h2 className="anomalias modal-title">
+                {getTipoIcon(selectedAnomalia?.tipo || 'infraestructura')}
+                <span>Detalles de Anomalía</span>
+              </h2>
+              <button 
+                className="anomalias modal-close"
+                onClick={() => setMostrarModal(false)}
+              >
+                <FiX />
+              </button>
+            </div>
+
+            {selectedAnomalia && (
+              <>
+                <div className="anomalias modal-info">
                   <div>
-                    <div style={{ fontSize: '13px', opacity: 0.7 }}>Estado actual:</div>
-                    <div className={`anomalias-estado anomalias-estado-${selectedAnomalia.estado}`}>
-                      {getEstadoIcon(selectedAnomalia.estado)}
-                      <span>
-                        {selectedAnomalia.estado === 'completado' ? 'Completado' :
-                         selectedAnomalia.estado === 'en-proceso' ? 'En proceso' :
-                         selectedAnomalia.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
-                      </span>
+                    <div className="anomalias modal-label">
+                      <FiMapPin />
+                      <span>Punto:</span>
+                    </div>
+                    <div>{selectedAnomalia.punto} - {selectedAnomalia.nombre}</div>
+                  </div>
+                  
+                  <div>
+                    <div className="anomalias modal-label">
+                      <FiCalendar />
+                      <span>Fecha reporte:</span>
+                    </div>
+                    <div>{formatFecha(selectedAnomalia.fecha)} {selectedAnomalia.hora}</div>
+                  </div>
+                  
+                  <div>
+                    <div className="anomalias modal-label">
+                      <FiUser />
+                      <span>Reportado por:</span>
+                    </div>
+                    <div>{selectedAnomalia.reportadoPor}</div>
+                  </div>
+                  
+                  <div>
+                    <div className="anomalias modal-label">
+                      <FiUsers />
+                      <span>Asignado a:</span>
+                    </div>
+                    <div>{selectedAnomalia.asignadoA}</div>
+                  </div>
+                </div>
+
+                <div className="anomalias modal-section">
+                  <label className="anomalias modal-label">
+                    <FiFileText />
+                    <span>Descripción detallada</span>
+                  </label>
+                  <div className="anomalias modal-textarea" style={{ minHeight: '80px' }}>
+                    {selectedAnomalia.descripcion}
+                  </div>
+                </div>
+
+                <div className="anomalias modal-section">
+                  <label className="anomalias modal-label">Estado y métricas</label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div>
+                      <div style={{ fontSize: '13px', opacity: 0.7 }}>Estado actual:</div>
+                      <div className={`anomalias estado-badge anomalias estado-${selectedAnomalia.estado}`}>
+                        {getEstadoIcon(selectedAnomalia.estado)}
+                        <span>
+                          {selectedAnomalia.estado === 'completado' ? 'Completado' :
+                           selectedAnomalia.estado === 'en-proceso' ? 'En proceso' :
+                           selectedAnomalia.estado === 'retrasado' ? 'Retrasado' : 'Pendiente'}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div style={{ fontSize: '13px', opacity: 0.7 }}>Prioridad:</div>
+                      <div className={`anomalias prioridad-badge anomalias prioridad-${selectedAnomalia.prioridad}`}>
+                        <div style={{ 
+                          width: '8px', 
+                          height: '8px', 
+                          borderRadius: '50%',
+                          backgroundColor: getPrioridadColor(selectedAnomalia.prioridad)
+                        }}></div>
+                        <span>
+                          {selectedAnomalia.prioridad === 'critica' ? 'Crítica' :
+                           selectedAnomalia.prioridad === 'media' ? 'Media' : 'Baja'}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div style={{ fontSize: '13px', opacity: 0.7 }}>Kg afectados:</div>
+                      <div style={{ fontSize: '16px', fontWeight: '600' }}>{selectedAnomalia.kilosAfetados} kg</div>
+                    </div>
+                    
+                    <div>
+                      <div style={{ fontSize: '13px', opacity: 0.7 }}>Tiempo resolución:</div>
+                      <div style={{ fontSize: '16px', fontWeight: '600' }}>{selectedAnomalia.tiempoResolucion}</div>
                     </div>
                   </div>
-                  
-                  <div>
-                    <div style={{ fontSize: '13px', opacity: 0.7 }}>Prioridad:</div>
-                    <div className={`anomalias-prioridad anomalias-prioridad-${selectedAnomalia.prioridad}`}>
-                      <div style={{ 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%',
-                        backgroundColor: getPrioridadColor(selectedAnomalia.prioridad)
-                      }}></div>
-                      <span>
-                        {selectedAnomalia.prioridad === 'critica' ? 'Crítica' :
-                         selectedAnomalia.prioridad === 'media' ? 'Media' : 'Baja'}
-                      </span>
+                </div>
+
+                <div className="anomalias modal-section">
+                  <label className="anomalias modal-label">
+                    <FiMessageSquare />
+                    <span>Actualizar estado</span>
+                  </label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <select className="anomalias modal-select">
+                      <option value="pendiente">Pendiente</option>
+                      <option value="en-proceso">En proceso</option>
+                      <option value="completado">Completado</option>
+                      <option value="retrasado">Retrasado</option>
+                    </select>
+                    
+                    <select className="anomalias modal-select">
+                      <option value="">Asignar a equipo...</option>
+                      <option value="mantenimiento">Equipo Mantenimiento</option>
+                      <option value="limpieza">Equipo Limpieza</option>
+                      <option value="logistica">Equipo Logística</option>
+                      <option value="sanitario">Equipo Sanitario</option>
+                      <option value="urgencias">Equipo Urgencias</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="anomalias modal-section">
+                  <label className="anomalias modal-label">
+                    <FiMessageSquare />
+                    <span>Historial de acciones</span>
+                  </label>
+                  <div className="anomalias modal-historial">
+                    <div className="anomalias historial-item">
+                      <div className="anomalias historial-fecha">2026-02-19 08:30</div>
+                      <div className="anomalias historial-desc">Reporte creado por {selectedAnomalia.reportadoPor}</div>
+                    </div>
+                    <div className="anomalias historial-item">
+                      <div className="anomalias historial-fecha">2026-02-19 10:15</div>
+                      <div className="anomalias historial-desc">Asignado a {selectedAnomalia.asignadoA}</div>
+                    </div>
+                    <div className="anomalias historial-item">
+                      <div className="anomalias historial-fecha">2026-02-20 14:30</div>
+                      <div className="anomalias historial-desc">Estado cambiado a "En proceso"</div>
                     </div>
                   </div>
-                  
-                  <div>
-                    <div style={{ fontSize: '13px', opacity: 0.7 }}>Kg afectados:</div>
-                    <div style={{ fontSize: '16px', fontWeight: '600' }}>{selectedAnomalia.kilosAfetados} kg</div>
-                  </div>
-                  
-                  <div>
-                    <div style={{ fontSize: '13px', opacity: 0.7 }}>Tiempo resolución:</div>
-                    <div style={{ fontSize: '16px', fontWeight: '600' }}>{selectedAnomalia.tiempoResolucion}</div>
-                  </div>
                 </div>
-              </div>
 
-              <div className="anomalias-modal-section">
-                <label className="anomalias-modal-label">
-                  <FiMessageSquare />
-                  <span>Actualizar estado</span>
-                </label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <select className="anomalias-modal-select">
-                    <option value="pendiente">Pendiente</option>
-                    <option value="en-proceso">En proceso</option>
-                    <option value="completado">Completado</option>
-                    <option value="retrasado">Retrasado</option>
-                  </select>
-                  
-                  <select className="anomalias-modal-select">
-                    <option value="">Asignar a equipo...</option>
-                    <option value="mantenimiento">Equipo Mantenimiento</option>
-                    <option value="limpieza">Equipo Limpieza</option>
-                    <option value="logistica">Equipo Logística</option>
-                    <option value="sanitario">Equipo Sanitario</option>
-                    <option value="urgencias">Equipo Urgencias</option>
-                  </select>
+                <div className="anomalias modal-section">
+                  <label className="anomalias modal-label">Comentarios adicionales</label>
+                  <textarea 
+                    className="anomalias modal-textarea"
+                    placeholder="Agregue observaciones o próximos pasos..."
+                    rows={3}
+                  />
                 </div>
-              </div>
 
-              <div className="anomalias-modal-section">
-                <label className="anomalias-modal-label">
-                  <FiMessageSquare />
-                  <span>Historial de acciones</span>
-                </label>
-                <div className="anomalias-modal-historial">
-                  <div className="anomalias-historial-item">
-                    <div className="anomalias-historial-fecha">2026-02-19 08:30</div>
-                    <div className="anomalias-historial-desc">Reporte creado por {selectedAnomalia.reportadoPor}</div>
-                  </div>
-                  <div className="anomalias-historial-item">
-                    <div className="anomalias-historial-fecha">2026-02-19 10:15</div>
-                    <div className="anomalias-historial-desc">Asignado a {selectedAnomalia.asignadoA}</div>
-                  </div>
-                  <div className="anomalias-historial-item">
-                    <div className="anomalias-historial-fecha">2026-02-20 14:30</div>
-                    <div className="anomalias-historial-desc">Estado cambiado a "En proceso"</div>
-                  </div>
+                <div className="anomalias modal-footer">
+                  <button className="anomalias modal-btn anomalias modal-btn-secondary">
+                    <FiMessageSquare />
+                    <span>Comentar</span>
+                  </button>
+                  <button className="anomalias modal-btn anomalias modal-btn-primary">
+                    <FiSend />
+                    <span>Guardar</span>
+                  </button>
+                  <button 
+                    className="anomalias modal-btn anomalias modal-btn-success"
+                    onClick={() => setMostrarModal(false)}
+                  >
+                    <FiCheckCircle />
+                    <span>Cerrar</span>
+                  </button>
                 </div>
-              </div>
-
-              <div className="anomalias-modal-section">
-                <label className="anomalias-modal-label">Comentarios adicionales</label>
-                <textarea 
-                  className="anomalias-modal-textarea"
-                  placeholder="Agregue observaciones o próximos pasos..."
-                  rows={3}
-                />
-              </div>
-
-              <div className="anomalias-modal-footer">
-                <button className="anomalias-modal-btn anomalias-modal-btn-secondary">
-                  <FiMessageSquare />
-                  <span>Comentar</span>
-                </button>
-                <button className="anomalias-modal-btn anomalias-modal-btn-primary">
-                  <FiSend />
-                  <span>Guardar</span>
-                </button>
-                <button 
-                  className="anomalias-modal-btn anomalias-modal-btn-success"
-                  onClick={() => setMostrarModal(false)}
-                >
-                  <FiCheckCircle />
-                  <span>Cerrar</span>
-                </button>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

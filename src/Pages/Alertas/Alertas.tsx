@@ -12,11 +12,10 @@ import {
   FiTool,
   FiFilter,
   FiSearch,
-  FiX
 } from 'react-icons/fi';
 
 export default function Alertas() {
-  const [alertas, setAlertas] = useState([
+  const [alertas] = useState([
     {
       id: 1,
       cantidad: 3,
@@ -118,11 +117,6 @@ export default function Alertas() {
     }
   };
 
-  const handleResolver = (id: number) => {
-    setAlertas(alertas.map(alerta => 
-      alerta.id === id ? { ...alerta, estado: 'resuelto' } : alerta
-    ));
-  };
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
@@ -139,45 +133,45 @@ export default function Alertas() {
   const puntosPendientes = alertas.reduce((total, alerta) => total + alerta.cantidad, 0);
 
   return (
-    <div className="alertas-container">
+    <div className="alertas alertas-container">
       {/* Sección 1: Header con estadísticas */}
       <header className="alertas-header">
-        <div className="header-content">
-          <div className="header-title">
+        <div className="alertas header-content">
+          <div className="alertas header-title">
             <h1>Alertas del Sistema</h1>
-            <p className="subtitle">Puntos de recolección no completados que requieren atención</p>
+            <p className="alertas subtitle">Puntos de recolección no completados que requieren atención</p>
           </div>
           
-          <div className="header-stats">
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(231, 76, 60, 0.2)', color: '#e74c3c' }}>
+          <div className="alertas header-stats">
+            <div className="alertas stat-card">
+              <div className="alertas stat-icon" style={{ backgroundColor: 'rgba(231, 76, 60, 0.2)', color: '#e74c3c' }}>
                 <FiAlertTriangle />
               </div>
               <div>
-                <span className="stat-value">{alertasPendientes}</span>
-                <span className="stat-label">Alertas activas</span>
+                <span className="alertas stat-value">{alertasPendientes}</span>
+                <span className="alertas stat-label">Alertas activas</span>
               </div>
             </div>
             
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(52, 152, 219, 0.2)', color: '#3498db' }}>
+            <div className="alertas stat-card">
+              <div className="alertas stat-icon" style={{ backgroundColor: 'rgba(52, 152, 219, 0.2)', color: '#3498db' }}>
                 <FiTruck />
               </div>
               <div>
-                <span className="stat-value">
+                <span className="alertas stat-value">
                   {[...new Set(alertas.filter(a => a.estado === 'pendiente').map(a => a.ruta))].length}
                 </span>
-                <span className="stat-label">Rutas afectadas</span>
+                <span className="alertas stat-label">Rutas afectadas</span>
               </div>
             </div>
             
-            <div className="stat-card">
-              <div className="stat-icon" style={{ backgroundColor: 'rgba(46, 204, 113, 0.2)', color: '#2ecc71' }}>
+            <div className="alertas stat-card">
+              <div className="alertas stat-icon" style={{ backgroundColor: 'rgba(46, 204, 113, 0.2)', color: '#2ecc71' }}>
                 <FiCheckCircle />
               </div>
               <div>
-                <span className="stat-value">{puntosPendientes}</span>
-                <span className="stat-label">Puntos pendientes</span>
+                <span className="alertas stat-value">{puntosPendientes}</span>
+                <span className="alertas stat-label">Puntos pendientes</span>
               </div>
             </div>
           </div>
@@ -185,50 +179,50 @@ export default function Alertas() {
       </header>
 
       {/* Sección 2: Filtros y búsqueda */}
-      <div className="filtros-container">
-        <div className="filtros-header">
-          <h3 className="filtros-title">Filtros de Alertas</h3>
-          <div className="table-search">
-            <FiSearch className="search-icon" />
+      <div className="alertas filtros-container">
+        <div className="alertas filtros-header">
+          <h3 className="alertas filtros-title">Filtros de Alertas</h3>
+          <div className="alertas table-search">
+            <FiSearch className="alertas search-icon" />
             <input 
               type="text" 
               placeholder="Buscar por ruta o motivo..."
-              className="search-input"
+              className="alertas search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="filtros-rapidos">
+        <div className="alertas filtros-rapidos">
           <button 
-            className={`quick-filter-btn ${activeFilter === 'todos' ? 'active' : ''}`}
+            className={`alertas quick-filter-btn ${activeFilter === 'todos' ? 'alertas active' : ''}`}
             onClick={() => handleFilterClick('todos')}
           >
             Todas las alertas
           </button>
           <button 
-            className={`quick-filter-btn ${activeFilter === 'pendiente' ? 'active' : ''}`}
+            className={`alertas quick-filter-btn ${activeFilter === 'pendiente' ? 'alertas active' : ''}`}
             onClick={() => handleFilterClick('pendiente')}
           >
             Solo pendientes
           </button>
         </div>
 
-        <div className="tipos-alerta">
-          <div className="tipo-item" style={{ borderLeftColor: '#e74c3c' }}>
+        <div className="alertas tipos-alerta">
+          <div className="alertas tipo-item" style={{ borderLeftColor: '#e74c3c' }}>
             <FiTool />
             <span>Fallas mecánicas</span>
           </div>
-          <div className="tipo-item" style={{ borderLeftColor: '#f39c12' }}>
+          <div className="alertas tipo-item" style={{ borderLeftColor: '#f39c12' }}>
             <FiAlertCircle />
             <span>Acceso bloqueado</span>
           </div>
-          <div className="tipo-item" style={{ borderLeftColor: '#3498db' }}>
+          <div className="alertas tipo-item" style={{ borderLeftColor: '#3498db' }}>
             <FiCloud />
             <span>Condiciones climáticas</span>
           </div>
-          <div className="tipo-item" style={{ borderLeftColor: '#9b59b6' }}>
+          <div className="alertas tipo-item" style={{ borderLeftColor: '#9b59b6' }}>
             <FiUserX />
             <span>Problemas de personal</span>
           </div>
@@ -236,19 +230,19 @@ export default function Alertas() {
       </div>
 
       {/* Sección 3: Tabla de alertas */}
-      <div className="table-container">
-        <div className="table-header">
-          <div className="table-summary">
+      <div className="alertas table-container">
+        <div className="alertas table-header">
+          <div className="alertas table-summary">
             Mostrando {alertasFiltradas.length} de {alertas.length} alertas
           </div>
-          <button className="btn-exportar">
+          <button className="alertas btn-exportar">
             <FiFilter />
             <span>Ordenar por prioridad</span>
           </button>
         </div>
 
-        <div className="table-wrapper">
-          <table className="alertas-table">
+        <div className="alertas table-wrapper">
+          <table className="alertas alertas-table">
             <thead>
               <tr>
                 <th>Tipo</th>
@@ -256,70 +250,57 @@ export default function Alertas() {
                 <th>Puntos afectados</th>
                 <th>Ruta y Vehículo</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+                
               </tr>
             </thead>
             <tbody>
               {alertasFiltradas.map((alerta) => (
-                <tr key={alerta.id} className={`table-row alerta-${alerta.estado}`}>
-                  <td className="tipo-cell">
-                    <div className="tipo-indicator" style={{ backgroundColor: getTipoColor(alerta.tipo) }}>
+                <tr key={alerta.id} className={`alertas table-row alerta-${alerta.estado}`}>
+                  <td className="alertas tipo-cell">
+                    <div className="alertas tipo-indicator" style={{ backgroundColor: getTipoColor(alerta.tipo) }}>
                       {getTipoIcon(alerta.tipo)}
                     </div>
                   </td>
-                  <td className="detalles-cell">
-                    <div className="detalles-info">
-                      <div className="motivo">{alerta.motivo}</div>
-                      <div className="fecha">{alerta.fecha}</div>
-                      <div className="conductor">
+                  <td className="alertas detalles-cell">
+                    <div className="alertas detalles-info">
+                      <div className="alertas motivo">{alerta.motivo}</div>
+                      <div className="alertas fecha">{alerta.fecha}</div>
+                      <div className="alertas conductor">
                         <FiUserX />
                         <span>{alerta.conductor}</span>
                       </div>
                     </div>
                   </td>
-                  <td className="puntos-cell">
-                    <div className="puntos-info">
-                      <div className="cantidad-badge">
-                        <span className="numero">{alerta.cantidad}</span>
-                        <span className="texto">puntos</span>
+                  <td className="alertas puntos-cell">
+                    <div className="alertas puntos-info">
+                      <div className="alertas cantidad-badge">
+                        <span className="alertas numero">{alerta.cantidad}</span>
+                        <span className="alertas texto">puntos</span>
                       </div>
-                      <div className="puntos-lista">
+                      <div className="alertas puntos-lista">
                         {alerta.puntos.slice(0, 2).map((punto, idx) => (
-                          <div key={idx} className="punto-item">{punto}</div>
+                          <div key={idx} className="alertas punto-item">{punto}</div>
                         ))}
                         {alerta.puntos.length > 2 && (
-                          <div className="punto-mas">+{alerta.puntos.length - 2} más</div>
+                          <div className="alertas punto-mas">+{alerta.puntos.length - 2} más</div>
                         )}
                       </div>
                     </div>
                   </td>
-                  <td className="ruta-cell">
-                    <div className="ruta-info">
-                      <div className="ruta-nombre">{alerta.ruta}</div>
-                      <div className="vehiculo-info">
+                  <td className="alertas ruta-cell">
+                    <div className="alertas ruta-info">
+                      <div className="alertas ruta-nombre">{alerta.ruta}</div>
+                      <div className="alertas vehiculo-info">
                         <FiTruck />
                         <span>{alerta.vehiculo}</span>
                       </div>
                     </div>
                   </td>
-                  <td className="estado-cell">
-                    <div className={`estado-badge estado-${alerta.estado}`}>
+                  <td className="alertas estado-cell">
+                    <div className={`alertas estado-badge alertas estado-${alerta.estado}`}>
                       {alerta.estado === 'pendiente' ? <FiAlertTriangle /> : <FiCheckCircle />}
                       <span>{alerta.estado === 'pendiente' ? 'Pendiente' : 'Resuelto'}</span>
                     </div>
-                  </td>
-                  <td className="acciones-cell">
-                    {alerta.estado === 'pendiente' ? (
-                      <button className="btn-resolver" onClick={() => handleResolver(alerta.id)}>
-                        <FiCheckCircle />
-                        <span>Marcar como resuelto</span>
-                      </button>
-                    ) : (
-                      <button className="btn-reabrir" onClick={() => handleResolver(alerta.id)}>
-                        <FiAlertTriangle />
-                        <span>Reabrir alerta</span>
-                      </button>
-                    )}
                   </td>
                 </tr>
               ))}
@@ -328,21 +309,21 @@ export default function Alertas() {
         </div>
 
         {/* Sección de resumen */}
-        <div className="resumen-container">
-          <div className="resumen-item">
+        <div className="alertas resumen-container">
+          <div className="alertas resumen-item">
             <h4>Resumen de alertas</h4>
-            <div className="resumen-stats">
-              <div className="resumen-stat">
-                <span className="stat-num">{alertasPendientes}</span>
-                <span className="stat-label">Pendientes</span>
+            <div className="alertas resumen-stats">
+              <div className="alertas resumen-stat">
+                <span className="alertas stat-num">{alertasPendientes}</span>
+                <span className="alertas stat-label">Pendientes</span>
               </div>
-              <div className="resumen-stat">
-                <span className="stat-num">{alertas.length - alertasPendientes}</span>
-                <span className="stat-label">Resueltas</span>
+              <div className="alertas resumen-stat">
+                <span className="alertas stat-num">{alertas.length - alertasPendientes}</span>
+                <span className="alertas stat-label">Resueltas</span>
               </div>
-              <div className="resumen-stat">
-                <span className="stat-num">{puntosPendientes}</span>
-                <span className="stat-label">Puntos afectados</span>
+              <div className="alertas resumen-stat">
+                <span className="alertas stat-num">{puntosPendientes}</span>
+                <span className="alertas stat-label">Puntos afectados</span>
               </div>
             </div>
           </div>
