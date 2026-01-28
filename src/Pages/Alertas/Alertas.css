@@ -86,6 +86,66 @@
   opacity: 0.9;
 }
 
+/* TABS DE NAVEGACIÓN */
+.alertas .tabs-navigation {
+  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
+  border-radius: 16px;
+  padding: 20px 32px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.alertas .tabs-container {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.alertas .tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.alertas .tab-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.alertas .tab-btn.active {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: white;
+  color: #0F676C;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
+  font-weight: 600;
+}
+
+.alertas .tab-btn.active svg {
+  color: #0F676C;
+}
+
+.alertas .tab-btn svg {
+  font-size: 18px;
+}
+
 /* FILTROS */
 .alertas .filtros-container {
   background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
@@ -144,6 +204,7 @@
   display: flex;
   gap: 12px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .alertas .quick-filter-btn {
@@ -246,7 +307,7 @@
 .alertas .alertas-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1000px;
+  min-width: 1200px;
 }
 
 .alertas .alertas-table thead {
@@ -276,11 +337,16 @@
 .alertas .alertas-table td {
   padding: 20px;
   color: white;
+  vertical-align: top;
 }
 
 /* CELDAS ESPECÍFICAS */
 .alertas .tipo-cell {
-  width: 60px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
 }
 
 .alertas .tipo-indicator {
@@ -294,6 +360,22 @@
   font-size: 18px;
 }
 
+.alertas .tipo-texto {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
+.alertas .prioridad-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .alertas .detalles-info {
   display: flex;
   flex-direction: column;
@@ -303,6 +385,7 @@
 .alertas .motivo {
   font-weight: 600;
   font-size: 15px;
+  line-height: 1.4;
 }
 
 .alertas .fecha {
@@ -333,6 +416,7 @@
   border: 1px solid rgba(231, 76, 60, 0.3);
   border-radius: 20px;
   font-weight: 600;
+  width: fit-content;
 }
 
 .alertas .numero {
@@ -348,27 +432,29 @@
 .alertas .puntos-lista {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .alertas .punto-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  padding-left: 8px;
-  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 4px 0;
 }
 
-.alertas .punto-item::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: rgba(255, 255, 255, 0.5);
+.alertas .punto-item svg {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .alertas .punto-mas {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   font-style: italic;
+  margin-top: 4px;
 }
 
 .alertas .ruta-info {
@@ -395,12 +481,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
   backdrop-filter: blur(10px);
   border: 1px solid;
+  white-space: nowrap;
 }
 
 .alertas .estado-pendiente {
@@ -409,47 +496,333 @@
   border-color: rgba(231, 76, 60, 0.3);
 }
 
+.alertas .estado-en-proceso {
+  background: rgba(241, 196, 15, 0.2);
+  color: #f1c40f;
+  border-color: rgba(241, 196, 15, 0.3);
+}
+
 .alertas .estado-resuelto {
   background: rgba(46, 204, 113, 0.2);
   color: #2ecc71;
   border-color: rgba(46, 204, 113, 0.3);
 }
 
+.alertas .estado-cancelado {
+  background: rgba(149, 165, 166, 0.2);
+  color: #95a5a6;
+  border-color: rgba(149, 165, 166, 0.3);
+}
+
 /* BOTONES DE ACCIÓN */
-.alertas .btn-resolver,
-.alertas .btn-reabrir {
+.alertas .acciones-cell {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.alertas .btn-editar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(241, 196, 15, 0.2);
+  border: 1px solid rgba(241, 196, 15, 0.3);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #f1c40f;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.alertas .btn-editar:hover {
+  background: rgba(241, 196, 15, 0.3);
+  border-color: rgba(241, 196, 15, 0.5);
+  transform: translateY(-1px);
+}
+
+.alertas .btn-eliminar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.alertas .btn-eliminar:hover {
+  background: rgba(231, 76, 60, 0.3);
+  border-color: rgba(231, 76, 60, 0.5);
+  transform: translateY(-1px);
+}
+
+.alertas .btn-editar svg,
+.alertas .btn-eliminar svg {
+  font-size: 14px;
+}
+
+/* PANEL DE CREAR/EDITAR ALERTA */
+.alertas .crear-alerta-container {
+  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  margin-bottom: 30px;
+}
+
+.alertas .crear-alerta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.alertas .form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.alertas .form-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 24px 0;
+}
+
+.alertas .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.alertas .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alertas .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.alertas .form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.alertas .form-label::after {
+  content: " *";
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.alertas .form-input,
+.alertas .form-select,
+.alertas .form-textarea {
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+.alertas .form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.alertas .form-input::placeholder,
+.alertas .form-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.alertas .form-input:focus,
+.alertas .form-select:focus,
+.alertas .form-textarea:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.alertas .form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.7)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+/* PUNTOS AFECTADOS EN FORMULARIO */
+.alertas .puntos-input-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.alertas .puntos-input {
+  flex: 1;
+}
+
+.alertas .btn-agregar-punto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(46, 204, 113, 0.3);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.alertas .btn-agregar-punto:hover {
+  background: rgba(46, 204, 113, 0.4);
+  border-color: rgba(46, 204, 113, 0.6);
+  transform: translateY(-1px);
+}
+
+.alertas .puntos-lista-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.alertas .punto-item-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 14px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.alertas .punto-item-form svg {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.alertas .btn-remover-punto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: 4px;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  font-size: 12px;
+}
+
+.alertas .btn-remover-punto:hover {
+  background: rgba(231, 76, 60, 0.3);
+  border-color: rgba(231, 76, 60, 0.5);
+}
+
+.alertas .sin-puntos {
+  padding: 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* BOTONES DEL FORMULARIO */
+.alertas .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alertas .btn-cancelar,
+.alertas .btn-guardar {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: none;
+  border: 1px solid transparent;
+  backdrop-filter: blur(10px);
 }
 
-.alertas .btn-resolver {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.3);
+.alertas .btn-cancelar {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-.alertas .btn-resolver:hover {
+.alertas .btn-cancelar:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.alertas .btn-guardar {
   background: rgba(46, 204, 113, 0.3);
-  border-color: rgba(46, 204, 113, 0.5);
+  color: white;
+  border-color: rgba(46, 204, 113, 0.4);
 }
 
-.alertas .btn-reabrir {
-  background: rgba(241, 196, 15, 0.2);
-  color: #f1c40f;
-  border: 1px solid rgba(241, 196, 15, 0.3);
+.alertas .btn-guardar:hover {
+  background: rgba(46, 204, 113, 0.4);
+  border-color: rgba(46, 204, 113, 0.6);
+  transform: translateY(-2px);
 }
 
-.alertas .btn-reabrir:hover {
-  background: rgba(241, 196, 15, 0.3);
-  border-color: rgba(241, 196, 15, 0.5);
+/* ANIMACIONES */
+.alertas .crear-alerta-form {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* RESUMEN */
@@ -529,7 +902,8 @@
   
   .alertas-header,
   .alertas .filtros-container,
-  .alertas .table-container {
+  .alertas .table-container,
+  .alertas .crear-alerta-container {
     padding: 20px;
   }
   
@@ -543,6 +917,40 @@
   
   .alertas .tipos-alerta {
     flex-direction: column;
+  }
+  
+  .alertas .tabs-container {
+    flex-direction: column;
+    max-width: none;
+  }
+  
+  .alertas .tab-btn {
+    width: 100%;
+  }
+  
+  .alertas .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .alertas .form-actions {
+    flex-direction: column;
+  }
+  
+  .alertas .btn-cancelar,
+  .alertas .btn-guardar {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .alertas .acciones-cell {
+    flex-direction: column;
+  }
+  
+  .alertas .btn-editar,
+  .alertas .btn-eliminar {
+    width: 100%;
+    justify-content: center;
   }
   
   .alertas .resumen-item {
@@ -564,5 +972,29 @@
   .alertas .btn-exportar {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .alertas .header-title h1 {
+    font-size: 24px;
+  }
+  
+  .alertas .form-title {
+    font-size: 20px;
+  }
+  
+  .alertas .estado-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .alertas .puntos-input-container {
+    flex-direction: column;
+  }
+  
+  .alertas .btn-agregar-punto {
+    width: 100%;
+    height: 44px;
   }
 }
