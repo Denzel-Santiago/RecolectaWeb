@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+  # Archivo Recolecta Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  # Aplicación web desarrollada con React 19 + TypeScript + Vite 7 para la gestión y validación de rutas de recolección.
 
-Currently, two official plugins are available:
+  # Este proyecto permite visualizar estados de rutas, validaciones y gestión de información relacionada con el proceso de recolección.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+  # Stack Tecnológico
+        Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+        React 19.2.0
 
-## Expanding the ESLint configuration
+        React DOM 19.2.0
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+        TypeScript 5.9.3
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+        Vite 7.2.4
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+        React Router DOM 7.12.0
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+        React Icons 5.5.0
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+        Google Maps JS API Loader 2.0.2 (no implementado)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+        Linting
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+        ESLint 9.39.1
+
+        typescript-eslint 8.46.4
+
+  # Requisitos
+
+        Node.js >= 18
+
+        npm >= 9
+
+  # Instalación
+        #  Clonar repositorio
+        #  git clone https://github.com/Denzel-Santiago/RecolectaWeb.git
+        # entrar en la carpeta con : cd recolecta-web
+
+  # Instalar dependencias
+        # npm install
+
+  # Ejecutar el Proyecto 
+        npm run dev
+
+  # Estructura del proyecto 
+    recolecta-web/
+      │
+      ├── public/                    # Archivos estáticos públicos
+      │
+      ├── src/
+      │   │
+      │   ├── assets/                # Recursos (imágenes, íconos, etc.)
+      │   │
+      │   ├── components/
+      │   │   └── Navigation/
+      │   │       ├── Navbar.tsx
+      │   │       └── Navbar.css
+      │   │
+      │   ├── Pages/
+      │   │   ├── Alertas/
+      │   │   ├── Anomalias/
+      │   │   ├── Dashboard/
+      │   │   ├── EstadoRuta/
+      │   │   ├── Historial/
+      │   │   ├── Login/
+      │   │   ├── Mapa/
+      │   │   └── ValidacionRecoleccion/
+      │   │
+      │   ├── Router/
+      │   │   └── AppRouter.tsx
+      │   │
+      │   ├── App.tsx
+      │   ├── App.css
+      │   ├── index.css
+      │   └── main.tsx
+      │
+      ├── .gitignore
+      ├── eslint.config.js
+      ├── index.html
+      ├── package.json
+      ├── package-lock.json
+      └── README.md
+
+
+      
