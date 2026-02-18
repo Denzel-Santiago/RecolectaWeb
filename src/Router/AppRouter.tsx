@@ -1,7 +1,10 @@
 // AppRouter.jsx
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+
 import Login from "../Pages/Login/Login";
 import Navbar from "../components/Navigation/Navbar";
+
+// Páginas globales
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Historial from "../Pages/Historial/Historial";
 import Alertas from "../Pages/Alertas/Alertas";
@@ -9,84 +12,59 @@ import Anomalias from "../Pages/Anomalias/Anomalias";
 import EstadoRuta from "../Pages/EstadoRuta/EstadoRuta";
 import ValidacionRecoleccion from "../Pages/ValidacionRecoleccion/ValidacionRecoleccion";
 
+// ==========================
+// ADMINISTRACIÓN (NUEVO)
+// ==========================
+
+import AdministracionLayout from "../Pages/Administracion/AdministracionLayout";
+import RellenosSanitariosPage from "../Pages/Administracion/RellenosSanitarios/RellenosSanitariosPage";
+import CamionesPage from "../Pages/Administracion/Camiones/CamionesPage";
+import DiasRecoleccionPage from "../Pages/Administracion/DiasRecoleccion/DiasRecoleccionPage";
+
+// Layout global (Navbar + contenido)
+function AppLayout() {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
+}
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta principal - Redirige a login por defecto */}
-        <Route path="/" element={<Navigate to="/login" />} />
-        
-        {/* Ruta de login (sin navbar) */}
+        {/* Ruta principal */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* Login sin navbar */}
         <Route path="/login" element={<Login />} />
-        
-        {/* Ruta del dashboard (con navbar) */}
-        <Route 
-          path="/dashboard" 
-          element={
-            <>
-              <Navbar />
-              <Dashboard />
-            </>
-          } 
-        />
 
-        {/* Ruta del historial (con navbar) */}
-        <Route 
-          path="/historial" 
-          element={
-            <>
-              <Navbar />
-              <Historial />
-            </>
-          } 
-        />
+        {/* ==========================
+            RUTAS CON NAVBAR (GLOBAL)
+           ========================== */}
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/historial" element={<Historial />} />
+          <Route path="/alertas" element={<Alertas />} />
+          <Route path="/anomalias" element={<Anomalias />} />
+          <Route path="/estado-ruta" element={<EstadoRuta />} />
+          <Route path="/validacion-recoleccion" element={<ValidacionRecoleccion />} />
 
-        {/* Ruta de alertas (con navbar) */}
-        <Route 
-          path="/alertas" 
-          element={
-            <>
-              <Navbar />
-              <Alertas />
-            </>
-          } 
-        />
+          {/* ==========================
+              ADMINISTRACIÓN (Nested)
+             ========================== */}
+          <Route path="/administracion" element={<AdministracionLayout />}>
+            <Route index element={<Navigate to="rellenos" replace />} />
+            <Route path="rellenos" element={<RellenosSanitariosPage />} />
+            <Route path="camiones" element={<CamionesPage />} />
+            <Route path="dias-recoleccion" element={<DiasRecoleccionPage />} />
+          </Route>
+        </Route>
 
-        {/* Ruta de anomalias (con navbar) */}
-        <Route 
-          path="/anomalias" 
-          element={
-            <>
-              <Navbar />
-              <Anomalias />
-            </>
-          } 
-        />
-
-        {/* Ruta de estado de ruta (con navbar) */}
-        <Route 
-          path="/estado-ruta" 
-          element={
-            <>
-              <Navbar />
-              <EstadoRuta />
-            </>
-          } 
-        />
-
-        {/* Ruta de recolección (con navbar) */}
-        <Route 
-          path="/validacion-recoleccion" 
-          element={
-            <>
-              <Navbar />
-              <ValidacionRecoleccion />
-            </>
-          } 
-        />
-
-        {/* Para cualquier otra ruta, redirige al login */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        {/* 404 */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

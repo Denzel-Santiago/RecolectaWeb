@@ -23,6 +23,7 @@ export default function Navbar() {
     { id: 'anomalias', label: 'Anomalias', path: '/anomalias' },
     { id: 'Puntos_de_ruta', label: 'Puntos de Ruta', path: '/estado-ruta' },
     { id: 'Recoleccion', label: 'Recolección', path: '/validacion-recoleccion' },
+    { id: 'Administracion', label: 'Administración', path: '/administracion' },
   ];
 
   return (

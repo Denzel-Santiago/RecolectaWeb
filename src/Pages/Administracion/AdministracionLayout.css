@@ -1,0 +1,10 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  height: calc(100vh - 60px); /* Ajusta al alto real de tu navbar */
+}
+
+.admin-content {
+  padding: 20px;
+  overflow-y: auto;
+}

@@ -1,0 +1,54 @@
+/* Wrapper para centrar y flotar */
+.admin-sidebar-wrapper {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+
+  background: rgba(15, 103, 108, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 18px 12px;
+  border-radius: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Navegación */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Links */
+.admin-link {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+  font-size: 18px;
+
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.admin-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Activo */
+.admin-link.active {
+  background: white;
+  color: #0F676C;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
