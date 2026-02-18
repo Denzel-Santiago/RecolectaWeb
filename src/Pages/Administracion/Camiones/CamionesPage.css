@@ -1,0 +1,681 @@
+/* CAMIONES - CSS MODULAR ENCAPSULADO */
+/* Este archivo solo afecta al componente Camiones */
+
+/* Contenedor principal con prefijo específico */
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espacio entre todas las secciones */
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 24px; /* Padding alrededor de todo el contenedor */
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Header tipo tu diseño */
+.camiones .admin-header {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 24px 28px; /* Más padding interno */
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave para destacar */
+  margin-bottom: 4px; /* Espacio adicional después del header */
+}
+
+.camiones .admin-header-left h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.camiones .admin-header-left p {
+  margin: 8px 0 0;
+  opacity: 0.85;
+  font-size: 16px;
+}
+
+/* Cards */
+.camiones .admin-header-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.camiones .mini-card {
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.camiones .mini-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.camiones .mini-card h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.camiones .mini-card span {
+  font-size: 13px;
+  opacity: 0.9;
+  display: block;
+}
+
+.camiones .mini-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 20px;
+  color: white;
+}
+
+.camiones .mini-card-icon.ok {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+.camiones .mini-card-icon.warn {
+  background: rgba(234, 179, 8, 0.3);
+}
+
+/* Barra de acciones */
+.camiones .admin-actions-bar {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 8px 0 4px; /* Espacio vertical */
+}
+
+/* Filtros */
+.camiones .admin-filters {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 8px 0; /* Espacio vertical */
+}
+
+.camiones .filters-left {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.camiones .filters-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.camiones .search {
+  width: 360px;
+  max-width: 45vw;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.camiones .search:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.camiones .search::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Chips */
+.camiones .chip-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.camiones .chip {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.camiones .chip:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.camiones .chip.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #063438;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Checkbox */
+.camiones .checkbox {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.95;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.camiones .checkbox:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.camiones .checkbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0d5a60;
+}
+
+/* Tabla */
+.camiones .admin-table-section {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 20px 24px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 8px; /* Espacio superior */
+}
+
+.camiones .admin-table-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  opacity: 0.9;
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.camiones .muted {
+  opacity: 0.7;
+}
+
+/* Table wrap */
+.camiones .table-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.camiones .table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.camiones .table thead {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.camiones .table th,
+.camiones .table td {
+  padding: 16px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.camiones .table th {
+  font-size: 13px;
+  opacity: 0.85;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.camiones .table td {
+  font-size: 14px;
+}
+
+.camiones .table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.camiones .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-weight: 500;
+}
+
+/* Status */
+.camiones .status {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid;
+  letter-spacing: 0.02em;
+}
+
+.camiones .status.disponible {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.camiones .status.en_ruta {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.camiones .status.mantenimiento {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.camiones .status.fuera_servicio {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Rentado pill */
+.camiones .pill {
+  display: inline-flex;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.02em;
+}
+
+.camiones .pill.rentado {
+  background: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Botones */
+.camiones .btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 12px 18px;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.camiones .btn-light {
+  background: rgba(255, 255, 255, 0.95);
+  color: #063438;
+}
+
+.camiones .btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.camiones .btn-outline {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.camiones .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.camiones .btn:active {
+  transform: translateY(0);
+}
+
+.camiones .actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.camiones .btn-details {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+}
+
+.camiones .btn-edit {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  padding: 8px 14px;
+}
+
+.camiones .btn-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 14px;
+}
+
+/* Empty state */
+.camiones .empty-state {
+  padding: 40px 26px;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 16px;
+}
+
+/* Modal */
+.camiones .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.camiones .modal {
+  width: min(720px, 96vw);
+  background: #0b2f33;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.camiones .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 4px;
+}
+
+.camiones .modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.camiones .modal-close {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camiones .modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: rotate(90deg);
+}
+
+/* Form */
+.camiones .form {
+  padding-top: 20px;
+}
+
+.camiones .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.camiones .field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.camiones .field input,
+.camiones .field select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.camiones .field input:focus,
+.camiones .field select:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+.camiones .field.full {
+  grid-column: 1 / -1;
+}
+
+.camiones .switch {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.camiones .switch input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0d5a60;
+}
+
+.camiones .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.camiones .form-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .admin-page {
+    padding: 20px;
+    gap: 18px;
+  }
+  
+  .camiones .admin-header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 22px;
+  }
+  
+  .camiones .admin-header-cards {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .camiones .admin-filters {
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+  }
+  
+  .camiones .filters-left,
+  .camiones .filters-right {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .camiones .search {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .camiones .admin-header {
+    padding: 20px;
+  }
+  
+  .camiones .admin-header-left h1 {
+    font-size: 28px;
+  }
+  
+  .camiones .admin-actions-bar {
+    flex-direction: column;
+    padding: 18px;
+  }
+  
+  .camiones .admin-filters {
+    padding: 18px;
+  }
+  
+  .camiones .admin-table-section {
+    padding: 18px;
+  }
+  
+  .camiones .mini-card {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .camiones .filters-left {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .camiones .chip-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .camiones .chip {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+  }
+  
+  .camiones .checkbox {
+    justify-content: center;
+  }
+  
+  .camiones .filters-right {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .camiones .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .camiones .admin-table-top {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  
+  .camiones .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .camiones .modal {
+    padding: 20px;
+  }
+  
+  .camiones .form-actions {
+    flex-direction: column;
+  }
+  
+  .camiones .form-actions .btn {
+    width: 100%;
+  }
+}
