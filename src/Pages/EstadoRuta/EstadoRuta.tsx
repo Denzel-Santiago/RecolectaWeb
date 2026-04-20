@@ -5,7 +5,6 @@ import {
   FiMapPin,
   FiCheckCircle,
   FiClock,
-  FiAlertTriangle,
   FiPauseCircle,
   FiEye,
   FiSearch,
@@ -18,8 +17,7 @@ import {
   FiSave,
   FiX,
   FiList,
-  FiNavigation,
-  FiMap
+  FiNavigation
 } from 'react-icons/fi';
 
 // Definimos el tipo de punto

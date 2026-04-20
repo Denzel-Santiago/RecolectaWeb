@@ -1,0 +1,631 @@
+/* DIAS RECOLECCION - CSS MODULAR ENCAPSULADO */
+/* Este archivo solo afecta al componente DiasRecoleccion */
+
+/* Contenedor principal */
+.dr-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* HEADER */
+.dias .dr-header {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 4px;
+}
+
+.dias .dr-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.dias .dr-header p {
+  margin: 8px 0 0;
+  opacity: 0.85;
+  font-size: 16px;
+}
+
+/* Cards */
+.dias .dr-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.dias .dr-card {
+  min-width: 140px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.dias .dr-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.dias .dr-card span {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.dias .dr-card strong {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Barra de acciones */
+.dias .dr-actions {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 8px 0 4px;
+}
+
+/* Filtros */
+.dias .dr-filters {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 8px 0;
+}
+
+/* Chips */
+.dias .dr-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dias .dr-chip {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-chip:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.dias .dr-chip.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #063438;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Search */
+.dias .dr-search {
+  width: 360px;
+  max-width: 45vw;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-search:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.dias .dr-search::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* TABLA (estilos para la tabla que viene del componente) */
+.dias .dr-table-section {
+  background: linear-gradient(180deg, #0d5a60, #0a3f44);
+  border-radius: 18px;
+  padding: 20px 24px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 8px;
+}
+
+.dias .dr-table-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  opacity: 0.9;
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+.dias .dr-table-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.dias .dr-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dias .dr-table thead {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dias .dr-table th,
+.dias .dr-table td {
+  padding: 16px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dias .dr-table th {
+  font-size: 13px;
+  opacity: 0.85;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.dias .dr-table td {
+  font-size: 14px;
+}
+
+.dias .dr-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Badges para días */
+.dias .dr-dias-badge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dias .dr-dia-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Estado badge */
+.dias .dr-estado-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid;
+}
+
+.dias .dr-estado-activo {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border-color: rgba(46, 204, 113, 0.3);
+}
+
+.dias .dr-estado-inactivo {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  border-color: rgba(231, 76, 60, 0.3);
+}
+
+/* Turno badge */
+.dias .dr-turno-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dias .dr-turno-matutino {
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border-color: rgba(241, 196, 15, 0.3);
+}
+
+.dias .dr-turno-vespertino {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border-color: rgba(52, 152, 219, 0.3);
+}
+
+/* Botones de acción en tabla */
+.dias .dr-actions-cell {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dias .dr-btn-edit {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-btn-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-btn-edit:hover,
+.dias .dr-btn-delete:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Botones generales */
+.dias .dr-btn-primary,
+.dias .dr-btn-secondary {
+  border: none;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 12px 18px;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.dias .dr-btn-secondary {
+  background: rgba(255, 255, 255, 0.92);
+  color: #063438;
+}
+
+.dias .dr-btn-primary:hover,
+.dias .dr-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* MODAL */
+.dias .dr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dias .dr-modal {
+  width: min(600px, 96vw);
+  background: #0b2f33;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.dias .dr-modal h2 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* FORM dentro del modal */
+.dias .dr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dias .dr-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dias .dr-form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.dias .dr-form-group input,
+.dias .dr-form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.dias .dr-form-group input:focus,
+.dias .dr-form-group select:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+/* Grid para días (checkboxes) */
+.dias .dr-dias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dias .dr-dia-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.dias .dr-dia-checkbox:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dias .dr-dia-checkbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0d5a60;
+}
+
+/* Turno group */
+.dias .dr-turno-group {
+  display: flex;
+  gap: 20px;
+  padding: 12px 0;
+}
+
+.dias .dr-turno-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dias .dr-turno-option input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #0d5a60;
+}
+
+/* Form actions */
+.dias .dr-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dias .dr-btn-cancel {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-btn-save {
+  background: linear-gradient(135deg, #0d5a60, #0a3f44);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dias .dr-btn-cancel:hover,
+.dias .dr-btn-save:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Empty state */
+.dias .dr-empty-state {
+  padding: 40px 26px;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .dr-page {
+    padding: 20px;
+    gap: 18px;
+  }
+  
+  .dias .dr-header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 22px;
+  }
+  
+  .dias .dr-cards {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .dias .dr-filters {
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+  }
+  
+  .dias .dr-search {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dr-page {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .dias .dr-header {
+    padding: 20px;
+  }
+  
+  .dias .dr-header h1 {
+    font-size: 28px;
+  }
+  
+  .dias .dr-actions {
+    flex-direction: column;
+    padding: 18px;
+  }
+  
+  .dias .dr-filters {
+    padding: 18px;
+  }
+  
+  .dias .dr-card {
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .dias .dr-chips {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .dias .dr-chip {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+  }
+  
+  .dias .dr-search {
+    width: 100%;
+  }
+  
+  .dias .dr-btn-primary,
+  .dias .dr-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .dias .dr-table th,
+  .dias .dr-table td {
+    padding: 12px 10px;
+  }
+  
+  .dias .dr-dias-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dias .dr-form-actions {
+    flex-direction: column;
+  }
+  
+  .dias .dr-btn-cancel,
+  .dias .dr-btn-save {
+    width: 100%;
+  }
+}
