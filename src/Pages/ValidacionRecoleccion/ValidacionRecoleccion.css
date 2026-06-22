@@ -1,135 +1,146 @@
-/* RECOLECCION/VALIDACION - CSS MODULAR ENCAPSULADO */
-/* Este archivo solo afecta al componente ValidacionRecoleccion */
-
-/* Contenedor principal con prefijo específico */
 .validacion-container {
-  background-color: #f8f9fa;
+  --primary: #0F676C;
+  --primary-dark: #0a4a4e;
+  --primary-light: rgba(15, 103, 108, 0.12);
+  --success: #639922;
+  --warning: #E88D1D;
+  --danger: #E24B4A;
+  --bg-light: #f0f4f2;
+  --bg-card: #ffffff;
+  --text: #1a3a2f;
+  --text-light: #5a6e60;
+  --border: #dce5df;
+  --radius: 14px;
+  --shadow-sm: 0 2px 6px rgba(15, 103, 108, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 103, 108, 0.12);
+  --shadow-lg: 0 8px 24px rgba(15, 103, 108, 0.15);
+  --transition: all 0.2s ease;
+
+  background: var(--bg-light);
   min-height: 100vh;
   padding: 20px;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  color: #202124;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text);
 }
 
-/* HEADER CON ESTADÍSTICAS */
+.validacion-container,
+.validacion-container * {
+  box-sizing: border-box;
+}
+
+.validacion-container button,
+.validacion-container input,
+.validacion-container select,
+.validacion-container textarea {
+  font: inherit;
+}
+
 .validacion .validacion-header {
-  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
-  border-radius: 16px;
-  padding: 32px 40px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius);
+  padding: 20px 24px;
   margin-bottom: 24px;
-  color: white;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
 }
 
 .validacion .header-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
+  align-items: center;
+  gap: 24px;
 }
 
 .validacion .header-title h1 {
-  font-size: 28px;
+  margin: 0;
+  font-size: 22px;
   font-weight: 600;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.5px;
 }
 
 .validacion .subtitle {
-  font-size: 15px;
-  opacity: 0.9;
-  margin: 0;
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #eef6f4;
 }
 
 .validacion .header-stats {
   display: flex;
-  gap: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .validacion .stat-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 10px;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 12px;
   min-width: 180px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+  border: 1px solid #fff;
+  box-shadow: var(--shadow-sm);
 }
 
-.validacion .stat-card:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
+.validacion .stat-icon-1,
+.validacion .stat-icon-2,
+.validacion .stat-icon-3,
+.validacion .stat-icon-4 {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: var(--primary-light);
 }
 
 .validacion .stat-icon-1 {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #0a6a64;
+  color: var(--primary);
 }
 
 .validacion .stat-icon-2 {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #d4fa02;
+  color: var(--warning);
 }
+
 .validacion .stat-icon-3 {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #09d11d;
+  color: var(--success);
 }
 
 .validacion .stat-icon-4 {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  color: #ed0909;
+  color: var(--danger);
 }
+
 .validacion .stat-value {
   display: block;
   font-size: 24px;
   font-weight: 700;
   line-height: 1;
   margin-bottom: 4px;
+  color: var(--primary);
 }
 
 .validacion .stat-label {
   font-size: 13px;
-  opacity: 0.9;
+  color: var(--text-light);
 }
 
-/* PANEL DE CONTROLES */
-.validacion .controles-panel {
-  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
-  border-radius: 16px;
-  padding: 24px 32px;
+.validacion .controles-panel,
+.validacion .table-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
   margin-bottom: 24px;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.validacion .controles-panel {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 }
 
 .validacion .controles-left {
@@ -147,160 +158,163 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-light);
   font-size: 16px;
 }
 
-.validacion .search-input {
+.validacion .search-input,
+.validacion .modal-textarea,
+.validacion .modal-select {
   width: 100%;
-  padding: 10px 12px 10px 36px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 14px;
+  border: 1px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.95);
-  color: #202124;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+  color: var(--text);
+  transition: var(--transition);
 }
 
-.validacion .search-input:focus {
+.validacion .search-input {
+  padding-left: 38px;
+}
+
+.validacion .search-input::placeholder,
+.validacion .modal-textarea::placeholder {
+  color: var(--text-light);
+}
+
+.validacion .search-input:focus,
+.validacion .modal-textarea:focus,
+.validacion .modal-select:focus {
   outline: none;
-  border-color: white;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 103, 108, 0.12);
 }
 
 .validacion .controles-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .validacion .filtros-rapidos {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .validacion .filtro-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
   font-size: 14px;
-  color: white;
+  color: var(--text-light);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
+  transition: var(--transition);
 }
 
 .validacion .filtro-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--primary-light);
+  border-color: rgba(15, 103, 108, 0.2);
+  color: var(--primary);
 }
 
 .validacion .filtro-btn.active {
-  background: white;
-  border-color: white;
-  color: #0F676C;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
 }
 
 .validacion .action-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 14px;
   border-radius: 10px;
-  font-size: 14px;
-  color: white;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
+  transition: var(--transition);
 }
 
 .validacion .action-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-/* TABLA */
-.validacion .table-container {
-  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
-  border-radius: 16px;
-  padding: 24px;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background: var(--primary-light);
+  border-color: rgba(15, 103, 108, 0.2);
+  color: var(--primary);
 }
 
 .validacion .table-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
-.validacion .table-summary {
+.validacion .table-summary,
+.validacion .table-actions {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-light);
 }
 
 .validacion .table-actions {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
 }
 
 .validacion .table-wrapper {
   overflow-x: auto;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
 }
 
 .validacion .validacion-table {
   width: 100%;
-  border-collapse: collapse;
   min-width: 1000px;
+  border-collapse: collapse;
+  background: #fff;
 }
 
 .validacion .validacion-table thead {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f6f8f7;
 }
 
 .validacion .validacion-table th {
-  padding: 16px 20px;
+  padding: 16px 18px;
   text-align: left;
-  font-weight: 600;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.validacion .table-row {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.validacion .table-row:hover {
-  background: rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.4px;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .validacion .validacion-table td {
-  padding: 20px;
-  color: white;
+  padding: 18px;
+  color: var(--text);
+  border-bottom: 1px solid #edf2ef;
+  vertical-align: top;
 }
 
-/* CELDAS ESPECÍFICAS */
+.validacion .table-row {
+  transition: var(--transition);
+}
+
+.validacion .table-row:hover {
+  background: #f8fbf9;
+}
+
 .validacion .punto-info {
   display: flex;
   flex-direction: column;
@@ -310,86 +324,74 @@
 .validacion .punto-codigo {
   font-weight: 600;
   font-size: 14px;
-  color: white;
+  color: var(--text);
 }
 
 .validacion .punto-nombre {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-light);
 }
 
 .validacion .fecha-cell,
 .validacion .hora-cell {
   font-size: 14px;
+  color: var(--text);
 }
 
-.validacion .validacion-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  border: 1px solid;
-}
-
-.validacion .validacion-validado {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.3);
-}
-
-.validacion .validacion-rechazado {
-  background: rgba(231, 76, 60, 0.2);
-  color: #e74c3c;
-  border: 1px solid rgba(231, 76, 60, 0.3);
-}
-
-.validacion .validacion-pendiente {
-  background: rgba(241, 196, 15, 0.2);
-  color: #f1c40f;
-  border: 1px solid rgba(241, 196, 15, 0.3);
-}
-
-.validacion .validacion-— {
-  background: rgba(189, 195, 199, 0.2);
-  color: #bdc3c7;
-  border: 1px solid rgba(189, 195, 199, 0.3);
-}
-
+.validacion .validacion-badge,
 .validacion .estado-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
-  border: 1px solid;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.validacion .validacion-validado {
+  background: rgba(99, 153, 34, 0.1);
+  color: var(--success);
+  border-color: rgba(99, 153, 34, 0.2);
+}
+
+.validacion .validacion-rechazado {
+  background: rgba(226, 75, 74, 0.1);
+  color: var(--danger);
+  border-color: rgba(226, 75, 74, 0.2);
+}
+
+.validacion .validacion-pendiente,
+.validacion .validacion-— {
+  background: rgba(232, 141, 29, 0.12);
+  color: var(--warning);
+  border-color: rgba(232, 141, 29, 0.2);
 }
 
 .validacion .estado-completado {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-  border-color: rgba(46, 204, 113, 0.3);
+  background: rgba(99, 153, 34, 0.1);
+  color: var(--success);
+  border-color: rgba(99, 153, 34, 0.2);
 }
 
 .validacion .estado-en-proceso {
-  background: rgba(241, 196, 15, 0.2);
-  color: #f1c40f;
-  border-color: rgba(241, 196, 15, 0.3);
+  background: rgba(232, 141, 29, 0.12);
+  color: var(--warning);
+  border-color: rgba(232, 141, 29, 0.2);
 }
 
 .validacion .estado-retrasado {
-  background: rgba(231, 76, 60, 0.2);
-  color: #e74c3c;
-  border-color: rgba(231, 76, 60, 0.3);
+  background: rgba(226, 75, 74, 0.1);
+  color: var(--danger);
+  border-color: rgba(226, 75, 74, 0.2);
 }
 
 .validacion .estado-pendiente {
-  background: rgba(189, 195, 199, 0.2);
-  color: #bdc3c7;
-  border-color: rgba(189, 195, 199, 0.3);
+  background: rgba(90, 110, 96, 0.1);
+  color: var(--text-light);
+  border-color: rgba(90, 110, 96, 0.16);
 }
 
 .validacion .acciones-cell {
@@ -397,36 +399,33 @@
 }
 
 .validacion .btn-detalles {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  font-size: 13px;
-  color: white;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
+  transition: var(--transition);
 }
 
 .validacion .btn-detalles:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateX(2px);
+  background: var(--primary-light);
+  border-color: rgba(15, 103, 108, 0.2);
+  color: var(--primary);
 }
 
-/* MODAL MODERNIZADO */
 .validacion .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(17, 24, 19, 0.45);
   display: flex;
   justify-content: flex-end;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
   z-index: 1000;
 }
 
@@ -436,15 +435,15 @@
 }
 
 .validacion .modal {
-  background-color: #ffffff;
-  width: 480px;
+  background: #fff;
+  width: min(480px, 100%);
   height: 100%;
   padding: 0;
   transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
@@ -452,52 +451,51 @@
   transform: translateX(0);
 }
 
-/* HEADER DEL MODAL */
 .validacion .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
-  background: linear-gradient(135deg, #0F676C 0%, #0a4a4e 100%);
-  color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  gap: 16px;
+  padding: 18px 20px;
+  background: #fff;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
 }
 
 .validacion .modal-title {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
+  color: var(--primary);
 }
 
 .validacion .btn-cerrar-modal {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition);
 }
 
 .validacion .btn-cerrar-modal:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--primary-light);
+  color: var(--primary);
   transform: rotate(90deg);
 }
 
-/* CONTENIDO DEL MODAL */
 .validacion .modal-info-grid {
-  padding: 24px;
+  padding: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border);
 }
 
 .validacion .info-item {
@@ -511,281 +509,154 @@
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: #5f6368;
-  font-weight: 500;
+  color: var(--text-light);
+  font-weight: 600;
 }
 
 .validacion .info-value {
   font-size: 14px;
-  color: #202124;
+  color: var(--text);
   font-weight: 500;
 }
 
-/* SECCIONES DEL MODAL */
 .validacion .modal-section {
-  padding: 20px 24px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
 }
 
 .validacion .section-label {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #0F676C;
+  color: var(--primary);
   margin-bottom: 12px;
 }
 
-/* FOTO DE EVIDENCIA */
-.validacion .foto-evidencia {
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.validacion .foto-preview {
-  border: 2px dashed #e0e0e0;
-  border-radius: 10px;
-  padding: 24px;
-  text-align: center;
-  background: #fafafa;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.validacion .foto-preview:hover {
-  border-color: #0F676C;
-  background: rgba(15, 103, 108, 0.1);
-}
-
-.validacion .foto-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  color: #5f6368;
-  font-size: 14px;
-}
-
-.validacion .foto-placeholder svg {
-  font-size: 48px;
-  color: #0F676C;
-}
-
-.validacion .foto-meta {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 12px;
-  font-size: 12px;
-  color: #5f6368;
-}
-
-.validacion .foto-sin-evidencia {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px;
-  background: rgba(231, 76, 60, 0.05);
-  border: 1px solid rgba(231, 76, 60, 0.2);
-  border-radius: 10px;
-  color: #e74c3c;
-}
-
-.validacion .foto-sin-evidencia svg {
-  font-size: 36px;
-}
-
-/* NOTAS Y COMENTARIOS */
 .validacion .notas-contenido {
-  padding: 16px;
-  background: #f8f9fa;
+  padding: 14px;
+  background: #fff;
   border-radius: 10px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border);
   font-size: 14px;
   line-height: 1.5;
-  color: #202124;
+  color: var(--text);
   min-height: 80px;
 }
 
 .validacion .comentarios-input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
-  font-family: inherit;
+  color: var(--text);
   resize: vertical;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition);
 }
 
 .validacion .comentarios-input:focus {
   outline: none;
-  border-color: #0F676C;
-  box-shadow: 0 0 0 3px rgba(15, 103, 108, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 103, 108, 0.12);
 }
 
-/* MÉTRICAS */
-.validacion .metricas-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.validacion .metrica-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.validacion .metrica-label {
-  font-size: 13px;
-  color: #5f6368;
-}
-
-.validacion .metrica-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: #202124;
-}
-
-/* ACCIONES DE DECISIÓN */
 .validacion .decision-actions {
   display: flex;
   gap: 12px;
 }
 
-.validacion .btn-validar {
-  flex: 1;
-  display: flex;
+.validacion .btn-validar,
+.validacion .btn-rechazar,
+.validacion .btn-principal,
+.validacion .btn-secundario {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  border: none;
+  padding: 11px 16px;
   border-radius: 10px;
-  color: white;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  transition: var(--transition);
 }
 
-.validacion .btn-validar:hover {
+.validacion .btn-validar:hover,
+.validacion .btn-rechazar:hover,
+.validacion .btn-principal:hover,
+.validacion .btn-secundario:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+.validacion .btn-validar {
+  flex: 1;
+  background: var(--success);
+  color: #fff;
 }
 
 .validacion .btn-rechazar {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--danger);
+  color: #fff;
 }
 
-.validacion .btn-rechazar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-}
-
-/* FOOTER DEL MODAL */
 .validacion .modal-footer {
-  padding: 24px;
+  padding: 18px 20px;
   display: flex;
   gap: 12px;
   margin-top: auto;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border);
+  background: #fff;
 }
 
 .validacion .btn-principal {
   flex: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #0F676C, #0a4a4e);
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
 }
 
 .validacion .btn-principal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(15, 103, 108, 0.3);
+  background: var(--primary-dark);
 }
 
 .validacion .btn-secundario {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: #f0f0f0;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  color: #202124;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+  color: var(--text);
+  border-color: var(--border);
 }
 
 .validacion .btn-secundario:hover {
-  background: #e0e0e0;
-  transform: translateY(-1px);
+  background: #f8fbf9;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1200px) {
   .validacion .header-content {
     flex-direction: column;
-    gap: 24px;
+    align-items: stretch;
   }
-  
+
   .validacion .header-stats {
-    width: 100%;
-    flex-wrap: wrap;
+    justify-content: flex-start;
   }
-  
-  .validacion .stat-card {
-    flex: 1;
-    min-width: 200px;
-  }
-  
+
   .validacion .controles-panel {
     flex-direction: column;
-    gap: 20px;
+    align-items: stretch;
   }
-  
-  .validacion .controles-left,
+
   .validacion .controles-right {
-    width: 100%;
+    justify-content: flex-start;
   }
-  
-  .validacion .search-container {
-    max-width: 100%;
-  }
-  
-  .validacion .filtros-rapidos {
-    flex-wrap: wrap;
+
+  .validacion .table-header {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
@@ -793,43 +664,67 @@
   .validacion-container {
     padding: 12px;
   }
-  
+
   .validacion .validacion-header,
   .validacion .controles-panel,
   .validacion .table-container {
-    padding: 20px;
+    padding: 18px;
   }
-  
+
   .validacion .header-stats {
-    flex-direction: column;
+    gap: 12px;
   }
-  
+
   .validacion .stat-card {
     width: 100%;
+    min-width: 0;
   }
-  
+
+  .validacion .filtros-rapidos {
+    width: 100%;
+  }
+
+  .validacion .filtro-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .validacion .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .validacion .modal {
     width: 100%;
   }
-  
+
   .validacion .modal-info-grid {
     grid-template-columns: 1fr;
   }
-  
-  .validacion .metricas-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .validacion .decision-actions {
-    flex-direction: column;
-  }
-  
+
+  .validacion .decision-actions,
   .validacion .modal-footer {
     flex-direction: column;
   }
-  
+
+  .validacion .btn-validar,
+  .validacion .btn-rechazar,
   .validacion .btn-principal,
   .validacion .btn-secundario {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .validacion .header-title h1 {
+    font-size: 20px;
+  }
+
+  .validacion .stat-value {
+    font-size: 20px;
+  }
+
+  .validacion .modal-title {
+    font-size: 16px;
   }
 }
