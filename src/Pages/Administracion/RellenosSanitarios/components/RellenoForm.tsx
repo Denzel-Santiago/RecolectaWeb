@@ -1,5 +1,5 @@
 // src/Pages/Administracion/RellenosSanitarios/RellenosSanitariosForm.tsx
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { RellenoSanitario } from "../RellenosSanitariosPage";
 
 interface Props {
@@ -13,28 +13,11 @@ export default function RellenosSanitariosForm({
   onCancel,
   onSave,
 }: Props) {
-  const [nombre, setNombre] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [municipio, setMunicipio] = useState("");
-  const [capacidadToneladas, setCapacidadToneladas] = useState<number>(0);
-  const [estado, setEstado] = useState<"Activo" | "Inactivo">("Activo");
-
-  useEffect(() => {
-    if (!initialData) {
-      setNombre("");
-      setDireccion("");
-      setMunicipio("");
-      setCapacidadToneladas(0);
-      setEstado("Activo");
-      return;
-    }
-
-    setNombre(initialData.nombre);
-    setDireccion(initialData.direccion);
-    setMunicipio(initialData.municipio);
-    setCapacidadToneladas(initialData.capacidadToneladas);
-    setEstado(initialData.estado);
-  }, [initialData]);
+  const [nombre, setNombre] = useState(() => initialData?.nombre ?? "");
+  const [direccion, setDireccion] = useState(() => initialData?.direccion ?? "");
+  const [municipio, setMunicipio] = useState(() => initialData?.municipio ?? "");
+  const [capacidadToneladas, setCapacidadToneladas] = useState<number>(() => initialData?.capacidadToneladas ?? 0);
+  const [estado, setEstado] = useState<"Activo" | "Inactivo">(() => initialData?.estado ?? "Activo");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +83,10 @@ export default function RellenosSanitariosForm({
 
         <div className="rs-field">
           <label>Estado</label>
-          <select value={estado} onChange={(e) => setEstado(e.target.value as any)}>
+          <select
+            value={estado}
+            onChange={(e) => setEstado(e.target.value as "Activo" | "Inactivo")}
+          >
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
           </select>

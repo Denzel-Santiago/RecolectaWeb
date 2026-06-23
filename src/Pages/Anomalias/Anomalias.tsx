@@ -23,14 +23,43 @@ import {
   FiArchive
 } from 'react-icons/fi';
 
+type EstadoAnomalia = 'completado' | 'en-proceso' | 'retrasado' | 'pendiente';
+type PrioridadAnomalia = 'critica' | 'media' | 'baja';
+type TipoAnomalia =
+  | 'infraestructura'
+  | 'contaminacion'
+  | 'acceso'
+  | 'capacidad'
+  | 'sanitario'
+  | 'vandalismo'
+  | 'abastecimiento'
+  | 'fuga';
+
+interface AnomaliaItem {
+  id: number;
+  punto: string;
+  nombre: string;
+  direccion: string;
+  descripcion: string;
+  tipo: TipoAnomalia;
+  fecha: string;
+  hora: string;
+  estado: EstadoAnomalia;
+  prioridad: PrioridadAnomalia;
+  reportadoPor: string;
+  asignadoA: string;
+  kilosAfetados: number;
+  tiempoResolucion: string;
+}
+
 export default function Anomalias() {
   const [mostrarModal, setMostrarModal] = useState(false);
-  const [selectedAnomalia, setSelectedAnomalia] = useState<any>(null);
+  const [selectedAnomalia, setSelectedAnomalia] = useState<AnomaliaItem | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEstado, setSelectedEstado] = useState('todos');
   const [selectedPrioridad, setSelectedPrioridad] = useState('todos');
 
-  const anomalias = [
+  const anomalias: AnomaliaItem[] = [
     {
       id: 1,
       punto: 'P-012',
@@ -180,7 +209,7 @@ export default function Anomalias() {
     { tipo: 'fuga', color: '#c0392b', icon: FiAlertTriangle },
   ];
 
-  const handleOpenModal = (anomalia: any) => {
+  const handleOpenModal = (anomalia: AnomaliaItem) => {
     setSelectedAnomalia(anomalia);
     setMostrarModal(true);
   };

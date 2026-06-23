@@ -356,6 +356,7 @@ export default function CamionesPage() {
               </div>
 
               <CamionForm
+                key={camionSeleccionado?.camion_id ?? "new"}
                 modo={modoForm}
                 tiposCamion={TIPOS_CAMION}
                 camion={camionSeleccionado}

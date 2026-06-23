@@ -12,7 +12,7 @@ interface Incidencia {
   fecha: string;
   hora: string;
   descripcion: string;
-  ubicacion: 'Suchiapa' | 'Chiapas' | 'Tuxtla Gutiérrez';
+  ubicacion: string;
 }
 
 interface Ruta {

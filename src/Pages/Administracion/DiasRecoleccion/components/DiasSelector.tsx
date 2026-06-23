@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import type { DiaRecoleccionConfig } from "../../../../modules/DiadeRecoleccion";
+import { useState } from "react";
+
+interface DiaRecoleccionConfig {
+  id: number;
+  ruta: string;
+  colonia: string;
+  dias: string[];
+  turno: "Matutino" | "Vespertino";
+  estado: "Activo" | "Inactivo";
+  fechaRegistro: string;
+}
 
 interface Props {
   initialData: DiaRecoleccionConfig | null;
@@ -18,26 +27,19 @@ const DIAS_SEMANA = [
   "Sábado",
 ];
 
+type Turno = DiaRecoleccionConfig["turno"];
+type Estado = DiaRecoleccionConfig["estado"];
+
 export default function DiasRecoleccionForm({
   initialData,
   onCancel,
   onSave,
 }: Props) {
-  const [ruta, setRuta] = useState("");
-  const [colonia, setColonia] = useState("");
-  const [dias, setDias] = useState<string[]>([]);
-  const [turno, setTurno] = useState<"Matutino" | "Vespertino">("Matutino");
-  const [estado, setEstado] = useState<"Activo" | "Inactivo">("Activo");
-
-  useEffect(() => {
-    if (initialData) {
-      setRuta(initialData.ruta);
-      setColonia(initialData.colonia);
-      setDias(initialData.dias);
-      setTurno(initialData.turno);
-      setEstado(initialData.estado);
-    }
-  }, [initialData]);
+  const [ruta, setRuta] = useState(() => initialData?.ruta ?? "");
+  const [colonia, setColonia] = useState(() => initialData?.colonia ?? "");
+  const [dias, setDias] = useState<string[]>(() => initialData?.dias ?? []);
+  const [turno, setTurno] = useState<Turno>(() => initialData?.turno ?? "Matutino");
+  const [estado, setEstado] = useState<Estado>(() => initialData?.estado ?? "Activo");
 
   const toggleDia = (dia: string) => {
     setDias((prev) =>
@@ -111,7 +113,7 @@ export default function DiasRecoleccionForm({
               name="turno"
               value="Matutino"
               checked={turno === "Matutino"}
-              onChange={(e) => setTurno(e.target.value as any)}
+              onChange={(e) => setTurno(e.target.value as Turno)}
             />
             <span>Matutino</span>
           </label>
@@ -121,7 +123,7 @@ export default function DiasRecoleccionForm({
               name="turno"
               value="Vespertino"
               checked={turno === "Vespertino"}
-              onChange={(e) => setTurno(e.target.value as any)}
+              onChange={(e) => setTurno(e.target.value as Turno)}
             />
             <span>Vespertino</span>
           </label>
@@ -133,7 +135,7 @@ export default function DiasRecoleccionForm({
         <select
           id="estado"
           value={estado}
-          onChange={(e) => setEstado(e.target.value as any)}
+          onChange={(e) => setEstado(e.target.value as Estado)}
           className="dias dr-form-select"
         >
           <option value="Activo">Activo</option>
