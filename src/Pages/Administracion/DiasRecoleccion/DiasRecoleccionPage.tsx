@@ -201,6 +201,7 @@ export default function DiasRecoleccionPage() {
               </h2>
 
               <DiasRecoleccionForm
+                key={editing?.id ?? "new"}
                 initialData={editing}
                 onCancel={() => setIsModalOpen(false)}
                 onSave={handleSave}

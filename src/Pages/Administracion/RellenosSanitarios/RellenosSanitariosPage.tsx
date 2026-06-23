@@ -316,6 +316,7 @@ export default function RellenosSanitariosPage() {
             </div>
 
             <RellenosSanitariosForm
+              key={editingRelleno?.id ?? "new"}
               initialData={editingRelleno}
               onCancel={closeModal}
               onSave={handleSave}

@@ -1,5 +1,5 @@
 // src/Pages/Administracion/Camiones/components/CamionForm.tsx
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { CamionMock, DisponibilidadCamion, TipoCamionMock } from "../CamionesPage";
 
 interface Props {
@@ -11,32 +11,17 @@ interface Props {
 }
 
 export default function CamionForm({ modo, camion, tiposCamion, onCancel, onSubmit }: Props) {
-  const [placa, setPlaca] = useState("");
-  const [modelo, setModelo] = useState("");
-  const [tipoCamionId, setTipoCamionId] = useState<number>(tiposCamion[0]?.tipo_camion_id ?? 1);
-  const [esRentado, setEsRentado] = useState(false);
-  const [disponibilidad, setDisponibilidad] = useState<DisponibilidadCamion>("DISPONIBLE");
+  const [placa, setPlaca] = useState(() => (modo === "EDITAR" && camion ? camion.placa : ""));
+  const [modelo, setModelo] = useState(() => (modo === "EDITAR" && camion ? camion.modelo : ""));
+  const [tipoCamionId, setTipoCamionId] = useState<number>(() =>
+    modo === "EDITAR" && camion ? camion.tipo_camion_id : tiposCamion[0]?.tipo_camion_id ?? 1
+  );
+  const [esRentado, setEsRentado] = useState(() => (modo === "EDITAR" && camion ? camion.es_rentado : false));
+  const [disponibilidad, setDisponibilidad] = useState<DisponibilidadCamion>(() =>
+    modo === "EDITAR" && camion ? camion.disponibilidad : "DISPONIBLE"
+  );
 
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (modo === "EDITAR" && camion) {
-      setPlaca(camion.placa);
-      setModelo(camion.modelo);
-      setTipoCamionId(camion.tipo_camion_id);
-      setEsRentado(camion.es_rentado);
-      setDisponibilidad(camion.disponibilidad);
-      return;
-    }
-
-    // Reset para crear
-    setPlaca("");
-    setModelo("");
-    setTipoCamionId(tiposCamion[0]?.tipo_camion_id ?? 1);
-    setEsRentado(false);
-    setDisponibilidad("DISPONIBLE");
-    setError(null);
-  }, [modo, camion, tiposCamion]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
