@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaTrashAlt, FaTruck, FaCalendarAlt } from "react-icons/fa";
+import { FaTrashAlt, FaTruck, FaCalendarAlt, FaUsers } from "react-icons/fa";
 import "./SidebarAdministracion.css";
 
 export default function SidebarAdministracion() {
@@ -34,6 +34,16 @@ export default function SidebarAdministracion() {
           title="Días de Recolección"
         >
           <FaCalendarAlt />
+        </NavLink>
+
+        <NavLink
+          to="/administracion/empleados"
+          className={({ isActive }) =>
+            isActive ? "admin-link active" : "admin-link"
+          }
+          title="Empleados"
+        >
+          <FaUsers />
         </NavLink>
       </nav>
     </aside>
