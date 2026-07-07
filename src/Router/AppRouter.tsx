@@ -20,6 +20,7 @@ import AdministracionLayout from "../Pages/Administracion/AdministracionLayout";
 import RellenosSanitariosPage from "../Pages/Administracion/RellenosSanitarios/RellenosSanitariosPage";
 import CamionesPage from "../Pages/Administracion/Camiones/CamionesPage";
 import DiasRecoleccionPage from "../Pages/Administracion/DiasRecoleccion/DiasRecoleccionPage";
+import EmpleadosPage from "../Pages/Administracion/Empleados/EmpleadosPage";
 
 // Layout global (Navbar + contenido)
 function AppLayout() {
@@ -60,6 +61,7 @@ export default function AppRouter() {
             <Route path="rellenos" element={<RellenosSanitariosPage />} />
             <Route path="camiones" element={<CamionesPage />} />
             <Route path="dias-recoleccion" element={<DiasRecoleccionPage />} />
+            <Route path="empleados" element={<EmpleadosPage />} />
           </Route>
         </Route>
 
