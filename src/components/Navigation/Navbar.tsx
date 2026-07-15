@@ -31,7 +31,8 @@ export default function Navbar() {
     { id: 'alertas', label: 'Alertas', path: '/alertas', section: 'alertas' },
     { id: 'anomalias', label: 'Anomalias', path: '/anomalias', section: 'anomalias' },
     { id: 'Puntos_de_ruta', label: 'Puntos de Ruta', path: '/estado-ruta', section: 'estadoRuta' },
-    { id: 'Recoleccion', label: 'Recolección', path: '/validacion-recoleccion', section: 'validacionRecoleccion' },
+    // Validación de Recolección: oculta del navbar por ahora (pendiente de
+    // implementar), pero la ruta y la vista se dejan intactas.
     { id: 'Administracion', label: 'Administración', path: '/administracion', section: 'administracion' },
   ];
 

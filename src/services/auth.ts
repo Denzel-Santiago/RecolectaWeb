@@ -78,10 +78,12 @@ export const SECTION_ROLES: Record<SectionKey, RoleId[]> = {
 
 // Orden en el que se intenta redirigir a la primera sub-sección accesible
 // de "Administración" (usado por el índice de AdministracionLayout).
+// "administracionDiasRecoleccion" se deja fuera a propósito: la vista sigue
+// existiendo (ver AppRouter.tsx) pero no se ofrece como redirección hasta
+// que se implemente del todo.
 export const ADMINISTRACION_SUBSECCIONES: { key: SectionKey; path: string }[] = [
   { key: "administracionRellenos", path: "rellenos" },
   { key: "administracionCamiones", path: "camiones" },
-  { key: "administracionDiasRecoleccion", path: "dias-recoleccion" },
   { key: "administracionEmpleados", path: "empleados" },
 ];
 
