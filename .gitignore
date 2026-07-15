@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+/*.pdf
+/*.zip
+/*.docx
+/*.mp4
+
+.env

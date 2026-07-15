@@ -19,13 +19,30 @@ import {
   FiAlertCircle
 } from 'react-icons/fi';
 
+type EstadoRegistro = 'completado' | 'en-proceso' | 'retrasado' | 'pendiente';
+type ValidacionEstado = '—' | 'Pendiente' | 'Validado' | 'Rechazado';
+
+interface RegistroItem {
+  id: number;
+  punto: string;
+  nombre: string;
+  direccion: string;
+  fecha: string;
+  hora: string;
+  valido: ValidacionEstado;
+  estado: EstadoRegistro;
+  conductor: string;
+  vehiculo: string;
+  notas: string;
+}
+
 export default function ValidacionRecoleccion() {
   const [mostrarModal, setMostrarModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<RegistroItem | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEstado, setSelectedEstado] = useState('todos');
 
-  const registros = [
+  const registros: RegistroItem[] = [
     {
       id: 1,
       punto: 'P-001',
@@ -113,7 +130,7 @@ export default function ValidacionRecoleccion() {
     rechazados: registros.filter(r => r.valido === 'Rechazado').length
   };
 
-  const handleOpenModal = (item: any) => {
+  const handleOpenModal = (item: RegistroItem) => {
     setSelectedItem(item);
     setMostrarModal(true);
   };
