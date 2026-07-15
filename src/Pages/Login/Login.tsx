@@ -3,12 +3,15 @@ import { useState } from 'react';
 import './Login.css'; 
 import Logo from '../../Assets/Logo.png';
 import { useNavigate } from 'react-router-dom';
-import { apiRequest, setToken } from '../../services/api';
+import { apiRequest, setToken, setRole } from '../../services/api';
 
 interface LoginResponse {
   token?: string;
   access_token?: string;
   jwt?: string;
+  data?: {
+    rol_id?: number;
+  };
 }
 
 export default function Login() {
@@ -26,12 +29,16 @@ export default function Login() {
     try {
       const data = await apiRequest<LoginResponse>('/api/empleados/login', {
         method: 'POST',
-        body: JSON.stringify({ email_or_alias: emailOrAlias, password: contrasena }),
+        body: JSON.stringify({ email: emailOrAlias, password: contrasena }),
       });
 
       const token = data.token ?? data.access_token ?? data.jwt ?? '';
       if (token) {
         setToken(token);
+      }
+
+      if (typeof data.data?.rol_id === 'number') {
+        setRole(data.data.rol_id);
       }
 
       navigate('/dashboard');

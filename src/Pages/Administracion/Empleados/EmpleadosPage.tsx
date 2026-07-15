@@ -16,7 +16,9 @@ export interface Empleado {
 
 export interface EmpleadoCreatePayload {
   nombre: string;
-  email: string;
+  apellidos: string;
+  mail: string;
+  username: string;
   password: string;
   rol_id: 4;
 }
@@ -26,7 +28,7 @@ function normalizarEmpleado(raw: unknown): Empleado {
   return {
     id: Number(s.id ?? 0),
     nombre: typeof s.nombre === "string" ? s.nombre : "",
-    email: typeof s.email === "string" ? s.email : "",
+    email: typeof s.mail === "string" ? s.mail : "",
     alias: typeof s.alias === "string" ? s.alias : null,
     telefono: typeof s.telefono === "string" ? s.telefono : null,
     created_at: typeof s.created_at === "string" ? s.created_at : "",
@@ -46,8 +48,8 @@ export default function EmpleadosPage() {
     setError(null);
 
     try {
-      const data = await apiRequest<unknown[]>("/api/empleados/");
-      const soloEmpleados = data.filter(
+      const response = await apiRequest<{ data: unknown[] }>("/api/empleados/");
+      const soloEmpleados = response.data.filter(
         (u) => (u as Record<string, unknown>).rol_id === 4
       );
       setEmpleados(soloEmpleados.map(normalizarEmpleado));

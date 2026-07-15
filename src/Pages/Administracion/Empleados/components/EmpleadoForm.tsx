@@ -9,7 +9,9 @@ interface Props {
 
 export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props) {
   const [nombre, setNombre] = useState("");
-  const [email, setEmail] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [mail, setMail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -18,10 +20,19 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
     setError(null);
 
     if (!nombre.trim()) return setError("El nombre es obligatorio.");
-    if (!email.trim()) return setError("El correo es obligatorio.");
+    if (!apellidos.trim()) return setError("Los apellidos son obligatorios.");
+    if (!mail.trim()) return setError("El correo es obligatorio.");
+    if (!username.trim()) return setError("El usuario es obligatorio.");
     if (!password.trim()) return setError("La contraseña es obligatoria.");
 
-    onSave({ nombre: nombre.trim(), email: email.trim(), password, rol_id: 4 });
+    onSave({
+      nombre: nombre.trim(),
+      apellidos: apellidos.trim(),
+      mail: mail.trim(),
+      username: username.trim(),
+      password,
+      rol_id: 4,
+    });
   };
 
   return (
@@ -39,12 +50,30 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
         </div>
 
         <div className="emp-field emp-full">
+          <label>Apellidos</label>
+          <input
+            value={apellidos}
+            onChange={(e) => setApellidos(e.target.value)}
+            placeholder="Ej: Pérez López"
+          />
+        </div>
+
+        <div className="emp-field emp-full">
           <label>Correo</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
             placeholder="Ej: juan@recolecta.mx"
+          />
+        </div>
+
+        <div className="emp-field emp-full">
+          <label>Usuario</label>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Ej: jperez"
           />
         </div>
 
