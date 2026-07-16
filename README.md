@@ -18,40 +18,64 @@ npm install
 
 ## Configuracion de entorno
 
-Crear un archivo `.env` en la raiz de este proyecto:
+El proyecto mantiene dos archivos de entorno versionables:
 
 ```txt
-recolecta-web/.env
+.env.example
+.env.development
 ```
 
-Puedes partir del ejemplo:
+`.env.example` documenta desarrollo y produccion. `.env.development` se usa para desarrollo y pruebas con Vite.
+
+Si necesitas variables locales propias, crea un `.env` en la raiz del proyecto a partir del ejemplo:
 
 ```bash
 cp .env.example .env
 ```
 
-Configuracion recomendada:
+Desarrollo recomendado:
 
 ```env
+ALLOW_ALL_HOSTS=true
+ALLOWED_HOSTS=
+API_PROXY_TARGET=http://localhost:8081
 VITE_API_URL=
-VITE_API_PROXY_TARGET=http://localhost:8081
+VITE_API_PROXY_TARGET=
 ```
+
+Produccion:
+
+```env
+ALLOW_ALL_HOSTS=false
+ALLOWED_HOSTS=frontend.example.com,www.example.com
+API_PROXY_TARGET=http://localhost:8081
+VITE_API_URL=
+VITE_API_PROXY_TARGET=
+```
+
+`ALLOWED_HOSTS` debe contener solo hosts separados por comas, sin `https://`, rutas ni diagonales finales.
 
 Si el backend corre en `8080`:
 
 ```env
 VITE_API_URL=
-VITE_API_PROXY_TARGET=http://localhost:8080
+API_PROXY_TARGET=http://localhost:8080
 ```
 
 Si usas ngrok:
 
 ```env
 VITE_API_URL=
-VITE_API_PROXY_TARGET=https://TU-SUBDOMINIO.ngrok-free.app
+API_PROXY_TARGET=https://TU-SUBDOMINIO.ngrok-free.app
 ```
 
-En desarrollo se recomienda dejar `VITE_API_URL` vacio. El frontend llama a `/api/...` y Vite reenvia esas peticiones al backend definido en `VITE_API_PROXY_TARGET`. Esto evita problemas CORS.
+En desarrollo se recomienda dejar `VITE_API_URL` vacio. El frontend llama a `/api/...` y Vite reenvia esas peticiones al backend definido en `API_PROXY_TARGET`. Esto evita problemas CORS.
+
+El proxy conserva compatibilidad con variables anteriores. La prioridad es:
+
+```txt
+API_PROXY_TARGET -> VITE_API_PROXY_TARGET -> VITE_API_URL -> http://localhost:8081
+```
 
 Llamada directa, solo si la API permite CORS:
 
@@ -87,9 +111,11 @@ vite.config.mjs
 Responsabilidades:
 
 - cargar `.env` con `loadEnv`
-- usar `VITE_API_PROXY_TARGET || VITE_API_URL || http://localhost:8081`
+- usar `API_PROXY_TARGET || VITE_API_PROXY_TARGET || VITE_API_URL || http://localhost:8081`
 - configurar proxy `/api`
-- permitir hosts `.ngrok-free.app`
+- permitir todos los hosts solo cuando `ALLOW_ALL_HOSTS=true`
+- restringir hosts en produccion usando `ALLOWED_HOSTS`
+- impedir que produccion arranque con `ALLOW_ALL_HOSTS=true` o sin hosts configurados
 - agregar `ngrok-skip-browser-warning: 1` cuando se usa ngrok
 
 Con esta configuracion, una llamada del frontend a:
@@ -104,7 +130,7 @@ puede ser reenviada por Vite a:
 http://localhost:8081/api/empleados/login
 ```
 
-o al valor configurado en `VITE_API_PROXY_TARGET`.
+o al valor configurado en `API_PROXY_TARGET`.
 
 ## Estructura principal
 
@@ -323,8 +349,10 @@ Failed to fetch
 Usa mejor:
 
 ```env
+ALLOW_ALL_HOSTS=true
+ALLOWED_HOSTS=
 VITE_API_URL=
-VITE_API_PROXY_TARGET=https://TU-SUBDOMINIO.ngrok-free.app
+API_PROXY_TARGET=https://TU-SUBDOMINIO.ngrok-free.app
 ```
 
 Asi el navegador llama a `/api/...` en el mismo origen de Vite, y Vite reenvia la peticion al backend.
@@ -332,7 +360,8 @@ Asi el navegador llama a `/api/...` en el mismo origen de Vite, y Vite reenvia l
 ## Archivos importantes
 
 - `vite.config.mjs`: configuracion real usada por scripts.
-- `.env.example`: ejemplo de variables.
+- `.env.example`: ejemplo documentado para desarrollo y produccion.
+- `.env.development`: variables de desarrollo y pruebas.
 - `src/services/api.ts`: cliente HTTP, token y rol.
 - `src/services/auth.ts`: roles y permisos.
 - `src/Router/AppRouter.tsx`: rutas internas.
