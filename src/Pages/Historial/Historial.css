@@ -29,11 +29,6 @@
   box-sizing: border-box;
 }
 
-.historial {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
 /* SECCION 1: HEADER CON ESTADISTICAS */
 .historial .historial-header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);

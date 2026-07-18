@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import type { EmpleadoCreatePayload } from "../EmpleadosPage";
 import { ROLES, ROLE_NAMES, type RoleId } from "../../../../services/auth";
 
@@ -14,6 +15,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrarPassword, setMostrarPassword] = useState(false);
   const [rolId, setRolId] = useState<RoleId>(ROLES.CONDUCTOR);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,12 +91,23 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
 
         <div className="emp-field emp-full">
           <label>Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Contraseña de acceso"
-          />
+          <div className="emp-password-field">
+            <input
+              type={mostrarPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Contraseña de acceso"
+            />
+            <button
+              type="button"
+              className="emp-password-toggle"
+              onClick={() => setMostrarPassword((v) => !v)}
+              tabIndex={-1}
+              aria-label={mostrarPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {mostrarPassword ? <FiEyeOff /> : <FiEye />}
+            </button>
+          </div>
         </div>
 
         <div className="emp-field emp-full">

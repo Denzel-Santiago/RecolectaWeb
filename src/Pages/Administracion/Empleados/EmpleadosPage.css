@@ -1,6 +1,5 @@
 .emp-page {
   min-height: 100%;
-  padding: 24px;
   background: linear-gradient(180deg, #f4f7f5 0%, #edf2ef 100%);
 font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
@@ -20,8 +19,10 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 .emp-header h1 {
-  margin: 0;
-  font-size: 2rem;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
   color: #183427;
 }
 
@@ -345,6 +346,34 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   background: #fff;
 }
 
+.emp-password-field {
+  position: relative;
+}
+
+.emp-password-field input {
+  padding-right: 42px;
+}
+
+.emp-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #5b6d63;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.emp-password-toggle:hover {
+  color: #183427;
+}
+
 .emp-form-actions {
   display: flex;
   justify-content: flex-end;
@@ -363,10 +392,6 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 @media (max-width: 640px) {
-  .emp-page {
-    padding: 18px;
-  }
-
   .emp-modal {
     padding: 18px;
   }
