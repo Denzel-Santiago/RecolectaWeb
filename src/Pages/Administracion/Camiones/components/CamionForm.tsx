@@ -1,5 +1,6 @@
 // src/Pages/Administracion/Camiones/components/CamionForm.tsx
 import { useState } from "react";
+import { FiSave, FiX } from "react-icons/fi";
 import { ESTADOS_DISPONIBILIDAD } from "../CamionesPage";
 import type { Camion, CamionPayload, TipoCamion } from "../CamionesPage";
 
@@ -119,11 +120,13 @@ export default function CamionForm({ modo, camion, tiposCamion, saving = false, 
 
       <div className="form-actions">
         <button type="button" className="btn btn-outline" onClick={onCancel} disabled={saving}>
-          Cancelar
+          <FiX />
+          <span>Cancelar</span>
         </button>
 
         <button type="submit" className="btn btn-primary" disabled={saving}>
-          {saving ? "Guardando..." : modo === "CREAR" ? "Crear" : "Guardar cambios"}
+          <FiSave />
+          <span>{saving ? "Guardando..." : modo === "CREAR" ? "Crear" : "Guardar cambios"}</span>
         </button>
       </div>
     </form>

@@ -1,5 +1,6 @@
 // src/Pages/Administracion/RellenosSanitarios/components/RellenoForm.tsx
 import { useState } from "react";
+import { FiSave, FiX } from "react-icons/fi";
 import type { RellenoSanitario, RellenoSanitarioPayload } from "../RellenosSanitariosPage";
 
 interface Props {
@@ -96,11 +97,13 @@ export default function RellenoForm({
 
       <div className="rs-form-actions">
         <button type="button" className="rs-btn rs-btn-secondary" onClick={onCancel} disabled={saving}>
-          Cancelar
+          <FiX />
+          <span>Cancelar</span>
         </button>
 
         <button type="submit" className="rs-btn rs-btn-primary" disabled={saving}>
-          {saving ? "Guardando..." : initialData ? "Guardar Cambios" : "Crear Relleno"}
+          <FiSave />
+          <span>{saving ? "Guardando..." : initialData ? "Guardar Cambios" : "Crear Relleno"}</span>
         </button>
       </div>
     </form>

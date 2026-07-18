@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import type { EmpleadoCreatePayload } from "../EmpleadosPage";
+import { FiEye, FiEyeOff, FiSave, FiX } from "react-icons/fi";
+import type { Empleado, EmpleadoFormValues } from "../EmpleadosPage";
 import { ROLES, ROLE_NAMES, type RoleId } from "../../../../services/auth";
 
 interface Props {
+  modo: "CREAR" | "EDITAR";
+  empleado: Empleado | null;
   onCancel: () => void;
-  onSave: (data: EmpleadoCreatePayload) => void;
+  onSave: (data: EmpleadoFormValues) => void;
   saving?: boolean;
 }
 
@@ -16,15 +18,17 @@ const PASSWORD_HINT = "Máximo 8 caracteres, con al menos una mayúscula, una mi
 // caracteres especiales en nombre/apellidos.
 const soloLetras = (raw: string) => raw.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
 
-export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props) {
-  const [nombre, setNombre] = useState("");
-  const [apellidos, setApellidos] = useState("");
-  const [mail, setMail] = useState("");
-  const [username, setUsername] = useState("");
+export default function EmpleadoForm({ modo, empleado, onCancel, onSave, saving = false }: Props) {
+  const [nombre, setNombre] = useState(() => empleado?.nombre ?? "");
+  const [apellidos, setApellidos] = useState(() => empleado?.apellidos ?? "");
+  const [mail, setMail] = useState(() => empleado?.email ?? "");
+  const [username, setUsername] = useState(() => empleado?.username ?? "");
   const [password, setPassword] = useState("");
   const [mostrarPassword, setMostrarPassword] = useState(false);
-  const [rolId, setRolId] = useState<RoleId>(ROLES.CONDUCTOR);
+  const [rolId, setRolId] = useState<RoleId>(() => (empleado?.rolId as RoleId) ?? ROLES.CONDUCTOR);
   const [error, setError] = useState<string | null>(null);
+
+  const passwordHint = modo === "EDITAR" ? `Déjala en blanco para no cambiarla. ${PASSWORD_HINT}` : PASSWORD_HINT;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     // Evita que Enter en un input dispare el submit del formulario mientras
@@ -42,8 +46,11 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
     if (!apellidos.trim()) return setError("Los apellidos son obligatorios.");
     if (!mail.trim()) return setError("El correo es obligatorio.");
     if (!username.trim()) return setError("El usuario es obligatorio.");
-    if (!password) return setError("La contraseña es obligatoria.");
-    if (!PASSWORD_REGEX.test(password)) return setError(`La contraseña no cumple el formato. ${PASSWORD_HINT}`);
+
+    if (modo === "CREAR" && !password) return setError("La contraseña es obligatoria.");
+    if (password && !PASSWORD_REGEX.test(password)) {
+      return setError(`La contraseña no cumple el formato. ${PASSWORD_HINT}`);
+    }
 
     onSave({
       nombre: nombre.trim(),
@@ -66,7 +73,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={nombre}
             onChange={(e) => setNombre(soloLetras(e.target.value))}
             placeholder="Ej: Juan Conductor"
-            maxLength={50}
+            maxLength={100}
           />
         </div>
 
@@ -76,7 +83,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={apellidos}
             onChange={(e) => setApellidos(soloLetras(e.target.value))}
             placeholder="Ej: Pérez López"
-            maxLength={50}
+            maxLength={100}
           />
         </div>
 
@@ -87,7 +94,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={mail}
             onChange={(e) => setMail(e.target.value)}
             placeholder="Ej: juan@recolecta.mx"
-            maxLength={50}
+            maxLength={100}
           />
         </div>
 
@@ -97,7 +104,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Ej: jperez"
-            maxLength={50}
+            maxLength={100}
           />
         </div>
 
@@ -108,7 +115,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
               type={mostrarPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Contraseña de acceso"
+              placeholder={modo === "EDITAR" ? "Dejar en blanco para no cambiar" : "Contraseña de acceso"}
               maxLength={8}
             />
             <button
@@ -121,7 +128,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
               {mostrarPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
-          <span className="emp-field-hint">{PASSWORD_HINT}</span>
+          <span className="emp-field-hint">{passwordHint}</span>
         </div>
 
         <div className="emp-field emp-full">
@@ -138,11 +145,13 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
 
       <div className="emp-form-actions">
         <button type="button" className="emp-btn secondary" onClick={onCancel} disabled={saving}>
-          Cancelar
+          <FiX />
+          <span>Cancelar</span>
         </button>
 
         <button type="submit" className="emp-btn primary" disabled={saving}>
-          {saving ? "Guardando..." : "Crear empleado"}
+          <FiSave />
+          <span>{saving ? "Guardando..." : modo === "CREAR" ? "Crear empleado" : "Guardar cambios"}</span>
         </button>
       </div>
     </form>

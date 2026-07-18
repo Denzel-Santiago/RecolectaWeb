@@ -9,7 +9,11 @@ import {
   FiCheckCircle,
   FiClock,
   FiPlus,
+  FiChevronLeft,
+  FiChevronRight,
 } from 'react-icons/fi';
+
+const ITEMS_POR_PAGINA = 10;
 import { apiRequest } from '../../services/api';
 import AsignacionForm from './components/AsignacionForm';
 import AsignacionTable from './components/AsignacionTable';
@@ -83,6 +87,7 @@ export default function Historial() {
   const [selectedConductor, setSelectedConductor] = useState('');
   const [activeFilter, setActiveFilter] = useState<'todos' | 'activa' | 'finalizada'>('todos');
   const [searchTerm, setSearchTerm] = useState('');
+  const [pagina, setPagina] = useState(1);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modoForm, setModoForm] = useState<'CREAR' | 'EDITAR'>('CREAR');
@@ -178,6 +183,17 @@ export default function Historial() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asignaciones, activeFilter, selectedCamion, selectedConductor, searchTerm, camiones, conductores]);
+
+  const totalPaginas = Math.max(1, Math.ceil(asignacionesFiltradas.length / ITEMS_POR_PAGINA));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const asignacionesPagina = asignacionesFiltradas.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA,
+  );
+
+  useEffect(() => {
+    setPagina(1);
+  }, [activeFilter, selectedCamion, selectedConductor, searchTerm]);
 
   const resumen = useMemo(() => {
     const total = asignaciones.length;
@@ -436,7 +452,7 @@ export default function Historial() {
             <div className="historial empty-state">Cargando historial de asignacion...</div>
           ) : (
             <AsignacionTable
-              asignaciones={asignacionesFiltradas}
+              asignaciones={asignacionesPagina}
               getPlaca={getPlaca}
               getConductorNombre={getConductorNombre}
               formatFecha={formatFecha}
@@ -444,6 +460,34 @@ export default function Historial() {
               onDarDeBaja={darDeBaja}
               onEliminar={eliminarAsignacion}
             />
+          )}
+
+          {!loading && totalPaginas > 1 && (
+            <div className="historial table-pagination">
+              <button
+                type="button"
+                className="historial pagination-btn"
+                onClick={() => setPagina((p) => Math.max(1, p - 1))}
+                disabled={paginaActual === 1}
+              >
+                <FiChevronLeft />
+                <span>Anterior</span>
+              </button>
+
+              <span className="historial pagination-info">
+                Página {paginaActual} de {totalPaginas}
+              </span>
+
+              <button
+                type="button"
+                className="historial pagination-btn"
+                onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
+                disabled={paginaActual === totalPaginas}
+              >
+                <span>Siguiente</span>
+                <FiChevronRight />
+              </button>
+            </div>
           )}
         </div>
 

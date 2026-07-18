@@ -555,10 +555,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   background: var(--warning-light);
   border: 1px solid rgba(232, 141, 29, 0.3);
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
   color: var(--warning);
   cursor: pointer;
@@ -575,10 +575,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   background: var(--danger-light);
   border: 1px solid rgba(226, 75, 74, 0.3);
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13px;
   color: var(--danger);
   cursor: pointer;
@@ -788,10 +788,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 11px 18px;
   border-radius: 10px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   border: 1px solid transparent;
@@ -810,14 +810,13 @@
 }
 
 .estado-ruta .btn-guardar {
-  background: var(--success-light);
-  color: var(--success);
-  border-color: rgba(99, 153, 34, 0.3);
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
 }
 
 .estado-ruta .btn-guardar:hover {
-  background: rgba(99, 153, 34, 0.15);
-  border-color: var(--success);
+  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 

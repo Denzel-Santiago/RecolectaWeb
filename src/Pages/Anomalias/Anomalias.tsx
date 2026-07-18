@@ -15,9 +15,13 @@ import {
   FiUser,
   FiFileText,
   FiX,
-  FiSend,
+  FiSave,
   FiAlertCircle,
+  FiChevronLeft,
+  FiChevronRight,
 } from 'react-icons/fi';
+
+const ITEMS_POR_PAGINA = 10;
 
 // Estados reales que maneja el backend (src/Fallas/domain/entities/anomalia.go)
 type EstadoAnomalia = 'PENDIENTE' | 'EN_PROCESO' | 'RESUELTA';
@@ -67,6 +71,7 @@ export default function Anomalias() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEstado, setSelectedEstado] = useState('todos');
+  const [pagina, setPagina] = useState(1);
 
   async function loadAnomalias() {
     setLoading(true);
@@ -128,6 +133,17 @@ export default function Anomalias() {
       return false;
     return true;
   });
+
+  const totalPaginas = Math.max(1, Math.ceil(anomaliasFiltradas.length / ITEMS_POR_PAGINA));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const anomaliasPagina = anomaliasFiltradas.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA,
+  );
+
+  useEffect(() => {
+    setPagina(1);
+  }, [selectedEstado, searchTerm]);
 
   const handleOpenModal = (anomalia: Anomalia) => {
     setSelectedAnomalia(anomalia);
@@ -289,7 +305,7 @@ export default function Anomalias() {
                       </td>
                     </tr>
                   ) : (
-                    anomaliasFiltradas.map((item) => (
+                    anomaliasPagina.map((item) => (
                       <tr key={item.anomalia_id} className="anomalias table-row">
                         <td>#{item.anomalia_id}{item.punto_id ? ` · Punto ${item.punto_id}` : ''}</td>
                         <td>
@@ -322,6 +338,34 @@ export default function Anomalias() {
               </table>
             )}
           </div>
+
+          {!loading && totalPaginas > 1 && (
+            <div className="anomalias table-pagination">
+              <button
+                type="button"
+                className="anomalias pagination-btn"
+                onClick={() => setPagina((p) => Math.max(1, p - 1))}
+                disabled={paginaActual === 1}
+              >
+                <FiChevronLeft />
+                <span>Anterior</span>
+              </button>
+
+              <span className="anomalias pagination-info">
+                Página {paginaActual} de {totalPaginas}
+              </span>
+
+              <button
+                type="button"
+                className="anomalias pagination-btn"
+                onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
+                disabled={paginaActual === totalPaginas}
+              >
+                <span>Siguiente</span>
+                <FiChevronRight />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Modal de detalle / cambio de estado */}
@@ -397,16 +441,16 @@ export default function Anomalias() {
                 </div>
 
                 <div className="anomalias modal-footer">
-                  <button className="anomalias modal-btn anomalias modal-btn-primary" onClick={handleGuardarEstado} disabled={saving}>
-                    <FiSend />
-                    <span>{saving ? 'Guardando...' : 'Guardar'}</span>
-                  </button>
                   <button
-                    className="anomalias modal-btn anomalias modal-btn-success"
+                    className="anomalias modal-btn anomalias modal-btn-secondary"
                     onClick={() => setMostrarModal(false)}
                   >
-                    <FiCheckCircle />
-                    <span>Cerrar</span>
+                    <FiX />
+                    <span>Cancelar</span>
+                  </button>
+                  <button className="anomalias modal-btn anomalias modal-btn-primary" onClick={handleGuardarEstado} disabled={saving}>
+                    <FiSave />
+                    <span>{saving ? 'Guardando...' : 'Guardar'}</span>
                   </button>
                 </div>
               </>

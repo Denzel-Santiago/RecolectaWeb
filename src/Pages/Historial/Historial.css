@@ -148,13 +148,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 14px;
+  gap: 8px;
+  padding: 11px 18px;
   background: var(--primary);
   color: #fff;
   border: 1px solid var(--primary);
-  border-radius: 8px;
-  font-size: 12px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
@@ -535,6 +535,44 @@
   color: var(--text-light);
 }
 
+.historial .table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.historial .pagination-info {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.historial .pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.historial .pagination-btn:hover:not(:disabled) {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.historial .pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .historial .empty-state h3 {
   margin: 0 0 8px 0;
   color: var(--text);
@@ -642,8 +680,11 @@
 
 .historial .btn-cancelar,
 .historial .btn-guardar {
-  padding: 10px 18px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;

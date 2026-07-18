@@ -1,5 +1,6 @@
 // src/Pages/Historial/components/AsignacionForm.tsx
 import { useState } from 'react';
+import { FiSave, FiX } from 'react-icons/fi';
 import type { AsignacionPayload, Camion, Conductor, HistorialAsignacion } from '../Historial';
 
 interface Props {
@@ -99,11 +100,13 @@ export default function AsignacionForm({
 
       <div className="historial form-actions">
         <button type="button" className="historial btn-cancelar" onClick={onCancel} disabled={saving}>
-          Cancelar
+          <FiX />
+          <span>Cancelar</span>
         </button>
 
         <button type="submit" className="historial btn-guardar" disabled={saving}>
-          {saving ? 'Guardando...' : modo === 'CREAR' ? 'Crear' : 'Guardar cambios'}
+          <FiSave />
+          <span>{saving ? 'Guardando...' : modo === 'CREAR' ? 'Crear' : 'Guardar cambios'}</span>
         </button>
       </div>
     </form>
