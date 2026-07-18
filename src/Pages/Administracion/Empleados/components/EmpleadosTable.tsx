@@ -1,9 +1,17 @@
 import type { Empleado } from "../EmpleadosPage";
+import { ROLES, ROLE_NAMES, type RoleId } from "../../../../services/auth";
 
 interface Props {
   data: Empleado[];
   onDelete: (empleadoId: number) => void;
 }
+
+const ROLE_BADGE_CLASS: Record<RoleId, string> = {
+  [ROLES.ADMIN]: "role-admin",
+  [ROLES.CONDUCTOR]: "role-conductor",
+  [ROLES.SUPERVISOR]: "role-operador",
+  [ROLES.COORDINADOR]: "role-coordinador",
+};
 
 export default function EmpleadosTable({ data, onDelete }: Props) {
   if (data.length === 0) {
@@ -17,6 +25,7 @@ export default function EmpleadosTable({ data, onDelete }: Props) {
           <tr>
             <th>NOMBRE</th>
             <th>EMAIL</th>
+            <th>ROL</th>
             <th>FECHA REGISTRO</th>
             <th>ACCIONES</th>
           </tr>
@@ -30,6 +39,11 @@ export default function EmpleadosTable({ data, onDelete }: Props) {
                 <div className="emp-subtext">ID: EMP-{String(empleado.id).padStart(3, "0")}</div>
               </td>
               <td>{empleado.email}</td>
+              <td>
+                <span className={`emp-badge ${ROLE_BADGE_CLASS[empleado.rolId as RoleId] ?? ""}`}>
+                  {ROLE_NAMES[empleado.rolId as RoleId] ?? "—"}
+                </span>
+              </td>
               <td>
                 {empleado.created_at
                   ? new Date(empleado.created_at).toLocaleDateString("es-MX")

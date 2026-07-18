@@ -150,6 +150,16 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   background: #fff;
 }
 
+.emp-role-filter {
+  min-width: 200px;
+  border: 1px solid rgba(36, 69, 54, 0.14);
+  border-radius: 14px;
+  padding: 13px 16px;
+  background: #fff;
+  color: #244536;
+  cursor: pointer;
+}
+
 .emp-alert,
 .emp-loading {
   padding: 14px 16px;
@@ -249,6 +259,26 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 .emp-badge.inactive {
   background: rgba(226, 75, 74, 0.12);
   color: #c23f3f;
+}
+
+.emp-badge.role-admin {
+  background: rgba(142, 68, 173, 0.12);
+  color: #8e44ad;
+}
+
+.emp-badge.role-coordinador {
+  background: rgba(15, 103, 108, 0.12);
+  color: #0F676C;
+}
+
+.emp-badge.role-operador {
+  background: rgba(232, 141, 29, 0.12);
+  color: #b06e13;
+}
+
+.emp-badge.role-conductor {
+  background: rgba(52, 152, 219, 0.12);
+  color: #2f80b5;
 }
 
 .emp-actions-row {

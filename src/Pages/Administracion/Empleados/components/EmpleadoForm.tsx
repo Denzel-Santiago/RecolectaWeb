@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { EmpleadoCreatePayload } from "../EmpleadosPage";
+import { ROLES, ROLE_NAMES, type RoleId } from "../../../../services/auth";
 
 interface Props {
   onCancel: () => void;
@@ -13,7 +14,16 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [rolId, setRolId] = useState<RoleId>(ROLES.CONDUCTOR);
   const [error, setError] = useState<string | null>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    // Evita que Enter en un input dispare el submit del formulario mientras
+    // se está llenando; solo se envía con clic explícito en "Crear empleado".
+    if (e.key === "Enter" && (e.target as HTMLElement).tagName !== "BUTTON") {
+      e.preventDefault();
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,12 +41,12 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
       mail: mail.trim(),
       username: username.trim(),
       password,
-      rol_id: 4,
+      rol_id: rolId,
     });
   };
 
   return (
-    <form className="emp-form" onSubmit={handleSubmit}>
+    <form className="emp-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
       {error && <div className="emp-alert">{error}</div>}
 
       <div className="emp-form-grid">
@@ -85,6 +95,17 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Contraseña de acceso"
           />
+        </div>
+
+        <div className="emp-field emp-full">
+          <label>Rol</label>
+          <select value={rolId} onChange={(e) => setRolId(Number(e.target.value) as RoleId)}>
+            {(Object.entries(ROLE_NAMES) as [string, string][]).map(([id, nombre]) => (
+              <option key={id} value={id}>
+                {nombre}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

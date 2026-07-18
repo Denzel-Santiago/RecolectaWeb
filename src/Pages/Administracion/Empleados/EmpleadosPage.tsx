@@ -4,6 +4,7 @@ import EmpleadoForm from "./components/EmpleadoForm";
 import EmpleadosTable from "./components/EmpleadosTable";
 import "./EmpleadosPage.css";
 import { apiRequest } from "../../../services/api";
+import { ROLE_NAMES, type RoleId } from "../../../services/auth";
 
 export interface Empleado {
   id: number;
@@ -12,6 +13,7 @@ export interface Empleado {
   alias: string | null;
   telefono: string | null;
   created_at: string;
+  rolId: number;
 }
 
 export interface EmpleadoCreatePayload {
@@ -20,7 +22,7 @@ export interface EmpleadoCreatePayload {
   mail: string;
   username: string;
   password: string;
-  rol_id: 4;
+  rol_id: RoleId;
 }
 
 function normalizarEmpleado(raw: unknown): Empleado {
@@ -32,6 +34,7 @@ function normalizarEmpleado(raw: unknown): Empleado {
     alias: typeof s.alias === "string" ? s.alias : null,
     telefono: typeof s.telefono === "string" ? s.telefono : null,
     created_at: typeof s.created_at === "string" ? s.created_at : "",
+    rolId: Number(s.rol_id ?? 0),
   };
 }
 
@@ -40,6 +43,7 @@ export default function EmpleadosPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState<RoleId | "todos">("todos");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -49,10 +53,7 @@ export default function EmpleadosPage() {
 
     try {
       const response = await apiRequest<{ data: unknown[] }>("/api/empleados/");
-      const soloEmpleados = response.data.filter(
-        (u) => (u as Record<string, unknown>).rol_id === 4
-      );
-      setEmpleados(soloEmpleados.map(normalizarEmpleado));
+      setEmpleados(response.data.map(normalizarEmpleado));
     } catch (err) {
       setError(err instanceof Error ? err.message : "No se pudieron cargar los empleados.");
     } finally {
@@ -66,13 +67,13 @@ export default function EmpleadosPage() {
 
   const filteredEmpleados = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (q.length === 0) return empleados;
 
-    return empleados.filter((e) =>
-      e.nombre.toLowerCase().includes(q) ||
-      e.email.toLowerCase().includes(q)
-    );
-  }, [empleados, search]);
+    return empleados.filter((e) => {
+      if (roleFilter !== "todos" && e.rolId !== roleFilter) return false;
+      if (q.length === 0) return true;
+      return e.nombre.toLowerCase().includes(q) || e.email.toLowerCase().includes(q);
+    });
+  }, [empleados, search, roleFilter]);
 
   const openCreate = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -117,11 +118,12 @@ export default function EmpleadosPage() {
   };
 
   const handleExport = () => {
-    const headers = ["ID", "Nombre", "Email", "Fecha Registro"];
+    const headers = ["ID", "Nombre", "Email", "Rol", "Fecha Registro"];
     const rows = filteredEmpleados.map((e) => [
       e.id,
       e.nombre,
       e.email,
+      ROLE_NAMES[e.rolId as RoleId] ?? "—",
       e.created_at,
     ]);
 
@@ -179,6 +181,19 @@ export default function EmpleadosPage() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por nombre o email..."
           />
+
+          <select
+            className="emp-role-filter"
+            value={roleFilter}
+            onChange={(e) => setRoleFilter(e.target.value === "todos" ? "todos" : (Number(e.target.value) as RoleId))}
+          >
+            <option value="todos">Todos los roles</option>
+            {(Object.entries(ROLE_NAMES) as [string, string][]).map(([id, nombre]) => (
+              <option key={id} value={id}>
+                {nombre}
+              </option>
+            ))}
+          </select>
         </section>
 
         {error && <div className="emp-alert">{error}</div>}
