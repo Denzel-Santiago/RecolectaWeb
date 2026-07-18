@@ -9,6 +9,13 @@ interface Props {
   saving?: boolean;
 }
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{1,8}$/;
+const PASSWORD_HINT = "Máximo 8 caracteres, con al menos una mayúscula, una minúscula y un número.";
+
+// Solo letras (incluye acentos y ñ) y espacios; nada de números ni
+// caracteres especiales en nombre/apellidos.
+const soloLetras = (raw: string) => raw.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
+
 export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props) {
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellidos] = useState("");
@@ -35,7 +42,8 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
     if (!apellidos.trim()) return setError("Los apellidos son obligatorios.");
     if (!mail.trim()) return setError("El correo es obligatorio.");
     if (!username.trim()) return setError("El usuario es obligatorio.");
-    if (!password.trim()) return setError("La contraseña es obligatoria.");
+    if (!password) return setError("La contraseña es obligatoria.");
+    if (!PASSWORD_REGEX.test(password)) return setError(`La contraseña no cumple el formato. ${PASSWORD_HINT}`);
 
     onSave({
       nombre: nombre.trim(),
@@ -56,8 +64,9 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
           <label>Nombre</label>
           <input
             value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            onChange={(e) => setNombre(soloLetras(e.target.value))}
             placeholder="Ej: Juan Conductor"
+            maxLength={50}
           />
         </div>
 
@@ -65,8 +74,9 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
           <label>Apellidos</label>
           <input
             value={apellidos}
-            onChange={(e) => setApellidos(e.target.value)}
+            onChange={(e) => setApellidos(soloLetras(e.target.value))}
             placeholder="Ej: Pérez López"
+            maxLength={50}
           />
         </div>
 
@@ -77,6 +87,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={mail}
             onChange={(e) => setMail(e.target.value)}
             placeholder="Ej: juan@recolecta.mx"
+            maxLength={50}
           />
         </div>
 
@@ -86,6 +97,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Ej: jperez"
+            maxLength={50}
           />
         </div>
 
@@ -97,6 +109,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña de acceso"
+              maxLength={8}
             />
             <button
               type="button"
@@ -108,6 +121,7 @@ export default function EmpleadoForm({ onCancel, onSave, saving = false }: Props
               {mostrarPassword ? <FiEyeOff /> : <FiEye />}
             </button>
           </div>
+          <span className="emp-field-hint">{PASSWORD_HINT}</span>
         </div>
 
         <div className="emp-field emp-full">

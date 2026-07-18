@@ -52,6 +52,7 @@ export default function RellenoForm({
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Ej: Relleno Sanitario Norte"
+            maxLength={100}
             disabled={saving}
           />
         </div>
@@ -62,6 +63,7 @@ export default function RellenoForm({
             value={direccion}
             onChange={(e) => setDireccion(e.target.value)}
             placeholder="Ej: Carretera Federal Km 12, Zona Industrial"
+            maxLength={255}
             disabled={saving}
           />
         </div>

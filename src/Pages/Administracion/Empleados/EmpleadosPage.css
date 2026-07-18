@@ -374,6 +374,13 @@ font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   color: #183427;
 }
 
+.emp-field-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #5b6d63;
+}
+
 .emp-form-actions {
   display: flex;
   justify-content: flex-end;

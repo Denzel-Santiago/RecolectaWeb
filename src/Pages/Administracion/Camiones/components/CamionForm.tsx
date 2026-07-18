@@ -78,6 +78,7 @@ export default function CamionForm({ modo, camion, tiposCamion, saving = false, 
             value={modelo}
             onChange={(e) => setModelo(e.target.value)}
             placeholder="Freightliner M2 2020"
+            maxLength={50}
           />
         </div>
 
