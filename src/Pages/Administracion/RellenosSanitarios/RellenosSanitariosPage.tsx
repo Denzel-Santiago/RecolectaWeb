@@ -6,7 +6,8 @@ import "./RellenosSanitariosPage.css";
 
 import RellenoForm from "./components/RellenoForm";
 import RellenosSanitariosTable from "./components/RellenosTable";
-import { apiRequest, ApiError } from "../../../services/api";
+import { apiRequest, ApiError, getRole } from "../../../services/api";
+import { ROLES } from "../../../services/auth";
 
 // Modelo tal como lo devuelve la API (GET /api/relleno-sanitario/)
 export interface RellenoSanitario {
@@ -51,6 +52,9 @@ export default function RellenosSanitariosPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingRelleno, setEditingRelleno] = useState<RellenoSanitario | null>(null);
+
+  // Conductor: solo puede consultar el listado de rellenos, no crear/editar/eliminar.
+  const isConductor = getRole() === ROLES.CONDUCTOR;
 
   async function loadRellenos() {
     setLoading(true);
@@ -282,10 +286,12 @@ export default function RellenosSanitariosPage() {
             <span>Exportar</span>
           </button>
 
-          <button className="rs-btn rs-btn-primary" onClick={openCreate} disabled={saving}>
-            <FiPlus />
-            <span>Crear Relleno</span>
-          </button>
+          {!isConductor && (
+            <button className="rs-btn rs-btn-primary" onClick={openCreate} disabled={saving}>
+              <FiPlus />
+              <span>Crear Relleno</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -312,6 +318,7 @@ export default function RellenosSanitariosPage() {
               data={rellenosPagina}
               onEdit={openEdit}
               onDelete={handleDelete}
+              readOnly={isConductor}
               onDetails={(relleno) => {
                 alert(
                   `Detalles:\n\nNombre: ${relleno.nombre}\nDirección: ${relleno.direccion}\nCapacidad: ${relleno.capacidad_toneladas} ton\nTipo: ${relleno.es_rentado ? "Rentado" : "Propio"}`

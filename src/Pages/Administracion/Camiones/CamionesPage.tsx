@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { FiTruck, FiCheckCircle, FiPlus, FiDownload, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import CamionesTable from "./components/CamionesTable";
 import CamionForm from "./components/CamionForm";
-import { apiRequest } from "../../../services/api";
+import { apiRequest, getRole } from "../../../services/api";
+import { ROLES } from "../../../services/auth";
 import "./CamionesPage.css";
 
 export interface TipoCamion {
@@ -66,6 +67,9 @@ export default function CamionesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modoForm, setModoForm] = useState<"CREAR" | "EDITAR">("CREAR");
   const [camionSeleccionado, setCamionSeleccionado] = useState<Camion | null>(null);
+
+  // Conductor: solo puede consultar el listado de camiones, no crear/editar/eliminar.
+  const isConductor = getRole() === ROLES.CONDUCTOR;
 
   async function loadCamiones() {
     setLoading(true);
@@ -303,10 +307,12 @@ export default function CamionesPage() {
               <span>Exportar</span>
             </button>
 
-            <button className="camiones btn camiones btn-primary" onClick={abrirCrear} disabled={saving}>
-              <FiPlus />
-              <span>Crear Camión</span>
-            </button>
+            {!isConductor && (
+              <button className="camiones btn camiones btn-primary" onClick={abrirCrear} disabled={saving}>
+                <FiPlus />
+                <span>Crear Camión</span>
+              </button>
+            )}
           </div>
         </section>
 
@@ -329,6 +335,7 @@ export default function CamionesPage() {
                 tiposCamion={tiposCamion}
                 onEditar={abrirEditar}
                 onEliminar={eliminarCamion}
+                readOnly={isConductor}
               />
 
               {totalPaginas > 1 && (

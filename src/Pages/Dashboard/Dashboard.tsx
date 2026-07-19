@@ -5,6 +5,7 @@ import camionRojo from '../../assets/camion-rojo.png';
 import camionNaranja from '../../assets/camion-naranja.png';
 import camionVerde from '../../assets/camion-verde.png';
 import { apiRequest } from '../../services/api';
+import { ROLES } from '../../services/auth';
 import './Dashboard.css';
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
@@ -363,7 +364,7 @@ export default function Dashboard() {
       try {
         const response = await apiRequest<{ data: Record<string, unknown>[] }>('/api/empleados/');
         const soloConductores = (response.data ?? [])
-          .filter((u) => u.rol_id === 2) // CONDUCTOR (core/roles.go)
+          .filter((u) => u.rol_id === ROLES.CONDUCTOR)
           .map((u) => ({
             id: Number(u.id ?? 0),
             nombre: typeof u.nombre === 'string' && u.nombre ? u.nombre : `Conductor #${u.id}`,

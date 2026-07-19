@@ -8,18 +8,18 @@ import { getRole } from "./api";
 
 export const ROLES = {
   ADMIN: 1,
-  CONDUCTOR: 2,
+  COORDINADOR: 2,
   SUPERVISOR: 3,
-  COORDINADOR: 4,
+  CONDUCTOR: 4,
 } as const;
 
 export type RoleId = (typeof ROLES)[keyof typeof ROLES];
 
 export const ROLE_NAMES: Record<RoleId, string> = {
   1: "Administrador",
-  2: "Conductor",
+  2: "Coordinador",
   3: "Operador",
-  4: "Coordinador",
+  4: "Conductor",
 };
 
 export type SectionKey =

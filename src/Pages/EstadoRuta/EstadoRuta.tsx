@@ -2,7 +2,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EstadoRuta.css';
-import { apiRequest, ApiError } from '../../services/api';
+import { apiRequest, ApiError, getRole } from '../../services/api';
+import { ROLES } from '../../services/auth';
 import {
   FiMapPin,
   FiSearch,
@@ -75,6 +76,9 @@ export default function EstadoRuta() {
   const [formRutaId, setFormRutaId] = useState<number | null>(null);
   const [formLat, setFormLat] = useState('');
   const [formLon, setFormLon] = useState('');
+
+  // Conductor: solo puede consultar los puntos de recoleccion, no editarlos ni eliminarlos.
+  const isConductor = getRole() === ROLES.CONDUCTOR;
 
   async function loadAll() {
     setLoading(true);
@@ -305,13 +309,13 @@ export default function EstadoRuta() {
                         <th>Ruta</th>
                         <th>Código Postal</th>
                         <th>Coordenadas</th>
-                        <th>Acciones</th>
+                        {!isConductor && <th>Acciones</th>}
                       </tr>
                     </thead>
                     <tbody>
                       {puntosFiltrados.length === 0 ? (
                         <tr>
-                          <td colSpan={4} style={{ textAlign: 'center', padding: 24 }}>
+                          <td colSpan={isConductor ? 3 : 4} style={{ textAlign: 'center', padding: 24 }}>
                             No hay puntos de recolección para mostrar.
                           </td>
                         </tr>
@@ -329,20 +333,22 @@ export default function EstadoRuta() {
                                 <span className="estado-ruta coordenadas">Lon: {punto.lon}</span>
                               </div>
                             </td>
-                            <td className="estado-ruta acciones-cell">
-                              <button className="estado-ruta btn-editar" onClick={() => handleEditPunto(punto)}>
-                                <FiEdit2 />
-                                <span>Editar</span>
-                              </button>
-                              <button
-                                className="estado-ruta btn-eliminar"
-                                onClick={() => void handleDeletePunto(punto.punto_id)}
-                                disabled={saving}
-                              >
-                                <FiTrash2 />
-                                <span>Eliminar</span>
-                              </button>
-                            </td>
+                            {!isConductor && (
+                              <td className="estado-ruta acciones-cell">
+                                <button className="estado-ruta btn-editar" onClick={() => handleEditPunto(punto)}>
+                                  <FiEdit2 />
+                                  <span>Editar</span>
+                                </button>
+                                <button
+                                  className="estado-ruta btn-eliminar"
+                                  onClick={() => void handleDeletePunto(punto.punto_id)}
+                                  disabled={saving}
+                                >
+                                  <FiTrash2 />
+                                  <span>Eliminar</span>
+                                </button>
+                              </td>
+                            )}
                           </tr>
                         ))
                       )}

@@ -14,7 +14,8 @@ import {
 } from 'react-icons/fi';
 
 const ITEMS_POR_PAGINA = 10;
-import { apiRequest } from '../../services/api';
+import { apiRequest, getRole } from '../../services/api';
+import { ROLES } from '../../services/auth';
 import AsignacionForm from './components/AsignacionForm';
 import AsignacionTable from './components/AsignacionTable';
 
@@ -27,7 +28,7 @@ export interface Camion {
 }
 
 // "Conductor" es el nombre que usamos en esta pantalla para los empleados
-// con rol_id === 2 (CONDUCTOR en core/roles.go). El backend los expone
+// con rol_id === ROLES.CONDUCTOR (core/roles.go). El backend los expone
 // dentro del mismo listado que /api/empleados/, no en un endpoint aparte.
 export interface Conductor {
   id: number;
@@ -93,6 +94,15 @@ export default function Historial() {
   const [modoForm, setModoForm] = useState<'CREAR' | 'EDITAR'>('CREAR');
   const [asignacionSeleccionada, setAsignacionSeleccionada] = useState<HistorialAsignacion | null>(null);
 
+  // Conductor: solo puede consultar el historial (sin botones de escritura).
+  const isConductor = getRole() === ROLES.CONDUCTOR;
+
+  // /api/empleados/ requiere rol ADMIN exclusivamente (ver auth_routes.go).
+  // Cualquier otro rol (Coordinador, Operador, Conductor) recibe 403 al
+  // intentar listar empleados, asi que ninguno de ellos puede armar el
+  // catalogo de conductores: no tiene sentido pedirlo ni mostrar el filtro.
+  const canListEmpleados = getRole() === ROLES.ADMIN;
+
   async function loadAsignaciones() {
     setLoading(true);
     setError(null);
@@ -123,10 +133,10 @@ export default function Historial() {
   async function loadConductores() {
     try {
       const response = await apiRequest<{ data: unknown[] }>('/api/empleados/');
-      // rol_id === 2 -> CONDUCTOR (core/roles.go). Los conductores de una
+      // rol_id === ROLES.CONDUCTOR (core/roles.go). Los conductores de una
       // asignacion siempre son empleados con este rol.
       const soloConductores = response.data.filter(
-        (u) => (u as Record<string, unknown>).rol_id === 2
+        (u) => (u as Record<string, unknown>).rol_id === ROLES.CONDUCTOR
       );
       setConductores(soloConductores.map(normalizarConductor));
     } catch (err) {
@@ -144,7 +154,12 @@ export default function Historial() {
   useEffect(() => {
     void loadAsignaciones();
     void loadCamiones();
-    void loadConductores();
+    // Solo ADMIN tiene permiso para /api/empleados/: no tiene sentido
+    // pedirlo para otros roles solo para que falle y muestre una advertencia.
+    if (canListEmpleados) {
+      void loadConductores();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPlaca = (id_camion: number) =>
@@ -348,10 +363,12 @@ export default function Historial() {
                 <FiX />
                 <span>Limpiar todos</span>
               </button>
-              <button className="historial btn-nueva" onClick={abrirCrear} disabled={saving}>
-                <FiPlus />
-                <span>Nueva asignacion</span>
-              </button>
+              {!isConductor && (
+                <button className="historial btn-nueva" onClick={abrirCrear} disabled={saving}>
+                  <FiPlus />
+                  <span>Nueva asignacion</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -376,7 +393,10 @@ export default function Historial() {
               </select>
             </div>
 
-            {/* Filtro por conductor */}
+            {/* Filtro por conductor: solo ADMIN tiene permiso para listar
+                /api/empleados/, asi que solo a ese rol tiene sentido
+                mostrarle este filtro. */}
+            {canListEmpleados && (
             <div className="historial filtro-group">
               <div className="historial filtro-label">
                 <FiUser />
@@ -395,6 +415,7 @@ export default function Historial() {
                 ))}
               </select>
             </div>
+            )}
 
             {/* Filtros rapidos por estado */}
             <div className="historial filtro-group historial full-width">
@@ -459,6 +480,7 @@ export default function Historial() {
               onEditar={abrirEditar}
               onDarDeBaja={darDeBaja}
               onEliminar={eliminarAsignacion}
+              readOnly={isConductor}
             />
           )}
 
