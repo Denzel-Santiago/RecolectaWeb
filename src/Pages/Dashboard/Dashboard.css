@@ -32,8 +32,6 @@
 
 /* ESTRUCTURA PRINCIPAL */
 .dashboard {
-  max-width: 1400px;
-  margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: var(--bg-light);
@@ -60,9 +58,10 @@
 }
 
 .dash-header-left h1 {
-  margin: 0;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
 }
 
 .dash-subtitle {

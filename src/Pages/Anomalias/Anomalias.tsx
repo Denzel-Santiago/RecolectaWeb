@@ -15,10 +15,13 @@ import {
   FiUser,
   FiFileText,
   FiX,
-  FiSend,
+  FiSave,
   FiAlertCircle,
-  FiPlus,
+  FiChevronLeft,
+  FiChevronRight,
 } from 'react-icons/fi';
+
+const ITEMS_POR_PAGINA = 10;
 
 // Estados reales que maneja el backend (src/Fallas/domain/entities/anomalia.go)
 type EstadoAnomalia = 'PENDIENTE' | 'EN_PROCESO' | 'RESUELTA';
@@ -45,18 +48,6 @@ interface AnomaliaPayload {
   id_chofer_id: number;
 }
 
-const TIPOS_ANOMALIA = [
-  'infraestructura',
-  'contaminacion',
-  'acceso',
-  'capacidad',
-  'sanitario',
-  'vandalismo',
-  'abastecimiento',
-  'fuga',
-  'otro',
-];
-
 function mensajeError(err: unknown, fallback: string): string {
   if (err instanceof ApiError) {
     if (err.status === 401) return 'Tu sesión expiró. Vuelve a iniciar sesión.';
@@ -64,13 +55,6 @@ function mensajeError(err: unknown, fallback: string): string {
     return err.message || fallback;
   }
   return err instanceof Error ? err.message : fallback;
-}
-
-function nowLocalInputValue(): string {
-  const d = new Date();
-  d.setSeconds(0, 0);
-  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-  return d.toISOString().slice(0, 16);
 }
 
 export default function Anomalias() {
@@ -85,17 +69,9 @@ export default function Anomalias() {
   const [selectedAnomalia, setSelectedAnomalia] = useState<Anomalia | null>(null);
   const [modalEstado, setModalEstado] = useState<EstadoAnomalia>('PENDIENTE');
 
-  const [mostrarForm, setMostrarForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEstado, setSelectedEstado] = useState('todos');
-
-  // Formulario de creación
-  const [formPuntoId, setFormPuntoId] = useState('');
-  const [formTipo, setFormTipo] = useState(TIPOS_ANOMALIA[0]);
-  const [formDescripcion, setFormDescripcion] = useState('');
-  const [formFecha, setFormFecha] = useState(nowLocalInputValue());
-  const [formChoferId, setFormChoferId] = useState('');
-  const [formError, setFormError] = useState<string | null>(null);
+  const [pagina, setPagina] = useState(1);
 
   async function loadAnomalias() {
     setLoading(true);
@@ -158,51 +134,21 @@ export default function Anomalias() {
     return true;
   });
 
+  const totalPaginas = Math.max(1, Math.ceil(anomaliasFiltradas.length / ITEMS_POR_PAGINA));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const anomaliasPagina = anomaliasFiltradas.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA,
+  );
+
+  useEffect(() => {
+    setPagina(1);
+  }, [selectedEstado, searchTerm]);
+
   const handleOpenModal = (anomalia: Anomalia) => {
     setSelectedAnomalia(anomalia);
     setModalEstado(anomalia.estado);
     setMostrarModal(true);
-  };
-
-  const handleCrear = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-
-    if (!formDescripcion.trim()) return setFormError('La descripción es obligatoria.');
-    if (!formChoferId.trim()) return setFormError('El id del chofer es obligatorio.');
-    if (!formFecha) return setFormError('La fecha de reporte es obligatoria.');
-
-    const payload: AnomaliaPayload = {
-      punto_id: formPuntoId.trim() ? Number(formPuntoId) : null,
-      tipo_anomalia: formTipo,
-      descripcion: formDescripcion.trim(),
-      fecha_reporte: new Date(formFecha).toISOString(),
-      estado: 'PENDIENTE',
-      fecha_resolucion: null,
-      id_chofer_id: Number(formChoferId),
-    };
-
-    setSaving(true);
-    setError(null);
-
-    try {
-      await apiRequest('/api/anomalias/', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      });
-
-      setMostrarForm(false);
-      setFormPuntoId('');
-      setFormDescripcion('');
-      setFormChoferId('');
-      setFormFecha(nowLocalInputValue());
-      await loadAnomalias();
-    } catch (err) {
-      setError(mensajeError(err, 'No se pudo crear la anomalía.'));
-      if (err instanceof ApiError && err.status === 401) navigate('/login');
-    } finally {
-      setSaving(false);
-    }
   };
 
   const handleGuardarEstado = async () => {
@@ -320,11 +266,6 @@ export default function Anomalias() {
                 <option value="RESUELTA">Resuelta</option>
               </select>
             </div>
-
-            <button className="anomalias action-btn" onClick={() => setMostrarForm(true)} disabled={saving}>
-              <FiPlus />
-              <span>Nueva anomalía</span>
-            </button>
           </div>
         </div>
 
@@ -364,7 +305,7 @@ export default function Anomalias() {
                       </td>
                     </tr>
                   ) : (
-                    anomaliasFiltradas.map((item) => (
+                    anomaliasPagina.map((item) => (
                       <tr key={item.anomalia_id} className="anomalias table-row">
                         <td>#{item.anomalia_id}{item.punto_id ? ` · Punto ${item.punto_id}` : ''}</td>
                         <td>
@@ -397,6 +338,34 @@ export default function Anomalias() {
               </table>
             )}
           </div>
+
+          {!loading && totalPaginas > 1 && (
+            <div className="anomalias table-pagination">
+              <button
+                type="button"
+                className="anomalias pagination-btn"
+                onClick={() => setPagina((p) => Math.max(1, p - 1))}
+                disabled={paginaActual === 1}
+              >
+                <FiChevronLeft />
+                <span>Anterior</span>
+              </button>
+
+              <span className="anomalias pagination-info">
+                Página {paginaActual} de {totalPaginas}
+              </span>
+
+              <button
+                type="button"
+                className="anomalias pagination-btn"
+                onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
+                disabled={paginaActual === totalPaginas}
+              >
+                <span>Siguiente</span>
+                <FiChevronRight />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Modal de detalle / cambio de estado */}
@@ -472,16 +441,16 @@ export default function Anomalias() {
                 </div>
 
                 <div className="anomalias modal-footer">
-                  <button className="anomalias modal-btn anomalias modal-btn-primary" onClick={handleGuardarEstado} disabled={saving}>
-                    <FiSend />
-                    <span>{saving ? 'Guardando...' : 'Guardar'}</span>
-                  </button>
                   <button
-                    className="anomalias modal-btn anomalias modal-btn-success"
+                    className="anomalias modal-btn anomalias modal-btn-secondary"
                     onClick={() => setMostrarModal(false)}
                   >
-                    <FiCheckCircle />
-                    <span>Cerrar</span>
+                    <FiX />
+                    <span>Cancelar</span>
+                  </button>
+                  <button className="anomalias modal-btn anomalias modal-btn-primary" onClick={handleGuardarEstado} disabled={saving}>
+                    <FiSave />
+                    <span>{saving ? 'Guardando...' : 'Guardar'}</span>
                   </button>
                 </div>
               </>
@@ -489,94 +458,6 @@ export default function Anomalias() {
           </div>
         </div>
 
-        {/* Modal de creación */}
-        <div className={`anomalias modal-overlay ${mostrarForm ? 'show' : ''}`}>
-          <div className="anomalias modal" onClick={(e) => e.stopPropagation()}>
-            <div className="anomalias modal-header">
-              <h2 className="anomalias modal-title">
-                <FiPlus />
-                <span>Nueva anomalía</span>
-              </h2>
-              <button className="anomalias modal-close" onClick={() => setMostrarForm(false)}>
-                <FiX />
-              </button>
-            </div>
-
-            <form onSubmit={handleCrear} style={{ padding: '0 4px' }}>
-              {formError && <div style={{ color: '#e74c3c', marginBottom: 12 }}>{formError}</div>}
-
-              <div className="anomalias modal-section">
-                <label className="anomalias modal-label">Tipo de anomalía</label>
-                <select className="anomalias modal-select" value={formTipo} onChange={(e) => setFormTipo(e.target.value)}>
-                  {TIPOS_ANOMALIA.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="anomalias modal-section">
-                <label className="anomalias modal-label">Descripción</label>
-                <textarea
-                  className="anomalias modal-textarea"
-                  rows={3}
-                  value={formDescripcion}
-                  onChange={(e) => setFormDescripcion(e.target.value)}
-                  placeholder="Describe la anomalía..."
-                />
-              </div>
-
-              <div className="anomalias modal-section" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                <div>
-                  <label className="anomalias modal-label">Punto de recolección (id, opcional)</label>
-                  <input
-                    className="anomalias search-input"
-                    type="number"
-                    value={formPuntoId}
-                    onChange={(e) => setFormPuntoId(e.target.value)}
-                    placeholder="Ej: 8"
-                  />
-                </div>
-                <div>
-                  <label className="anomalias modal-label">Chofer (id)</label>
-                  <input
-                    className="anomalias search-input"
-                    type="number"
-                    value={formChoferId}
-                    onChange={(e) => setFormChoferId(e.target.value)}
-                    placeholder="Ej: 5"
-                  />
-                </div>
-              </div>
-
-              <div className="anomalias modal-section">
-                <label className="anomalias modal-label">Fecha de reporte</label>
-                <input
-                  className="anomalias search-input"
-                  type="datetime-local"
-                  value={formFecha}
-                  onChange={(e) => setFormFecha(e.target.value)}
-                />
-              </div>
-
-              <div className="anomalias modal-footer">
-                <button type="submit" className="anomalias modal-btn anomalias modal-btn-primary" disabled={saving}>
-                  <FiSend />
-                  <span>{saving ? 'Guardando...' : 'Crear anomalía'}</span>
-                </button>
-                <button
-                  type="button"
-                  className="anomalias modal-btn anomalias modal-btn-secondary"
-                  onClick={() => setMostrarForm(false)}
-                >
-                  <FiX />
-                  <span>Cancelar</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
   );

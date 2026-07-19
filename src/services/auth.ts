@@ -18,7 +18,7 @@ export type RoleId = (typeof ROLES)[keyof typeof ROLES];
 export const ROLE_NAMES: Record<RoleId, string> = {
   1: "Administrador",
   2: "Conductor",
-  3: "Supervisor",
+  3: "Operador",
   4: "Coordinador",
 };
 

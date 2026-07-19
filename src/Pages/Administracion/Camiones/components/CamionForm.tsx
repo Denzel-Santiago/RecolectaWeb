@@ -1,5 +1,6 @@
 // src/Pages/Administracion/Camiones/components/CamionForm.tsx
 import { useState } from "react";
+import { FiSave, FiX } from "react-icons/fi";
 import { ESTADOS_DISPONIBILIDAD } from "../CamionesPage";
 import type { Camion, CamionPayload, TipoCamion } from "../CamionesPage";
 
@@ -12,8 +13,24 @@ interface Props {
   onSubmit: (data: CamionPayload) => void;
 }
 
+// Inserta un guion en cada transición letra<->dígito (p. ej. ABC123A ->
+// ABC-123-A, AB123A -> AB-123-A). Se adapta a prefijos de letras de
+// longitud variable porque no asume una cantidad fija de caracteres.
+function formatPlaca(raw: string): string {
+  const clean = raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+
+  let result = "";
+  for (let i = 0; i < clean.length; i++) {
+    if (i > 0 && /[0-9]/.test(clean[i - 1]) !== /[0-9]/.test(clean[i])) {
+      result += "-";
+    }
+    result += clean[i];
+  }
+  return result;
+}
+
 export default function CamionForm({ modo, camion, tiposCamion, saving = false, onCancel, onSubmit }: Props) {
-  const [placa, setPlaca] = useState(() => camion?.placa ?? "");
+  const [placa, setPlaca] = useState(() => formatPlaca(camion?.placa ?? ""));
   const [modelo, setModelo] = useState(() => camion?.modelo ?? "");
   const [tipoCamionId, setTipoCamionId] = useState<number>(
     () => camion?.tipo_camion_id ?? tiposCamion[0]?.tipo_camion_id ?? 0
@@ -47,7 +64,13 @@ export default function CamionForm({ modo, camion, tiposCamion, saving = false, 
       <div className="form-grid">
         <div className="field">
           <label>Placa</label>
-          <input value={placa} onChange={(e) => setPlaca(e.target.value)} placeholder="CHP-123-A" />
+          <input
+            value={placa}
+            onChange={(e) => setPlaca(formatPlaca(e.target.value))}
+            placeholder="CHP-123-A"
+            maxLength={10}
+          />
+          <span className="field-hint">Escribe solo letras y números; las mayúsculas y guiones se agregan automáticamente.</span>
         </div>
 
         <div className="field">
@@ -56,6 +79,7 @@ export default function CamionForm({ modo, camion, tiposCamion, saving = false, 
             value={modelo}
             onChange={(e) => setModelo(e.target.value)}
             placeholder="Freightliner M2 2020"
+            maxLength={50}
           />
         </div>
 
@@ -96,11 +120,13 @@ export default function CamionForm({ modo, camion, tiposCamion, saving = false, 
 
       <div className="form-actions">
         <button type="button" className="btn btn-outline" onClick={onCancel} disabled={saving}>
-          Cancelar
+          <FiX />
+          <span>Cancelar</span>
         </button>
 
         <button type="submit" className="btn btn-primary" disabled={saving}>
-          {saving ? "Guardando..." : modo === "CREAR" ? "Crear" : "Guardar cambios"}
+          <FiSave />
+          <span>{saving ? "Guardando..." : modo === "CREAR" ? "Crear" : "Guardar cambios"}</span>
         </button>
       </div>
     </form>

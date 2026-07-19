@@ -1,4 +1,5 @@
 // src/Pages/Administracion/RellenosSanitarios/components/RellenosTable.tsx
+import { FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
 import type { RellenoSanitario } from "../RellenosSanitariosPage";
 
 interface Props {
@@ -60,21 +61,24 @@ export default function RellenosSanitariosTable({
                       className="rs-action rs-details"
                       onClick={() => onDetails(r)}
                     >
-                      👁 Detalles
+                      <FiEye />
+                      <span>Detalles</span>
                     </button>
 
                     <button
                       className="rs-action rs-edit"
                       onClick={() => onEdit(r)}
                     >
-                      ✏ Editar
+                      <FiEdit2 />
+                      <span>Editar</span>
                     </button>
 
                     <button
                       className="rs-action rs-delete"
                       onClick={() => onDelete(r.relleno_id)}
                     >
-                      🗑 Eliminar
+                      <FiTrash2 />
+                      <span>Eliminar</span>
                     </button>
                   </div>
                 </td>

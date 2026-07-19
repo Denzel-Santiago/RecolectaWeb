@@ -1,5 +1,5 @@
 // src/Pages/Administracion/Camiones/components/CamionesTable.tsx
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { ESTADOS_DISPONIBILIDAD } from "../CamionesPage";
 import type { Camion, TipoCamion } from "../CamionesPage";
 
@@ -75,13 +75,13 @@ export default function CamionesTable({ camiones, tiposCamion, onEditar, onElimi
               <td>
                 <div className="actions">
                   <button className="btn btn-edit" onClick={() => onEditar(c)}>
-                    <FaEdit />
-                    Editar
+                    <FiEdit2 />
+                    <span>Editar</span>
                   </button>
 
                   <button className="btn btn-delete" onClick={() => onEliminar(c.camion_id)}>
-                    <FaTrashAlt />
-                    Eliminar
+                    <FiTrash2 />
+                    <span>Eliminar</span>
                   </button>
                 </div>
               </td>
