@@ -12,7 +12,6 @@ import {
   FiSearch,
   FiCalendar,
   FiMapPin,
-  FiUser,
   FiFileText,
   FiX,
   FiSave,
@@ -293,14 +292,13 @@ export default function Anomalias() {
                     <th>Tipo / Descripción</th>
                     <th>Fecha reporte</th>
                     <th>Estado</th>
-                    <th>Chofer</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {anomaliasFiltradas.length === 0 ? (
                     <tr>
-                      <td colSpan={6} style={{ textAlign: 'center', padding: 24 }}>
+                      <td colSpan={5} style={{ textAlign: 'center', padding: 24 }}>
                         No hay anomalías para mostrar.
                       </td>
                     </tr>
@@ -320,10 +318,6 @@ export default function Anomalias() {
                             {getEstadoIcon(item.estado)}
                             <span>{getEstadoLabel(item.estado)}</span>
                           </div>
-                        </td>
-                        <td>
-                          <FiUser style={{ marginRight: 4 }} />
-                          {item.id_chofer_id}
                         </td>
                         <td>
                           <button className="anomalias btn-detalles" onClick={() => handleOpenModal(item)}>
@@ -398,14 +392,6 @@ export default function Anomalias() {
                       <span>Fecha reporte:</span>
                     </div>
                     <div>{formatFecha(selectedAnomalia.fecha_reporte)}</div>
-                  </div>
-
-                  <div>
-                    <div className="anomalias modal-label">
-                      <FiUser />
-                      <span>Chofer (id):</span>
-                    </div>
-                    <div>{selectedAnomalia.id_chofer_id}</div>
                   </div>
 
                   <div>
