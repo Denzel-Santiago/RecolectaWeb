@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useState, useEffect, useMemo, useRef } from 'react';
 import './Navbar.css';
 import Logo from '../../Assets/Logo.png';
 import { clearSession, getUserName } from '../../services/api';
@@ -82,15 +82,29 @@ export default function Navbar() {
 
           <div className="anomalias-navbar-center">
             {navItems.map((item) => (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={({ isActive }) =>
-                  `anomalias-nav-link ${isActive ? 'active' : ''}`
-                }
-              >
-                {item.label}
-              </NavLink>
+              <Fragment key={item.id}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `anomalias-nav-link ${isActive ? 'active' : ''}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+                {item.id === 'dashboard' && (
+                  // /mapa/ es una SPA aparte (map-view) servida por nginx
+                  // junto a este frontend, no una ruta de este React Router:
+                  // por eso es un <a> normal y no un <NavLink>.
+                  <a
+                    href="/mapa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="anomalias-nav-link"
+                  >
+                    Mapa
+                  </a>
+                )}
+              </Fragment>
             ))}
           </div>
 

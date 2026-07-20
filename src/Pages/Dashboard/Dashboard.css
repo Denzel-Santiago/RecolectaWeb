@@ -208,6 +208,34 @@
   gap: 8px;
 }
 
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 2px solid rgba(15, 103, 108, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  flex-wrap: wrap;
+}
+
+.card-title-row .card-title {
+  padding: 0;
+  border-bottom: none;
+  background: transparent;
+}
+
+.ruta-filter-select {
+  padding: 6px 12px;
+  border: 1px solid rgba(15, 103, 108, 0.25);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: #fff;
+  cursor: pointer;
+}
+
 .card::before {
   content: '';
   position: absolute;
@@ -369,10 +397,15 @@
 .tbadge-warn { background: var(--warning-light); color: var(--warning); }
 .tbadge-ok { background: var(--success-light); color: var(--success); }
 
-/* ===== ALERTAS ===== */
-.card--alerts {
-  max-height: 220px;
-  overflow: hidden;
+/* ===== CAMIONES (columna derecha) ===== */
+.card--camiones {
+  max-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.truck-list--compact {
+  max-height: 240px;
 }
 
 .alerts-list {
@@ -466,10 +499,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-}
-
-.dash-full {
-  margin-top: 10px;
 }
 
 .mini-row {

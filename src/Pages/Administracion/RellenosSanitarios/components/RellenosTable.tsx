@@ -7,6 +7,8 @@ interface Props {
   onEdit: (relleno: RellenoSanitario) => void;
   onDelete: (id: number) => void;
   onDetails: (relleno: RellenoSanitario) => void;
+  // Conductor: solo puede consultar los rellenos, no crear/editar/eliminar.
+  readOnly?: boolean;
 }
 
 export default function RellenosSanitariosTable({
@@ -14,6 +16,7 @@ export default function RellenosSanitariosTable({
   onEdit,
   onDelete,
   onDetails,
+  readOnly = false,
 }: Props) {
   return (
     <div className="rs-table-wrapper">
@@ -65,21 +68,25 @@ export default function RellenosSanitariosTable({
                       <span>Detalles</span>
                     </button>
 
-                    <button
-                      className="rs-action rs-edit"
-                      onClick={() => onEdit(r)}
-                    >
-                      <FiEdit2 />
-                      <span>Editar</span>
-                    </button>
+                    {!readOnly && (
+                      <>
+                        <button
+                          className="rs-action rs-edit"
+                          onClick={() => onEdit(r)}
+                        >
+                          <FiEdit2 />
+                          <span>Editar</span>
+                        </button>
 
-                    <button
-                      className="rs-action rs-delete"
-                      onClick={() => onDelete(r.relleno_id)}
-                    >
-                      <FiTrash2 />
-                      <span>Eliminar</span>
-                    </button>
+                        <button
+                          className="rs-action rs-delete"
+                          onClick={() => onDelete(r.relleno_id)}
+                        >
+                          <FiTrash2 />
+                          <span>Eliminar</span>
+                        </button>
+                      </>
+                    )}
                   </div>
                 </td>
               </tr>

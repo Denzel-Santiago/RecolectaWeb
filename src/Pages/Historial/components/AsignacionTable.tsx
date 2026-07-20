@@ -10,6 +10,8 @@ interface Props {
   onEditar: (asignacion: HistorialAsignacion) => void;
   onDarDeBaja: (asignacion: HistorialAsignacion) => void;
   onEliminar: (id_historial: number) => void;
+  // Conductor: solo puede consultar el historial, no modificarlo.
+  readOnly?: boolean;
 }
 
 export default function AsignacionTable({
@@ -20,6 +22,7 @@ export default function AsignacionTable({
   onEditar,
   onDarDeBaja,
   onEliminar,
+  readOnly = false,
 }: Props) {
   if (asignaciones.length === 0) {
     return (
@@ -40,7 +43,7 @@ export default function AsignacionTable({
             <th>Fecha asignacion</th>
             <th>Fecha baja</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            {!readOnly && <th>Acciones</th>}
           </tr>
         </thead>
         <tbody>
@@ -66,26 +69,28 @@ export default function AsignacionTable({
                     <span>{activa ? 'Activa' : 'Finalizada'}</span>
                   </div>
                 </td>
-                <td className="historial acciones-cell">
-                  <div className="historial acciones-group">
-                    <button className="historial btn-detalles" onClick={() => onEditar(item)}>
-                      <FiEdit2 />
-                      <span>Editar</span>
-                    </button>
-
-                    {activa && (
-                      <button className="historial btn-baja" onClick={() => onDarDeBaja(item)}>
-                        <FiLogOut />
-                        <span>Dar de baja</span>
+                {!readOnly && (
+                  <td className="historial acciones-cell">
+                    <div className="historial acciones-group">
+                      <button className="historial btn-detalles" onClick={() => onEditar(item)}>
+                        <FiEdit2 />
+                        <span>Editar</span>
                       </button>
-                    )}
 
-                    <button className="historial btn-eliminar" onClick={() => onEliminar(item.id_historial)}>
-                      <FiTrash2 />
-                      <span>Eliminar</span>
-                    </button>
-                  </div>
-                </td>
+                      {activa && (
+                        <button className="historial btn-baja" onClick={() => onDarDeBaja(item)}>
+                          <FiLogOut />
+                          <span>Dar de baja</span>
+                        </button>
+                      )}
+
+                      <button className="historial btn-eliminar" onClick={() => onEliminar(item.id_historial)}>
+                        <FiTrash2 />
+                        <span>Eliminar</span>
+                      </button>
+                    </div>
+                  </td>
+                )}
               </tr>
             );
           })}
